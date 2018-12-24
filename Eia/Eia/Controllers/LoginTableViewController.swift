@@ -10,6 +10,9 @@ import UIKit
 
 class LoginTableViewController: UITableViewController {
 
+    @IBAction func loginButton(_ sender: MainFlowButton) {
+        performSegue(withIdentifier: "homeScreenSegue", sender: self)
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.tableFooterView = UIView()

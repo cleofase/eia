@@ -9,7 +9,7 @@
 import UIKit
 
 class UserTextField: EiaTextField {
-    let iconImage = UIImage(named: "field_icon_user")
+    let iconImage = UIImage(named: "user_field_icon")
     override init(frame: CGRect) {
         super.init(frame: frame)
         setIcon(with: iconImage)

@@ -9,7 +9,7 @@
 import UIKit
 
 class EmailTextField: EiaTextField {
-    let iconImage = UIImage(named: "field_icon_email")
+    let iconImage = UIImage(named: "email_field_icon")
     override init(frame: CGRect) {
         super.init(frame: frame)
         setIcon(with: iconImage)

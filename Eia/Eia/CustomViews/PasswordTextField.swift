@@ -9,7 +9,7 @@
 import UIKit
 
 class PasswordTextField: EiaTextField {
-    let iconImage = UIImage(named: "field_icon_password")
+    let iconImage = UIImage(named: "password_field_icon")
     override init(frame: CGRect) {
         super.init(frame: frame)
         setIcon(with: iconImage)
