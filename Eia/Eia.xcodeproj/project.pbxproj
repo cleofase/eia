@@ -8,22 +8,40 @@
 
 /* Begin PBXBuildFile section */
 		809F1F5021CF061500A943B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F4F21CF061500A943B7 /* AppDelegate.swift */; };
-		809F1F5221CF061500A943B7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F5121CF061500A943B7 /* ViewController.swift */; };
 		809F1F5521CF061500A943B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F1F5321CF061500A943B7 /* Main.storyboard */; };
 		809F1F5821CF061500A943B7 /* Eia.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F5621CF061500A943B7 /* Eia.xcdatamodeld */; };
 		809F1F5A21CF062000A943B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 809F1F5921CF062000A943B7 /* Assets.xcassets */; };
 		809F1F5D21CF062000A943B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F1F5B21CF062000A943B7 /* LaunchScreen.storyboard */; };
+		809F1F6621CF939700A943B7 /* LoginTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F6521CF939700A943B7 /* LoginTableViewController.swift */; };
+		809F1F6921CFEDAF00A943B7 /* EiaButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F6821CFEDAF00A943B7 /* EiaButton.swift */; };
+		809F1F6B21CFEE8600A943B7 /* MainFlowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F6A21CFEE8600A943B7 /* MainFlowButton.swift */; };
+		809F1F6D21CFF17D00A943B7 /* AlternativeFlowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F6C21CFF17D00A943B7 /* AlternativeFlowButton.swift */; };
+		809F1F6F21CFF8B300A943B7 /* EmailTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F6E21CFF8B300A943B7 /* EmailTextField.swift */; };
+		809F1F7121D008DB00A943B7 /* EiaTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7021D008DB00A943B7 /* EiaTextField.swift */; };
+		809F1F7321D00BA500A943B7 /* PasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7221D00BA500A943B7 /* PasswordTextField.swift */; };
+		809F1F7521D063E700A943B7 /* UserTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7421D063E700A943B7 /* UserTextField.swift */; };
+		809F1F7721D0649300A943B7 /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */; };
+		809F1F7921D06F5E00A943B7 /* ResetPasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		809F1F4C21CF061500A943B7 /* Eia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F1F4F21CF061500A943B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		809F1F5121CF061500A943B7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		809F1F5421CF061500A943B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		809F1F5721CF061500A943B7 /* Eia.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Eia.xcdatamodel; sourceTree = "<group>"; };
 		809F1F5921CF062000A943B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		809F1F5C21CF062000A943B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		809F1F5E21CF062000A943B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		809F1F6521CF939700A943B7 /* LoginTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTableViewController.swift; sourceTree = "<group>"; };
+		809F1F6821CFEDAF00A943B7 /* EiaButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaButton.swift; sourceTree = "<group>"; };
+		809F1F6A21CFEE8600A943B7 /* MainFlowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainFlowButton.swift; sourceTree = "<group>"; };
+		809F1F6C21CFF17D00A943B7 /* AlternativeFlowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeFlowButton.swift; sourceTree = "<group>"; };
+		809F1F6E21CFF8B300A943B7 /* EmailTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailTextField.swift; sourceTree = "<group>"; };
+		809F1F7021D008DB00A943B7 /* EiaTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaTextField.swift; sourceTree = "<group>"; };
+		809F1F7221D00BA500A943B7 /* PasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextField.swift; sourceTree = "<group>"; };
+		809F1F7421D063E700A943B7 /* UserTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTextField.swift; sourceTree = "<group>"; };
+		809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
+		809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,8 +74,9 @@
 		809F1F4E21CF061500A943B7 /* Eia */ = {
 			isa = PBXGroup;
 			children = (
+				809F1F6721CFED4800A943B7 /* CustomViews */,
+				809F1F6421CF932500A943B7 /* Controllers */,
 				809F1F4F21CF061500A943B7 /* AppDelegate.swift */,
-				809F1F5121CF061500A943B7 /* ViewController.swift */,
 				809F1F5321CF061500A943B7 /* Main.storyboard */,
 				809F1F5921CF062000A943B7 /* Assets.xcassets */,
 				809F1F5B21CF062000A943B7 /* LaunchScreen.storyboard */,
@@ -65,6 +84,30 @@
 				809F1F5621CF061500A943B7 /* Eia.xcdatamodeld */,
 			);
 			path = Eia;
+			sourceTree = "<group>";
+		};
+		809F1F6421CF932500A943B7 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				809F1F6521CF939700A943B7 /* LoginTableViewController.swift */,
+				809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */,
+				809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		809F1F6721CFED4800A943B7 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				809F1F6821CFEDAF00A943B7 /* EiaButton.swift */,
+				809F1F6A21CFEE8600A943B7 /* MainFlowButton.swift */,
+				809F1F6C21CFF17D00A943B7 /* AlternativeFlowButton.swift */,
+				809F1F6E21CFF8B300A943B7 /* EmailTextField.swift */,
+				809F1F7021D008DB00A943B7 /* EiaTextField.swift */,
+				809F1F7221D00BA500A943B7 /* PasswordTextField.swift */,
+				809F1F7421D063E700A943B7 /* UserTextField.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +181,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				809F1F5221CF061500A943B7 /* ViewController.swift in Sources */,
 				809F1F5821CF061500A943B7 /* Eia.xcdatamodeld in Sources */,
+				809F1F6B21CFEE8600A943B7 /* MainFlowButton.swift in Sources */,
+				809F1F7321D00BA500A943B7 /* PasswordTextField.swift in Sources */,
+				809F1F6F21CFF8B300A943B7 /* EmailTextField.swift in Sources */,
+				809F1F7521D063E700A943B7 /* UserTextField.swift in Sources */,
+				809F1F7721D0649300A943B7 /* SignUpTableViewController.swift in Sources */,
+				809F1F7921D06F5E00A943B7 /* ResetPasswordTableViewController.swift in Sources */,
+				809F1F6921CFEDAF00A943B7 /* EiaButton.swift in Sources */,
+				809F1F6D21CFF17D00A943B7 /* AlternativeFlowButton.swift in Sources */,
+				809F1F7121D008DB00A943B7 /* EiaTextField.swift in Sources */,
 				809F1F5021CF061500A943B7 /* AppDelegate.swift in Sources */,
+				809F1F6621CF939700A943B7 /* LoginTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
