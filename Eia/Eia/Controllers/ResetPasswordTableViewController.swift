@@ -8,16 +8,43 @@
 
 import UIKit
 
-class ResetPasswordTableViewController: UITableViewController {
+class ResetPasswordTableViewController: EiaFormTableViewController {
+    @IBOutlet weak var emailTextField: EmailTextField!
+    @IBOutlet weak var alertEmailLabel: UILabel!
     
+    @IBAction func resetPasswordButton(_ sender: MainFlowButton) {
+        performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
+            if formValid {
+                self?.perfomResetPassword()
+            } else {
+                self?.becomeFirstNotValidFieldFirstResponder()
+            }
+        })
+    }
     @IBAction func loginButton(_ sender: AlternativeFlowButton) {
         dismiss(animated: true, completion: nil)
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.tableFooterView = UIView()
+        setupUI()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        registerFieldsToDinamicValidation()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        deRegisterFieldsToDinamicValidation()
+    }
+    private func setupUI() {
+        tableView.tableFooterView = UIView()
+        emailTextField.delegate = self
+        eiaTextFields = [emailTextField]
+        alertLabels = [alertEmailLabel]
+    }
+    private func perfomResetPassword() {
+        
+    }
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1

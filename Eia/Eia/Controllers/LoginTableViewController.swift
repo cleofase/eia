@@ -8,14 +8,43 @@
 
 import UIKit
 
-class LoginTableViewController: UITableViewController {
-
+class LoginTableViewController: EiaFormTableViewController {
+    
+    @IBOutlet weak var emailTextField: EmailTextField!
+    @IBOutlet weak var alertEmailLabel: UILabel!
+    @IBOutlet weak var passwordTextField: PasswordTextField!
+    @IBOutlet weak var alertPasswordLabel: UILabel!
+    
     @IBAction func loginButton(_ sender: MainFlowButton) {
-        performSegue(withIdentifier: "homeScreenSegue", sender: self)
+        performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
+            if formValid {
+                self?.performLogin()
+            } else {
+                self?.becomeFirstNotValidFieldFirstResponder()
+            }
+        })
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupUI()
+    }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        registerFieldsToDinamicValidation()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        deRegisterFieldsToDinamicValidation()
+    }
+    private func setupUI() {
         tableView.tableFooterView = UIView()
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        eiaTextFields = [emailTextField, passwordTextField]
+        alertLabels = [alertEmailLabel, alertPasswordLabel]
+    }
+    private func performLogin() {
+        performSegue(withIdentifier: "homeScreenSegue", sender: self)
     }
 
     // MARK: - Table view data source

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PasswordTextField: EiaTextField {
+class PasswordTextField: EiaTextField, ValidableField {
     let iconImage = UIImage(named: "password_field_icon")
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,5 +17,16 @@ class PasswordTextField: EiaTextField {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setIcon(with: iconImage)
+    }
+    func performeValidation() throws {
+        guard let text = text, text.count > 0 else {
+            markAsNotValid()
+            throw EiaError(withType: EiaErrorType.passwordEmpty)
+        }
+        if text.count < 8 {
+            markAsNotValid()
+            throw EiaError(withType: EiaErrorType.passwordNotValid)
+        }
+        markAsValid()
     }
 }

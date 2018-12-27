@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		80957A6921D3B2A7003D63DA /* Voluntary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80957A6821D3B2A7003D63DA /* Voluntary.swift */; };
+		80957A6B21D50AB6003D63DA /* EiaColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80957A6A21D50AB6003D63DA /* EiaColors.swift */; };
+		80957A6D21D516E6003D63DA /* EiaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80957A6C21D516E6003D63DA /* EiaError.swift */; };
+		80957A6F21D51ACB003D63DA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80957A6E21D51ACB003D63DA /* Localizable.strings */; };
+		80957A7121D55909003D63DA /* RePasswordTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80957A7021D55909003D63DA /* RePasswordTextField.swift */; };
+		80957A7321D56DA1003D63DA /* EiaFormTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80957A7221D56DA1003D63DA /* EiaFormTableViewController.swift */; };
 		809F1F5021CF061500A943B7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F4F21CF061500A943B7 /* AppDelegate.swift */; };
 		809F1F5521CF061500A943B7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 809F1F5321CF061500A943B7 /* Main.storyboard */; };
 		809F1F5821CF061500A943B7 /* Eia.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F5621CF061500A943B7 /* Eia.xcdatamodeld */; };
@@ -22,9 +28,18 @@
 		809F1F7521D063E700A943B7 /* UserTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7421D063E700A943B7 /* UserTextField.swift */; };
 		809F1F7721D0649300A943B7 /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */; };
 		809F1F7921D06F5E00A943B7 /* ResetPasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */; };
+		809F1F7C21D2851E00A943B7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7B21D2851E00A943B7 /* ProfileViewController.swift */; };
+		80FFCFD021D31E4F00FAF12D /* PhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFCFCF21D31E4F00FAF12D /* PhoneTextField.swift */; };
+		80FFCFD221D323F200FAF12D /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFCFD121D323F200FAF12D /* EditProfileTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		80957A6821D3B2A7003D63DA /* Voluntary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voluntary.swift; sourceTree = "<group>"; };
+		80957A6A21D50AB6003D63DA /* EiaColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaColors.swift; sourceTree = "<group>"; };
+		80957A6C21D516E6003D63DA /* EiaError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaError.swift; sourceTree = "<group>"; };
+		80957A6E21D51ACB003D63DA /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		80957A7021D55909003D63DA /* RePasswordTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RePasswordTextField.swift; sourceTree = "<group>"; };
+		80957A7221D56DA1003D63DA /* EiaFormTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaFormTableViewController.swift; sourceTree = "<group>"; };
 		809F1F4C21CF061500A943B7 /* Eia.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Eia.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		809F1F4F21CF061500A943B7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		809F1F5421CF061500A943B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -42,6 +57,9 @@
 		809F1F7421D063E700A943B7 /* UserTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTextField.swift; sourceTree = "<group>"; };
 		809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordTableViewController.swift; sourceTree = "<group>"; };
+		809F1F7B21D2851E00A943B7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		80FFCFCF21D31E4F00FAF12D /* PhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextField.swift; sourceTree = "<group>"; };
+		80FFCFD121D323F200FAF12D /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +73,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		80957A6721D3A614003D63DA /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				80957A6821D3B2A7003D63DA /* Voluntary.swift */,
+				80957A6A21D50AB6003D63DA /* EiaColors.swift */,
+				80957A6C21D516E6003D63DA /* EiaError.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		809F1F4321CF061400A943B7 = {
 			isa = PBXGroup;
 			children = (
@@ -74,6 +102,7 @@
 		809F1F4E21CF061500A943B7 /* Eia */ = {
 			isa = PBXGroup;
 			children = (
+				80957A6721D3A614003D63DA /* Entities */,
 				809F1F6721CFED4800A943B7 /* CustomViews */,
 				809F1F6421CF932500A943B7 /* Controllers */,
 				809F1F4F21CF061500A943B7 /* AppDelegate.swift */,
@@ -82,6 +111,7 @@
 				809F1F5B21CF062000A943B7 /* LaunchScreen.storyboard */,
 				809F1F5E21CF062000A943B7 /* Info.plist */,
 				809F1F5621CF061500A943B7 /* Eia.xcdatamodeld */,
+				80957A6E21D51ACB003D63DA /* Localizable.strings */,
 			);
 			path = Eia;
 			sourceTree = "<group>";
@@ -92,6 +122,9 @@
 				809F1F6521CF939700A943B7 /* LoginTableViewController.swift */,
 				809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */,
 				809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */,
+				809F1F7B21D2851E00A943B7 /* ProfileViewController.swift */,
+				80FFCFD121D323F200FAF12D /* EditProfileTableViewController.swift */,
+				80957A7221D56DA1003D63DA /* EiaFormTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -106,6 +139,8 @@
 				809F1F7021D008DB00A943B7 /* EiaTextField.swift */,
 				809F1F7221D00BA500A943B7 /* PasswordTextField.swift */,
 				809F1F7421D063E700A943B7 /* UserTextField.swift */,
+				80FFCFCF21D31E4F00FAF12D /* PhoneTextField.swift */,
+				80957A7021D55909003D63DA /* RePasswordTextField.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -169,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				809F1F5D21CF062000A943B7 /* LaunchScreen.storyboard in Resources */,
+				80957A6F21D51ACB003D63DA /* Localizable.strings in Resources */,
 				809F1F5A21CF062000A943B7 /* Assets.xcassets in Resources */,
 				809F1F5521CF061500A943B7 /* Main.storyboard in Resources */,
 			);
@@ -183,15 +219,23 @@
 			files = (
 				809F1F5821CF061500A943B7 /* Eia.xcdatamodeld in Sources */,
 				809F1F6B21CFEE8600A943B7 /* MainFlowButton.swift in Sources */,
+				80957A7321D56DA1003D63DA /* EiaFormTableViewController.swift in Sources */,
+				80FFCFD021D31E4F00FAF12D /* PhoneTextField.swift in Sources */,
 				809F1F7321D00BA500A943B7 /* PasswordTextField.swift in Sources */,
+				80957A6D21D516E6003D63DA /* EiaError.swift in Sources */,
 				809F1F6F21CFF8B300A943B7 /* EmailTextField.swift in Sources */,
 				809F1F7521D063E700A943B7 /* UserTextField.swift in Sources */,
 				809F1F7721D0649300A943B7 /* SignUpTableViewController.swift in Sources */,
+				80957A6B21D50AB6003D63DA /* EiaColors.swift in Sources */,
 				809F1F7921D06F5E00A943B7 /* ResetPasswordTableViewController.swift in Sources */,
+				80FFCFD221D323F200FAF12D /* EditProfileTableViewController.swift in Sources */,
 				809F1F6921CFEDAF00A943B7 /* EiaButton.swift in Sources */,
 				809F1F6D21CFF17D00A943B7 /* AlternativeFlowButton.swift in Sources */,
 				809F1F7121D008DB00A943B7 /* EiaTextField.swift in Sources */,
+				809F1F7C21D2851E00A943B7 /* ProfileViewController.swift in Sources */,
+				80957A7121D55909003D63DA /* RePasswordTextField.swift in Sources */,
 				809F1F5021CF061500A943B7 /* AppDelegate.swift in Sources */,
+				80957A6921D3B2A7003D63DA /* Voluntary.swift in Sources */,
 				809F1F6621CF939700A943B7 /* LoginTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

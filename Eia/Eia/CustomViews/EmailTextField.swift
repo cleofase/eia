@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EmailTextField: EiaTextField {
+class EmailTextField: EiaTextField, ValidableField {
     let iconImage = UIImage(named: "email_field_icon")
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -17,5 +17,17 @@ class EmailTextField: EiaTextField {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setIcon(with: iconImage)
+    }
+    func performeValidation() throws {
+        let emailRegEx: String = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,6}"
+        guard let text = text, text.count > 0 else {
+            markAsNotValid()
+            throw EiaError(withType: EiaErrorType.emailEmpty)
+        }
+        if !NSPredicate(format: "SELF MATCHES %@", emailRegEx).evaluate(with: text) {
+            markAsNotValid()
+            throw EiaError(withType: EiaErrorType.emailNotValid)
+        }
+        markAsValid()
     }
 }

@@ -8,17 +8,53 @@
 
 import UIKit
 
-class SignUpTableViewController: UITableViewController {
+class SignUpTableViewController: EiaFormTableViewController {
+    @IBOutlet weak var nameTextField: UserTextField!
+    @IBOutlet weak var alertNameLabel: UILabel!
+    @IBOutlet weak var emailTextField: EmailTextField!
+    @IBOutlet weak var alertEmailLabel: UILabel!
+    @IBOutlet weak var passwordTextField: PasswordTextField!
+    @IBOutlet weak var alertPasswordLabel: UILabel!
+    @IBOutlet weak var rePasswordTextField: RePasswordTextField!
+    @IBOutlet weak var alertRePasswordLabel: UILabel!
     
-    
+    @IBAction func signUpButton(_ sender: MainFlowButton) {
+        performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
+            if formValid {
+                self?.perfomSignUp()
+            } else {
+                self?.becomeFirstNotValidFieldFirstResponder()
+            }
+        })
+    }
     @IBAction func loginButton(_ sender: AlternativeFlowButton) {
         dismiss(animated: true, completion: nil)
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.tableFooterView = UIView()
+        setupUI()
     }
-    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        registerFieldsToDinamicValidation()
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        deRegisterFieldsToDinamicValidation()
+    }
+    private func setupUI() {
+        tableView.tableFooterView = UIView()
+        nameTextField.delegate = self
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
+        rePasswordTextField.delegate = self
+        eiaTextFields = [nameTextField, emailTextField, passwordTextField, rePasswordTextField]
+        alertLabels = [alertNameLabel, alertEmailLabel, alertPasswordLabel, alertRePasswordLabel]
+    }
+    private func perfomSignUp() {
+        
+    }
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1

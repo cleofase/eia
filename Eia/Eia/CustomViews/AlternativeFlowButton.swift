@@ -19,6 +19,6 @@ class AlternativeFlowButton: EiaButton {
     }
     private func commonInit() {
         backgroundColor = UIColor.clear
-        setTitleColor(UIColor(named: "Sand"), for: .normal)
+        setTitleColor(EiaColors.PembaSand, for: .normal)
     }
 }
