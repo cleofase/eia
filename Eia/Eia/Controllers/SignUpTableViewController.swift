@@ -7,8 +7,15 @@
 //
 
 import UIKit
+import CoreData
+import FirebaseCore
+import FirebaseAuth
+import FirebaseDatabase
 
 class SignUpTableViewController: EiaFormTableViewController {
+    private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
+    private let fbDbRef = Database.database().reference()
+
     @IBOutlet weak var nameTextField: UserTextField!
     @IBOutlet weak var alertNameLabel: UILabel!
     @IBOutlet weak var emailTextField: EmailTextField!
@@ -21,7 +28,14 @@ class SignUpTableViewController: EiaFormTableViewController {
     @IBAction func signUpButton(_ sender: MainFlowButton) {
         performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
             if formValid {
-                self?.perfomSignUp()
+                let name = self?.nameTextField.text ?? ""
+                let email = self?.emailTextField.text ?? ""
+                let password = self?.passwordTextField.text ?? ""
+                self?.perfomSignUp(name: name, email: email, password: password) {[weak self] (success) in
+                    if success {
+                        self?.dismiss(animated: true, completion: nil)
+                    }
+                }
             } else {
                 self?.becomeFirstNotValidFieldFirstResponder()
             }
@@ -46,14 +60,78 @@ class SignUpTableViewController: EiaFormTableViewController {
     private func setupUI() {
         tableView.tableFooterView = UIView()
         nameTextField.delegate = self
-        emailTextField.delegate = self
+        emailTextField.isEnabled = false
         passwordTextField.delegate = self
         rePasswordTextField.delegate = self
-        eiaTextFields = [nameTextField, emailTextField, passwordTextField, rePasswordTextField]
-        alertLabels = [alertNameLabel, alertEmailLabel, alertPasswordLabel, alertRePasswordLabel]
+        rePasswordTextField.associatedPasswordTextField = passwordTextField
+        eiaTextFields = [nameTextField, passwordTextField, rePasswordTextField]
+        alertLabels = [alertNameLabel, alertPasswordLabel, alertRePasswordLabel]
     }
-    private func perfomSignUp() {
+    private func perfomSignUp(name: String, email: String, password: String, completion: @escaping (Bool) -> Void) {
+        let context: NSManagedObjectContext = containter.viewContext
+        Auth.auth().createUser(withEmail: email, password: password) {[weak self] (authResult, error) in
+            if let error = error {
+                let serverError = EiaError(withType: EiaErrorType.serverError)
+                serverError.showAsAlert(title: "Cadastro", controller: self, complement: error.localizedDescription) {
+                    completion(false)
+                }
+            } else {
+                if let currentUser = authResult?.user {
+                    self?.sendEmailVerification(email: email, password: password) {(success) in
+                        if success {
+                            let voluntary = Voluntary.create(with: currentUser, name: name, in: context)
+                            try? context.save()
+                            self?.persisteOnCloud(withVoluntary: voluntary) {
+                                completion(true)
+                            }
+                        } else {
+                            completion(false)
+                        }
+                    }
+                } else {
+                    let serverError = EiaError(withType: EiaErrorType.serverError)
+                    serverError.showAsAlert(title: "Cadastro", controller: self, complement: nil) {
+                        completion(false)
+                    }
+                }
+            }
+        }
         
+        
+    }
+    private func sendEmailVerification(email: String, password: String, completion: @escaping (Bool) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) {[weak self] (user, error) in
+            if let error = error {
+                let serverError = EiaError(withType: EiaErrorType.serverError)
+                serverError.showAsAlert(title: "Verificação de Email", controller: self, complement: error.localizedDescription) {
+                    completion(false)
+                }
+            } else {
+                Auth.auth().currentUser?.sendEmailVerification() {[weak self] (error) in
+                    if let error = error {
+                        let serverError = EiaError(withType: EiaErrorType.serverError)
+                        serverError.showAsAlert(title: "Verificação de Email", controller: self, complement: error.localizedDescription) {
+                            try? Auth.auth().signOut()
+                            completion(false)
+                        }
+                    } else {
+                        let feedback = EiaFeedback(withType: EiaFeedbackType.verificationEmailSent)
+                        feedback.showAsAlert(at: self) {
+                            try? Auth.auth().signOut()
+                            completion(true)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    private func persisteOnCloud(withVoluntary voluntary: Voluntary, completion: @escaping () -> Void) {
+        let child = Voluntary.rootFirebaseDatabaseReference
+        let authId = voluntary.authId ?? ""
+        print(fbDbRef.debugDescription)
+        print(voluntary.dictionaryValue.debugDescription)
+        fbDbRef.child(child).child(authId).setValue(voluntary.dictionaryValue)
+        completion()
     }
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {

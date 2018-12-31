@@ -19,14 +19,17 @@ class UserTextField: EiaTextField, ValidableField {
         setIcon(with: iconImage)
     }
     func performeValidation() throws {
-        let nameRegEx: String = "[A-Z0-9a-z._%+-]+"
         guard let text = text, text.count > 0 else {
             markAsNotValid()
             throw EiaError(withType: EiaErrorType.nameEmpty)
         }
-        if !NSPredicate(format: "SELF MATCHES %@", nameRegEx).evaluate(with: text) {
+        if text.count < 2 {
             markAsNotValid()
-            throw EiaError(withType: EiaErrorType.nameNotValid)
+            throw EiaError(withType: EiaErrorType.nameTooShort)
+        }
+        if text.count > 16 {
+            markAsNotValid()
+            throw EiaError(withType: EiaErrorType.nameTooLong)
         }
         markAsValid()
     }

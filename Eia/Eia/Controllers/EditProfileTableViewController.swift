@@ -8,10 +8,16 @@
 
 import UIKit
 import Photos
+import CoreData
+import FirebaseCore
+import FirebaseAuth
+import FirebaseDatabase
 
 class EditProfileTableViewController: EiaFormTableViewController {
-    public var volutary: Voluntary?
-    
+    public var voluntary: Voluntary?
+    private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
+    private let fbDBRef = Database.database().reference()
+
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameText: UserTextField!
     @IBOutlet weak var alertNameLabel: UILabel!
@@ -23,7 +29,10 @@ class EditProfileTableViewController: EiaFormTableViewController {
     @IBAction func confirmEditionButton(_ sender: UIBarButtonItem) {
         performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
             if formValid {
-                self?.saveVoluntaryData()
+                let name = self?.nameText.text ?? ""
+                let phone = self?.phoneText.text ?? ""
+                self?.saveVoluntaryData(withName: name, phone: phone)
+                self?.navigationController?.popViewController(animated: true)
             } else {
                 self?.becomeFirstNotValidFieldFirstResponder()
             }
@@ -36,7 +45,7 @@ class EditProfileTableViewController: EiaFormTableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        if let voluntary = volutary {
+        if let voluntary = voluntary {
             loadVoluntaryData(with: voluntary)
         }
     }
@@ -61,14 +70,20 @@ class EditProfileTableViewController: EiaFormTableViewController {
         nameText.text = voluntary.name
         emailText.text = voluntary.email
         phoneText.text = voluntary.phone
-        if let photoData = voluntary.photo, let photoImage = UIImage(data: photoData) {
+        if let photoStr = voluntary.photo_str, let photoData = Data(base64Encoded: photoStr), let photoImage = UIImage(data: photoData) {
             photoImageView.image = photoImage
         } else {
             // load default user photo...
         }
     }
-    private func saveVoluntaryData() {
-        
+    private func saveVoluntaryData(withName name: String, phone: String) {
+        let context: NSManagedObjectContext = containter.viewContext
+        guard let voluntary = voluntary else {return}
+        guard let authId = voluntary.authId else {return}
+        voluntary.name = name
+        voluntary.phone = phone
+        try? context.save()
+        fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(authId).setValue(voluntary.dictionaryValue)
     }
 
     // MARK: - Table view data source
@@ -114,6 +129,10 @@ extension EditProfileTableViewController: UIImagePickerControllerDelegate, UINav
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             photoImageView.image = pickedImage
+            if let imageData = pickedImage.pngData() {
+                let imageStr = imageData.base64EncodedString()
+                voluntary?.photo_str = imageStr
+            }
         }
         picker.dismiss(animated: true, completion: nil)
     }

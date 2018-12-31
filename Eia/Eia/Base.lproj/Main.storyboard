@@ -14,7 +14,7 @@
         <!--Login Table View Controller-->
         <scene sceneID="K3D-OR-U2J">
             <objects>
-                <tableViewController id="amk-gP-Aoh" customClass="LoginTableViewController" customModule="Eia" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="loginTableViewController" id="amk-gP-Aoh" customClass="LoginTableViewController" customModule="Eia" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="static" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="OHQ-Jx-Pbp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -325,7 +325,7 @@
                                                             </constraints>
                                                             <color key="textColor" name="PembaSand"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
+                                                            <textInputTraits key="textInputTraits" returnKeyType="next" textContentType="name"/>
                                                         </textField>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7m4-O0-Kni">
                                                             <rect key="frame" x="0.0" y="40" width="343" height="17"/>
@@ -401,7 +401,7 @@
                                                             </constraints>
                                                             <color key="textColor" name="PembaSand"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
+                                                            <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES" textContentType="password"/>
                                                         </textField>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NIg-9b-CwX">
                                                             <rect key="frame" x="0.0" y="40" width="343" height="17"/>
@@ -432,7 +432,7 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="VsM-t6-gXf">
                                                     <rect key="frame" x="16" y="3.5" width="343" height="57"/>
                                                     <subviews>
-                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirme a Senha" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rxp-lD-11n" customClass="RePasswordTextField">
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirme a Senha" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="rxp-lD-11n" customClass="RePasswordTextField" customModule="Eia" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="0.0" width="343" height="40"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="40" id="ZiQ-XB-NOK"/>
@@ -531,7 +531,7 @@
                         <outlet property="emailTextField" destination="m6n-8r-Dyz" id="NPS-Oe-WqR"/>
                         <outlet property="nameTextField" destination="8M4-Qg-rb9" id="bzD-TC-xWo"/>
                         <outlet property="passwordTextField" destination="xbd-i2-MTR" id="M8S-pX-9zc"/>
-                        <outlet property="rePasswordTextField" destination="rxp-lD-11n" id="0tN-as-Rxx"/>
+                        <outlet property="rePasswordTextField" destination="rxp-lD-11n" id="P6b-iA-bMB"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="MJh-Jr-6KT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -609,7 +609,7 @@
                                                             </constraints>
                                                             <color key="textColor" name="PembaSand"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
+                                                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="go" textContentType="email"/>
                                                         </textField>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JAh-ee-eWL">
                                                             <rect key="frame" x="0.0" y="40" width="343" height="17"/>
@@ -702,10 +702,10 @@
             </objects>
             <point key="canvasLocation" x="1226" y="-251"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Home Tab Bar Controller-->
         <scene sceneID="q5N-pv-zub">
             <objects>
-                <tabBarController id="zoy-Wp-mdW" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="homeTabBarController" id="zoy-Wp-mdW" customClass="HomeTabBarController" customModule="Eia" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="BHb-9d-kFh">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -857,6 +857,9 @@
                     </view>
                     <navigationItem key="navigationItem" title="Grupos" id="q3o-90-69k">
                         <barButtonItem key="backBarButtonItem" title=" " id="q4W-qs-nh7"/>
+                        <barButtonItem key="rightBarButtonItem" image="add_nav_icon" id="BB2-5r-MAL">
+                            <color key="tintColor" name="PembaSand"/>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SQi-kq-lTn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -903,7 +906,7 @@
                                             <constraint firstAttribute="width" secondItem="FDD-Wt-8co" secondAttribute="height" id="A6G-PG-Hwx"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cleofas Pereira" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MhL-br-KD2">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MhL-br-KD2">
                                         <rect key="frame" x="16" y="196.5" width="343" height="46.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                         <color key="textColor" name="SunSet"/>
@@ -940,7 +943,7 @@
                                                 <color key="textColor" name="PembaSand"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cleofase@gmail.com" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="SoD-K6-z7V">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="SoD-K6-z7V">
                                                 <rect key="frame" x="141.5" y="0.0" width="201.5" height="25"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <color key="textColor" name="SunSet"/>
@@ -967,7 +970,7 @@
                                                 <color key="textColor" name="PembaSand"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+5561983134149" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="W9N-kM-KLN">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="W9N-kM-KLN">
                                                 <rect key="frame" x="141.5" y="0.0" width="201.5" height="25"/>
                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                 <color key="textColor" name="SunSet"/>
@@ -1003,6 +1006,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="emailLabel" destination="SoD-K6-z7V" id="ee9-Ce-gpr"/>
+                        <outlet property="nameLabel" destination="MhL-br-KD2" id="wAa-zs-l2V"/>
+                        <outlet property="phoneLabel" destination="W9N-kM-KLN" id="f9S-Zk-qtt"/>
                         <outlet property="photoBackgroundView" destination="9sj-TM-aPx" id="Ip5-pw-NfZ"/>
                         <outlet property="photoImageView" destination="FDD-Wt-8co" id="MjB-Ya-5hb"/>
                         <segue destination="h1y-6g-VeS" kind="show" identifier="editProfileSegue" id="rRJ-E9-1sa"/>
@@ -1081,7 +1087,7 @@
                                                             </constraints>
                                                             <color key="textColor" name="PembaSand"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
+                                                            <textInputTraits key="textInputTraits" returnKeyType="next" textContentType="name"/>
                                                         </textField>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6eC-5h-PGB">
                                                             <rect key="frame" x="0.0" y="40" width="343" height="17"/>
@@ -1165,7 +1171,7 @@
                                                             </constraints>
                                                             <color key="textColor" name="PembaSand"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next" textContentType="email"/>
+                                                            <textInputTraits key="textInputTraits" keyboardType="phonePad" returnKeyType="done" textContentType="tel"/>
                                                         </textField>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ECS-d9-dwc">
                                                             <rect key="frame" x="0.0" y="40" width="343" height="17"/>
@@ -1240,6 +1246,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="add_nav_icon" width="22" height="22"/>
         <image name="confirm_nav_icon" width="22" height="22"/>
         <image name="email_field_icon" width="25" height="25"/>
         <image name="group_selected_tab_icon" width="25" height="25"/>

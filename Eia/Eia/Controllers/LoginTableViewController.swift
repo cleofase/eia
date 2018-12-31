@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
 
 class LoginTableViewController: EiaFormTableViewController {
     
@@ -18,7 +20,13 @@ class LoginTableViewController: EiaFormTableViewController {
     @IBAction func loginButton(_ sender: MainFlowButton) {
         performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
             if formValid {
-                self?.performLogin()
+                let email = self?.emailTextField.text ?? ""
+                let password = self?.passwordTextField.text ?? ""
+                self?.performLogin(withEmail: email, password: password) {[weak self] (success) in
+                    if success {
+                        self?.goToHomeScreen()
+                    }
+                }
             } else {
                 self?.becomeFirstNotValidFieldFirstResponder()
             }
@@ -43,8 +51,36 @@ class LoginTableViewController: EiaFormTableViewController {
         eiaTextFields = [emailTextField, passwordTextField]
         alertLabels = [alertEmailLabel, alertPasswordLabel]
     }
-    private func performLogin() {
-        performSegue(withIdentifier: "homeScreenSegue", sender: self)
+    private func performLogin(withEmail email: String, password: String, completion: @escaping (Bool) -> Void) {
+        Auth.auth().signIn(withEmail: email, password: password) {(authResult, error) in
+            if let error = error {
+                let serverError = EiaError(withType: .serverError)
+                serverError.showAsAlert(title: "Login", controller: self, complement: error.localizedDescription) {
+                    completion(false)
+                }
+            } else {
+                if let authResult = authResult {
+                    if authResult.user.isEmailVerified {
+                        completion(true)
+                    } else {
+                        let serverError = EiaError(withType: .emailVerificationPending)
+                        serverError.showAsAlert(title: "Login", controller: self, complement: nil) {
+                            completion(false)
+                        }
+                    }
+                } else {
+                    let serverError = EiaError(withType: .serverError)
+                    serverError.showAsAlert(title: "Login", controller: self, complement: nil) {
+                        completion(false)
+                    }
+                }
+            }
+        }
+    }
+    private func goToHomeScreen() {
+        DispatchQueue.main.async {[weak self] in
+            self?.performSegue(withIdentifier: "homeScreenSegue", sender: self)
+        }
     }
 
     // MARK: - Table view data source

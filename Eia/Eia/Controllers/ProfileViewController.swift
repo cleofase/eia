@@ -7,19 +7,37 @@
 //
 
 import UIKit
+import CoreData
+import FirebaseCore
+import FirebaseAuth
+import FirebaseDatabase
 
 class ProfileViewController: UIViewController {
+    public var voluntary: Voluntary?
+    
     @IBOutlet weak var photoBackgroundView: UIView!
     @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var emailLabel: UILabel!
+    @IBOutlet weak var phoneLabel: UILabel!
+    
     @IBAction func manageButton(_ sender: UIBarButtonItem) {
         manageProfile()
     }
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-
-        // Do any additional setup after loading the view.
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        updateUI()
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "editProfileSegue" {
+            if let destination = segue.destination as? EditProfileTableViewController {
+                destination.voluntary = voluntary
+            }
+        }
     }
     private func setupUI() {
         let gradientLayer = CAGradientLayer()
@@ -28,6 +46,17 @@ class ProfileViewController: UIViewController {
         photoBackgroundView.layer.insertSublayer(gradientLayer, at: 0)
         photoImageView.layer.cornerRadius = photoImageView.frame.height/2
         photoImageView.clipsToBounds = true
+    }
+    private func updateUI() {
+        guard let voluntary = voluntary else {return}
+        nameLabel.text = "\(voluntary.name ?? "") - \(voluntary.status ?? "")"
+        emailLabel.text = voluntary.email
+        phoneLabel.text = voluntary.phone
+        if let photoStr = voluntary.photo_str, let photoData = Data(base64Encoded: photoStr), let photoImage = UIImage(data: photoData) {
+            photoImageView.image = photoImage
+        } else {
+            // photo default...
+        }
     }
     private func manageProfile() {
         let manageAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
