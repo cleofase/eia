@@ -70,7 +70,7 @@ class ProfileViewController: UIViewController {
         present(manageAlert, animated: true, completion: nil)
     }
     private func performLogout() {
-        
+        try? Auth.auth().signOut()
     }
     private func editProfile() {
         performSegue(withIdentifier: "editProfileSegue", sender: self)

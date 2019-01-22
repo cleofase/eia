@@ -65,6 +65,12 @@ class Voluntary: NSManagedObject {
         if let photo_url = dictionary["photo_url"] as? String {
             voluntary.photo_url = photo_url
         }
+        if let groups = dictionary["groups"] as? NSDictionary {
+            voluntary.groups = NSSet(array: Group_Item.createOrUpdate(withList: groups, in: context))
+        }
+        if let teams = dictionary["teams"] as? NSDictionary {
+            voluntary.teams = NSSet(array: Team_Item.createOrUpdate(withList: teams, in: context))
+        }
         return voluntary
     }
     class func createOrUpdate(matchDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Voluntary? {
@@ -87,11 +93,39 @@ class Voluntary: NSManagedObject {
                 if let photo_url = dictionary["photo_url"] as? String {
                     voluntary.photo_url = photo_url
                 }
+                if let groups = dictionary["groups"] as? NSDictionary {
+                    voluntary.groups = NSSet(array: Group_Item.createOrUpdate(withList: groups, in: context))
+                }
+                if let teams = dictionary["teams"] as? NSDictionary {
+                    voluntary.teams = NSSet(array: Team_Item.createOrUpdate(withList: teams, in: context))
+                }
             } else {
                 voluntary = Voluntary.create(withDictionary: dictionary, in: context)
             }
         }
         return voluntary
+    }
+    private func dictionaryValueForGroups() -> [String: Any] {
+        var dictionary = [String: Any]()
+        if let groups = groups {
+            for group in groups {
+                if let group = group as? Group_Item, let identifier = group.identifier {
+                    dictionary.updateValue(group.dictionaryValue, forKey: identifier)
+                }
+            }
+        }
+        return dictionary
+    }
+    private func dictionaryValueForTeams() -> [String: Any] {
+        var dictionary = [String: Any]()
+        if let teams = teams {
+            for team in teams {
+                if let team = team as? Team_Item, let identifier = team.identifier {
+                    dictionary.updateValue(team.dictionaryValue, forKey: identifier)
+                }
+            }
+        }
+        return dictionary
     }
     var dictionaryValue: [String: Any] {
         get {
@@ -103,7 +137,9 @@ class Voluntary: NSManagedObject {
                 "photo_str": photo_str ?? "",
                 "photo_url": photo_url ?? "",
                 "status": status ?? "",
-                "authId": authId ?? ""
+                "authId": authId ?? "",
+                "groups": dictionaryValueForGroups(),
+                "teams": dictionaryValueForTeams()
             ]            
         }
     }

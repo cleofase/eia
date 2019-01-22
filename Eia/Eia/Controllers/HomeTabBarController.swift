@@ -81,8 +81,12 @@ class HomeTabBarController: UITabBarController {
 extension HomeTabBarController: UITabBarControllerDelegate {
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if let navigationController = viewController as? UINavigationController {
-            if let profileController = navigationController.viewControllers.first as? ProfileViewController {
+            let destination = navigationController.viewControllers.first
+            if let profileController = destination as? ProfileViewController {
                 profileController.voluntary = voluntary                
+            }
+            if let groupsController = destination as? GroupsTableViewController {
+                groupsController.voluntary = voluntary
             }
         }
     }

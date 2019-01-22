@@ -1,5 +1,38 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Group" representedClassName=".Group" syncable="YES" codeGenerationType="category">
+        <attribute name="group_description" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="leader_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="leader_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo_str" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="photo_url" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team_Item" inverseName="group" inverseEntity="Team_Item" syncable="YES"/>
+        <relationship name="volunteers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Voluntary_Item" inverseName="groups" inverseEntity="Voluntary_Item" syncable="YES"/>
+    </entity>
+    <entity name="Group_Item" representedClassName=".Group_Item" syncable="YES" codeGenerationType="category">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="volunteers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Voluntary" inverseName="groups" inverseEntity="Voluntary" syncable="YES"/>
+    </entity>
+    <entity name="Team" representedClassName=".Team" syncable="YES" codeGenerationType="category">
+        <attribute name="group_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="group_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="leader_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="leader_name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="volunteers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Voluntary_Item" inverseName="teams" inverseEntity="Voluntary_Item" syncable="YES"/>
+    </entity>
+    <entity name="Team_Item" representedClassName=".Team_Item" syncable="YES" codeGenerationType="category">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="teams" inverseEntity="Group" syncable="YES"/>
+        <relationship name="volunteers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Voluntary" inverseName="teams" inverseEntity="Voluntary" syncable="YES"/>
+    </entity>
     <entity name="Voluntary" representedClassName=".Voluntary" syncable="YES" codeGenerationType="category">
         <attribute name="authId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
@@ -9,8 +42,21 @@
         <attribute name="photo_str" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="photo_url" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group_Item" inverseName="volunteers" inverseEntity="Group_Item" syncable="YES"/>
+        <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team_Item" inverseName="volunteers" inverseEntity="Team_Item" syncable="YES"/>
+    </entity>
+    <entity name="Voluntary_Item" representedClassName=".Voluntary_Item" syncable="YES" codeGenerationType="category">
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="volunteers" inverseEntity="Group" syncable="YES"/>
+        <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team" inverseName="volunteers" inverseEntity="Team" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Voluntary" positionX="-63" positionY="-18" width="128" height="165"/>
+        <element name="Group" positionX="-313.02734375" positionY="257.6796875" width="128" height="193"/>
+        <element name="Group_Item" positionX="-311.140625" positionY="139.4609375" width="128" height="88"/>
+        <element name="Team" positionX="-311.7265625" positionY="473.5859375" width="128" height="163"/>
+        <element name="Team_Item" positionX="-46.35546875" positionY="319.44921875" width="128" height="103"/>
+        <element name="Voluntary" positionX="-53.9765625" positionY="46.1484375" width="128" height="193"/>
+        <element name="Voluntary_Item" positionX="-45.0625" positionY="473.73828125" width="128" height="103"/>
     </elements>
 </model>

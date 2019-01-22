@@ -60,12 +60,12 @@ class SignUpTableViewController: EiaFormTableViewController {
     private func setupUI() {
         tableView.tableFooterView = UIView()
         nameTextField.delegate = self
-        emailTextField.isEnabled = false
+        emailTextField.delegate = self
         passwordTextField.delegate = self
         rePasswordTextField.delegate = self
         rePasswordTextField.associatedPasswordTextField = passwordTextField
-        eiaTextFields = [nameTextField, passwordTextField, rePasswordTextField]
-        alertLabels = [alertNameLabel, alertPasswordLabel, alertRePasswordLabel]
+        eiaTextFields = [nameTextField, emailTextField, passwordTextField, rePasswordTextField]
+        alertLabels = [alertNameLabel, alertEmailLabel, alertPasswordLabel, alertRePasswordLabel]
     }
     private func perfomSignUp(name: String, email: String, password: String, completion: @escaping (Bool) -> Void) {
         let context: NSManagedObjectContext = containter.viewContext

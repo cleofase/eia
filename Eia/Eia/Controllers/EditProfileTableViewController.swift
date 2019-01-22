@@ -17,6 +17,7 @@ class EditProfileTableViewController: EiaFormTableViewController {
     public var voluntary: Voluntary?
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDBRef = Database.database().reference()
+    private var photoStr: String?
 
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameText: UserTextField!
@@ -61,16 +62,17 @@ class EditProfileTableViewController: EiaFormTableViewController {
         photoImageView.layer.cornerRadius = 6
         photoImageView.clipsToBounds = true
         nameText.delegate = self
-        emailText.delegate = self
+        emailText.isEnabled = false
         phoneText.delegate = self
-        eiaTextFields = [nameText, emailText, phoneText]
-        alertLabels = [alertNameLabel, alertEmailLabel, alertPhoneLabel]
+        eiaTextFields = [nameText, phoneText]
+        alertLabels = [alertNameLabel, alertPhoneLabel]
     }
     private func loadVoluntaryData(with voluntary: Voluntary) {
         nameText.text = voluntary.name
         emailText.text = voluntary.email
         phoneText.text = voluntary.phone
         if let photoStr = voluntary.photo_str, let photoData = Data(base64Encoded: photoStr), let photoImage = UIImage(data: photoData) {
+            self.photoStr = photoStr
             photoImageView.image = photoImage
         } else {
             // load default user photo...
@@ -82,6 +84,7 @@ class EditProfileTableViewController: EiaFormTableViewController {
         guard let authId = voluntary.authId else {return}
         voluntary.name = name
         voluntary.phone = phone
+        voluntary.photo_str = photoStr
         try? context.save()
         fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(authId).setValue(voluntary.dictionaryValue)
     }
@@ -131,7 +134,7 @@ extension EditProfileTableViewController: UIImagePickerControllerDelegate, UINav
             photoImageView.image = pickedImage
             if let imageData = pickedImage.pngData() {
                 let imageStr = imageData.base64EncodedString()
-                voluntary?.photo_str = imageStr
+                photoStr = imageStr
             }
         }
         picker.dismiss(animated: true, completion: nil)

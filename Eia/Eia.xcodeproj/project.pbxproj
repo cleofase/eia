@@ -8,8 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		801CCE5E21D5BDA500D7DD3B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801CCE5D21D5BDA500D7DD3B /* GoogleService-Info.plist */; };
+		80414A9921F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80414A9821F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift */; };
 		80456D1421D83AD8004678DD /* EiaFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80456D1321D83AD8004678DD /* EiaFeedback.swift */; };
 		80456D1621D886C6004678DD /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80456D1521D886C6004678DD /* HomeTabBarController.swift */; };
+		8087F51D21E12D2A00870B3E /* GroupsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F51C21E12D2A00870B3E /* GroupsTableViewController.swift */; };
+		8087F51F21E1325C00870B3E /* GroupTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F51E21E1325C00870B3E /* GroupTableViewCell.swift */; };
+		8087F52121E170CD00870B3E /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F52021E170CD00870B3E /* Group.swift */; };
+		8087F52321E1849200870B3E /* Group_Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F52221E1849200870B3E /* Group_Item.swift */; };
+		8087F52521E18C1800870B3E /* Voluntary_Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F52421E18C1800870B3E /* Voluntary_Item.swift */; };
+		8087F52721E1950E00870B3E /* Team.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F52621E1950E00870B3E /* Team.swift */; };
+		8087F52921E195F500870B3E /* Team_Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F52821E195F500870B3E /* Team_Item.swift */; };
+		8087F52B21E6DA6900870B3E /* AddGroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F52A21E6DA6800870B3E /* AddGroupTableViewController.swift */; };
+		8087F52D21E6DFBC00870B3E /* GroupNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F52C21E6DFBC00870B3E /* GroupNameTextField.swift */; };
+		8087F52F21E6E19600870B3E /* GroupDescriptionTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8087F52E21E6E19600870B3E /* GroupDescriptionTextField.swift */; };
 		80957A6921D3B2A7003D63DA /* Voluntary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80957A6821D3B2A7003D63DA /* Voluntary.swift */; };
 		80957A6B21D50AB6003D63DA /* EiaColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80957A6A21D50AB6003D63DA /* EiaColors.swift */; };
 		80957A6D21D516E6003D63DA /* EiaError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80957A6C21D516E6003D63DA /* EiaError.swift */; };
@@ -32,6 +43,8 @@
 		809F1F7721D0649300A943B7 /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */; };
 		809F1F7921D06F5E00A943B7 /* ResetPasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */; };
 		809F1F7C21D2851E00A943B7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7B21D2851E00A943B7 /* ProfileViewController.swift */; };
+		80A61B0D21F407AB000FDD7F /* GroupVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A61B0C21F407AB000FDD7F /* GroupVolunteersDataSource.swift */; };
+		80B507E621F6B31E00B197FD /* NewGroupVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B507E521F6B31E00B197FD /* NewGroupVolunteersDataSource.swift */; };
 		80FFCFD021D31E4F00FAF12D /* PhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFCFCF21D31E4F00FAF12D /* PhoneTextField.swift */; };
 		80FFCFD221D323F200FAF12D /* EditProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFCFD121D323F200FAF12D /* EditProfileTableViewController.swift */; };
 		A6C67500A2B7575B001292FA /* Pods_Eia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 01F4378AC67ECCA96A5088C0 /* Pods_Eia.framework */; };
@@ -41,8 +54,19 @@
 		01F4378AC67ECCA96A5088C0 /* Pods_Eia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B608739E29B2B70540ED05E /* Pods-Eia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eia.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eia/Pods-Eia.release.xcconfig"; sourceTree = "<group>"; };
 		801CCE5D21D5BDA500D7DD3B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		80414A9821F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupVolunteerTableViewCell.swift; sourceTree = "<group>"; };
 		80456D1321D83AD8004678DD /* EiaFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaFeedback.swift; sourceTree = "<group>"; };
 		80456D1521D886C6004678DD /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
+		8087F51C21E12D2A00870B3E /* GroupsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsTableViewController.swift; sourceTree = "<group>"; };
+		8087F51E21E1325C00870B3E /* GroupTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupTableViewCell.swift; sourceTree = "<group>"; };
+		8087F52021E170CD00870B3E /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		8087F52221E1849200870B3E /* Group_Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group_Item.swift; sourceTree = "<group>"; };
+		8087F52421E18C1800870B3E /* Voluntary_Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voluntary_Item.swift; sourceTree = "<group>"; };
+		8087F52621E1950E00870B3E /* Team.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team.swift; sourceTree = "<group>"; };
+		8087F52821E195F500870B3E /* Team_Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Team_Item.swift; sourceTree = "<group>"; };
+		8087F52A21E6DA6800870B3E /* AddGroupTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddGroupTableViewController.swift; sourceTree = "<group>"; };
+		8087F52C21E6DFBC00870B3E /* GroupNameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNameTextField.swift; sourceTree = "<group>"; };
+		8087F52E21E6E19600870B3E /* GroupDescriptionTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupDescriptionTextField.swift; sourceTree = "<group>"; };
 		80957A6821D3B2A7003D63DA /* Voluntary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Voluntary.swift; sourceTree = "<group>"; };
 		80957A6A21D50AB6003D63DA /* EiaColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaColors.swift; sourceTree = "<group>"; };
 		80957A6C21D516E6003D63DA /* EiaError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaError.swift; sourceTree = "<group>"; };
@@ -67,6 +91,8 @@
 		809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordTableViewController.swift; sourceTree = "<group>"; };
 		809F1F7B21D2851E00A943B7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		80A61B0C21F407AB000FDD7F /* GroupVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupVolunteersDataSource.swift; sourceTree = "<group>"; };
+		80B507E521F6B31E00B197FD /* NewGroupVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVolunteersDataSource.swift; sourceTree = "<group>"; };
 		80FFCFCF21D31E4F00FAF12D /* PhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextField.swift; sourceTree = "<group>"; };
 		80FFCFD121D323F200FAF12D /* EditProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileTableViewController.swift; sourceTree = "<group>"; };
 		D2F20254F232136AA0ADD9AC /* Pods-Eia.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eia.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Eia/Pods-Eia.debug.xcconfig"; sourceTree = "<group>"; };
@@ -108,6 +134,13 @@
 				80957A6A21D50AB6003D63DA /* EiaColors.swift */,
 				80957A6C21D516E6003D63DA /* EiaError.swift */,
 				80456D1321D83AD8004678DD /* EiaFeedback.swift */,
+				8087F52021E170CD00870B3E /* Group.swift */,
+				8087F52221E1849200870B3E /* Group_Item.swift */,
+				8087F52421E18C1800870B3E /* Voluntary_Item.swift */,
+				8087F52621E1950E00870B3E /* Team.swift */,
+				8087F52821E195F500870B3E /* Team_Item.swift */,
+				80A61B0C21F407AB000FDD7F /* GroupVolunteersDataSource.swift */,
+				80B507E521F6B31E00B197FD /* NewGroupVolunteersDataSource.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -158,6 +191,10 @@
 				80FFCFD121D323F200FAF12D /* EditProfileTableViewController.swift */,
 				80957A7221D56DA1003D63DA /* EiaFormTableViewController.swift */,
 				80456D1521D886C6004678DD /* HomeTabBarController.swift */,
+				8087F51C21E12D2A00870B3E /* GroupsTableViewController.swift */,
+				8087F51E21E1325C00870B3E /* GroupTableViewCell.swift */,
+				8087F52A21E6DA6800870B3E /* AddGroupTableViewController.swift */,
+				80414A9821F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -174,6 +211,8 @@
 				809F1F7421D063E700A943B7 /* UserTextField.swift */,
 				80FFCFCF21D31E4F00FAF12D /* PhoneTextField.swift */,
 				80957A7021D55909003D63DA /* RePasswordTextField.swift */,
+				8087F52C21E6DFBC00870B3E /* GroupNameTextField.swift */,
+				8087F52E21E6E19600870B3E /* GroupDescriptionTextField.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -309,23 +348,36 @@
 				809F1F5821CF061500A943B7 /* Eia.xcdatamodeld in Sources */,
 				809F1F6B21CFEE8600A943B7 /* MainFlowButton.swift in Sources */,
 				80456D1621D886C6004678DD /* HomeTabBarController.swift in Sources */,
+				8087F52121E170CD00870B3E /* Group.swift in Sources */,
+				8087F52521E18C1800870B3E /* Voluntary_Item.swift in Sources */,
+				8087F51F21E1325C00870B3E /* GroupTableViewCell.swift in Sources */,
 				80957A7321D56DA1003D63DA /* EiaFormTableViewController.swift in Sources */,
 				80FFCFD021D31E4F00FAF12D /* PhoneTextField.swift in Sources */,
+				8087F52D21E6DFBC00870B3E /* GroupNameTextField.swift in Sources */,
 				809F1F7321D00BA500A943B7 /* PasswordTextField.swift in Sources */,
+				80414A9921F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift in Sources */,
 				80957A6D21D516E6003D63DA /* EiaError.swift in Sources */,
 				809F1F6F21CFF8B300A943B7 /* EmailTextField.swift in Sources */,
+				8087F52321E1849200870B3E /* Group_Item.swift in Sources */,
 				809F1F7521D063E700A943B7 /* UserTextField.swift in Sources */,
 				809F1F7721D0649300A943B7 /* SignUpTableViewController.swift in Sources */,
 				80957A6B21D50AB6003D63DA /* EiaColors.swift in Sources */,
 				809F1F7921D06F5E00A943B7 /* ResetPasswordTableViewController.swift in Sources */,
+				8087F52721E1950E00870B3E /* Team.swift in Sources */,
+				8087F52B21E6DA6900870B3E /* AddGroupTableViewController.swift in Sources */,
 				80FFCFD221D323F200FAF12D /* EditProfileTableViewController.swift in Sources */,
+				80A61B0D21F407AB000FDD7F /* GroupVolunteersDataSource.swift in Sources */,
+				8087F52F21E6E19600870B3E /* GroupDescriptionTextField.swift in Sources */,
 				809F1F6921CFEDAF00A943B7 /* EiaButton.swift in Sources */,
 				809F1F6D21CFF17D00A943B7 /* AlternativeFlowButton.swift in Sources */,
 				80456D1421D83AD8004678DD /* EiaFeedback.swift in Sources */,
 				809F1F7121D008DB00A943B7 /* EiaTextField.swift in Sources */,
+				8087F52921E195F500870B3E /* Team_Item.swift in Sources */,
 				809F1F7C21D2851E00A943B7 /* ProfileViewController.swift in Sources */,
+				8087F51D21E12D2A00870B3E /* GroupsTableViewController.swift in Sources */,
 				80957A7121D55909003D63DA /* RePasswordTextField.swift in Sources */,
 				809F1F5021CF061500A943B7 /* AppDelegate.swift in Sources */,
+				80B507E621F6B31E00B197FD /* NewGroupVolunteersDataSource.swift in Sources */,
 				80957A6921D3B2A7003D63DA /* Voluntary.swift in Sources */,
 				809F1F6621CF939700A943B7 /* LoginTableViewController.swift in Sources */,
 			);

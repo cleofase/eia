@@ -10,6 +10,12 @@ import Foundation
 import UIKit
 
 enum EiaErrorType: String {
+    case groupNameEmpty = "GROUP_NAME_EMPTY"
+    case groupNameTooShort = "GROUP_NAME_TOO_SHORT"
+    case groupNameTooLong = "GROUP_NAME_TOO_LONG"
+    case groupDescriptionEmpty = "GROUP_DESCRIPTION_EMPTY"
+    case groupDescriptionTooShort = "GROUP_DESCRIPTION_TOO_SHORT"
+    case groupDescriptionTooLong = "GROUP_DESCRIPTION_TOO_LONG"
     case nameEmpty = "NAME_EMPTY"
     case nameNotValid = "NAME_NOT_VALID"
     case nameTooShort = "NAME_TOO_SHORT"

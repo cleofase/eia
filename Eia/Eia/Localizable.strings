@@ -7,6 +7,12 @@
 */
 
 //Eia Error
+"GROUP_NAME_EMPTY" = "Informe o nome do grupo.";
+"GROUP_NAME_TOO_SHORT" = "O nome está muito pequeno.";
+"GROUP_NAME_TOO_LONG" = "O nome está muito grande.";
+"GROUP_DESCRIPTION_EMPTY" = "Informe a descrição do grupo.";
+"GROUP_DESCRIPTION_TOO_SHORT" = "A descrição está muito pequena.";
+"GROUP_DESCRIPTION_TOO_LONG" = "A descrição está muito grande.";
 "NAME_EMPTY" = "Informe seu nome.";
 "NAME_NOT_VALID" = "Informe um nome mais comum.";
 "NAME_TOO_SHORT" = "O nome está muito pequeno.";
