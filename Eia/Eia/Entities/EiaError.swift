@@ -29,6 +29,12 @@ enum EiaErrorType: String {
     case rePasswordNotValid = "RE_PASSWORD_NOT_VALID"
     case errorNotMapped = "ERROR_NOT_MAPPED"
     case serverError = "SERVER_ERROR"
+    case teamNameEmpty = "TEAM_NAME_EMPTY"
+    case teamNameTooShort = "TEAM_NAME_TOO_SHORT"
+    case teamNameTooLong = "TEAM_NAME_TOO_LONG"
+    case dateEmpty = "DATE_EMPTY"
+    case endDateMinor = "END_DATE_MINOR"
+    case dateNotValid = "DATE_NOT_VALID"
     
     var mnemonic: String {get{
         return self.rawValue

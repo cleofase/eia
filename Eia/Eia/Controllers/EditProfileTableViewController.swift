@@ -59,7 +59,7 @@ class EditProfileTableViewController: EiaFormTableViewController {
         deRegisterFieldsToDinamicValidation()
     }
     private func setupUI() {
-        photoImageView.layer.cornerRadius = 6
+        photoImageView.layer.cornerRadius = photoImageView.frame.height / 2
         photoImageView.clipsToBounds = true
         nameText.delegate = self
         emailText.isEnabled = false
@@ -75,6 +75,7 @@ class EditProfileTableViewController: EiaFormTableViewController {
             self.photoStr = photoStr
             photoImageView.image = photoImage
         } else {
+            self.photoStr = nil
             // load default user photo...
         }
     }

@@ -30,7 +30,7 @@ class GroupVolunteersDataSource: NSObject, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupVolunteerCell", for: indexPath)
         if let cell = cell as? GroupVolunteerTableViewCell {
-            cell.setup(withVolunteer: volunteers[indexPath.row], group: group)
+            cell.setup(withVolunteer: volunteers[indexPath.row])
             return cell
         }
         return cell

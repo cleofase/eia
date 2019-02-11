@@ -22,7 +22,7 @@ class Voluntary_Item: NSManagedObject {
     }
     class func create(withVoluntary voluntary: Voluntary, in context: NSManagedObjectContext) -> Voluntary_Item {
         let voluntaryItem = Voluntary_Item(context: context)
-        voluntaryItem.identifier = voluntary.identifier
+        voluntaryItem.identifier = voluntary.authId
         voluntaryItem.name = voluntary.name
         return voluntaryItem
     }

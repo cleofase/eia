@@ -20,9 +20,9 @@ enum VoluntaryStatus: String {
 }
 
 class Voluntary: NSManagedObject {
-    class func find(matching email: String, in context: NSManagedObjectContext) -> Voluntary? {
+    class func find(matching authId: String, in context: NSManagedObjectContext) -> Voluntary? {
         let request: NSFetchRequest<Voluntary> = Voluntary.fetchRequest()
-        request.predicate = NSPredicate(format: "email = %@", email)
+        request.predicate = NSPredicate(format: "authId = %@", authId)
         if let matches = try? context.fetch(request) {
             if matches.count > 0 {
                 return matches.first
@@ -71,12 +71,15 @@ class Voluntary: NSManagedObject {
         if let teams = dictionary["teams"] as? NSDictionary {
             voluntary.teams = NSSet(array: Team_Item.createOrUpdate(withList: teams, in: context))
         }
+        if let invitations = dictionary["invitations"] as? NSDictionary {
+            voluntary.invitations = NSSet(array: Invitation_Item.createOrUpdate(withList: invitations, in: context))
+        }
         return voluntary
     }
     class func createOrUpdate(matchDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Voluntary? {
         var voluntary: Voluntary? = nil
-        if let email = dictionary["email"] as? String {
-            voluntary = Voluntary.find(matching: email, in: context)
+        if let volunteerId = dictionary["authId"] as? String {
+            voluntary = Voluntary.find(matching: volunteerId, in: context)
             if let voluntary = voluntary {
                 if let name = dictionary["name"] as? String {
                     voluntary.name = name
@@ -98,6 +101,9 @@ class Voluntary: NSManagedObject {
                 }
                 if let teams = dictionary["teams"] as? NSDictionary {
                     voluntary.teams = NSSet(array: Team_Item.createOrUpdate(withList: teams, in: context))
+                }
+                if let invitations = dictionary["invitations"] as? NSDictionary {
+                    voluntary.invitations = NSSet(array: Invitation_Item.createOrUpdate(withList: invitations, in: context))
                 }
             } else {
                 voluntary = Voluntary.create(withDictionary: dictionary, in: context)
@@ -127,6 +133,17 @@ class Voluntary: NSManagedObject {
         }
         return dictionary
     }
+    private func dictionaryValueForInvitations() -> [String: Any] {
+        var dictionary = [String: Any]()
+        if let invitations = invitations {
+            for invitation in invitations {
+                if let invitation = invitation as? Invitation_Item, let identifier = invitation.identifier {
+                    dictionary.updateValue(invitation.dictionaryValue, forKey: identifier)
+                }
+            }
+        }
+        return dictionary
+    }
     var dictionaryValue: [String: Any] {
         get {
             return [
@@ -139,7 +156,8 @@ class Voluntary: NSManagedObject {
                 "status": status ?? "",
                 "authId": authId ?? "",
                 "groups": dictionaryValueForGroups(),
-                "teams": dictionaryValueForTeams()
+                "teams": dictionaryValueForTeams(),
+                "invitations": dictionaryValueForInvitations()
             ]            
         }
     }

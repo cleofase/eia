@@ -20,6 +20,12 @@ class Team_Item: NSManagedObject {
         }
         return nil
     }
+    class func create(withTeam team: Team, in context: NSManagedObjectContext) -> Team_Item {
+        let teamItem = Team_Item(context: context)
+        teamItem.identifier = team.identifier
+        teamItem.name = team.name
+        return teamItem
+    }
     class func create(withDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Team_Item? {
         let teamItem = Team_Item(context: context)
         if let identifier = dictionary["identifier"] as? String {
@@ -61,6 +67,11 @@ class Team_Item: NSManagedObject {
                 "identifier": identifier ?? "",
                 "name": name ?? ""
             ]
+        }
+    }
+    class var rootFirebaseDatabaseReference: String {
+        get {
+            return "teams"
         }
     }
 }

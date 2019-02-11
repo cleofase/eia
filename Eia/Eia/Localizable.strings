@@ -26,6 +26,11 @@
 "RE_PASSWORD_NOT_VALID" = "Informe a mesma senha.";
 "ERROR_NOT_MAPPED" = "Existe um erro não mapeado.";
 "SERVER_ERROR" = "O servidor retornou um erro... ";
-
+"TEAM_NAME_EMPTY" = "Informe o nome da equipe.";
+"TEAM_NAME_TOO_SHORT" = "O nome está muito pequeno.";
+"TEAM_NAME_TOO_LONG" = "O nome está muito grande.";
+"DATE_EMPTY" = "Informe o período da escala.";
+"END_DATE_MINOR" = "Informe uma data posterior.";
+"DATE_NOT_VALID" = "Informe uma data válida.";
 //Eia Feedback
 "VERIIFCATION_EMAIL_SENT" = "Acesse o seu e-mail para concluir o cadastro.";

@@ -11,7 +11,7 @@ import CoreData
 import FirebaseCore
 import FirebaseDatabase
 
-class AddGroupTableViewController: EiaFormTableViewController {
+class NewGroupTableViewController: EiaFormTableViewController {
     public var voluntary: Voluntary?
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private var volunteersDataSource: NewGroupVolunteersDataSource!
@@ -81,11 +81,16 @@ class AddGroupTableViewController: EiaFormTableViewController {
             let groupId = group.identifier ?? ""
             fbDBRef.child(Group.rootFirebaseDatabaseReference).child(groupId).setValue(group.dictionaryValue)
             let groupItem = Group_Item.create(withGroup: group, in: context)
-            groupItem.addToVolunteers(voluntary)
             voluntary.addToGroups(groupItem)
             try? context.save()
             let groupItemId = groupItem.identifier ?? ""
             fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(leaderId).child(Group_Item.rootFirebaseDatabaseReference).child(groupItemId).setValue(groupItem.dictionaryValue)
+            for volunteer in volunteers {
+                volunteer.addToGroups(groupItem)
+                try? context.save()
+                let volunteerId = volunteer.authId ?? ""
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(volunteerId).child(Group_Item.rootFirebaseDatabaseReference).child(groupItemId).setValue(groupItem.dictionaryValue)
+            }
         }
     }
 

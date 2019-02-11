@@ -1,8 +1,8 @@
 //
-//  GroupsTableViewController.swift
+//  TeamsTableTableViewController.swift
 //  Eia
 //
-//  Created by Cleofas Pereira on 05/01/19.
+//  Created by Cleofas Pereira on 30/01/19.
 //  Copyright © 2019 Cleofas Pereira. All rights reserved.
 //
 
@@ -11,14 +11,11 @@ import CoreData
 import FirebaseCore
 import FirebaseDatabase
 
-class GroupsTableViewController: UITableViewController {
+class TeamsTableTableViewController: UITableViewController {
     public var voluntary: Voluntary?
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDBRef = Database.database().reference()
-
-    @IBAction func addGroupButton(_ sender: UIBarButtonItem) {
-        performSegue(withIdentifier: "addGroupSegue", sender: self)
-    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -28,14 +25,9 @@ class GroupsTableViewController: UITableViewController {
         updateUI()
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "addGroupSegue" {
-            if let destination = segue.destination as? NewGroupTableViewController {
-                destination.voluntary = voluntary
-            }
-        }
-        if segue.identifier == "detailGroupSegue" {
-            if let destination = segue.destination as? DetailGroupTableViewController, let group = sender as? Group {
-                destination.group = group
+        if segue.identifier == "detailTeamSegue" {
+            if let destination = segue.destination as? DetailTeamTableViewController, let team = sender as? Team {
+                destination.team = team
             }
         }
     }
@@ -45,18 +37,18 @@ class GroupsTableViewController: UITableViewController {
     private func updateUI() {
         tableView.reloadData()
     }
-    
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return voluntary?.groups?.count ?? 0
+        let  numberOfRows = voluntary?.teams?.count ?? 0
+        return numberOfRows
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath)
-        if let cell = cell as? GroupTableViewCell, let groupItems = voluntary?.groups?.allObjects as? [Group_Item] {
-            cell.setup(withGroupItem: groupItems[indexPath.row])
+        let cell = tableView.dequeueReusableCell(withIdentifier: "teamCell", for: indexPath)
+        if let cell = cell as? TeamTableViewCell, let teamItems = voluntary?.teams?.allObjects as? [Team_Item] {
+            cell.setup(withTeamItem: teamItems[indexPath.row])
             return cell
         } else {
             return cell
@@ -66,9 +58,9 @@ class GroupsTableViewController: UITableViewController {
         return 64
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        if let cell = tableView.cellForRow(at: indexPath) as? GroupTableViewCell {
-            if let group = cell.group {
-                performSegue(withIdentifier: "detailGroupSegue", sender: group)                
+        if let cell = tableView.cellForRow(at: indexPath) as? TeamTableViewCell {
+            if let team = cell.team {
+                performSegue(withIdentifier: "detailTeamSegue", sender: team)
             }
         }
     }

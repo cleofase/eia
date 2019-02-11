@@ -9,6 +9,13 @@
 import UIKit
 import CoreData
 
+enum TeamStatus: String {
+    case active = "ATIVA"
+    case inactive = "INATIVA"
+    var stringValue: String {get{
+        return self.rawValue
+        }}
+}
 class Team: NSManagedObject {
     class func find(matching identifier: String, in context: NSManagedObjectContext) -> Team? {
         let request: NSFetchRequest<Team> = Team.fetchRequest()
@@ -19,6 +26,18 @@ class Team: NSManagedObject {
             }
         }
         return nil
+    }
+    class func create(withName name: String, group: Group, volunteerItems: [Voluntary_Item], in context: NSManagedObjectContext) -> Team {
+        let team = Team(context: context)
+        team.identifier = UUID().uuidString
+        team.name = name
+        team.leader_id = group.leader_id
+        team.leader_name = group.leader_name
+        team.group_id = group.identifier
+        team.group_name = group.name
+        team.status = TeamStatus.active.stringValue
+        team.volunteers = NSSet(array: volunteerItems)
+        return team
     }
     class func create(withDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Team? {
         let team = Team(context: context)
@@ -45,6 +64,9 @@ class Team: NSManagedObject {
         } else {return nil}
         if let volunteers = dictionary["volunteers"] as? NSDictionary {
             team.volunteers = NSSet(array: Voluntary_Item.createOrUpdate(withList: volunteers, in: context))
+        }
+        if let scales = dictionary["scales"] as? NSDictionary {
+            team.scales = NSSet(array: Scale_Item.createOrUpdate(withList: scales, in: context))
         }
         return team
     }
@@ -74,6 +96,9 @@ class Team: NSManagedObject {
                 if let volunteers = dictionary["volunteers"] as? NSDictionary {
                     team.volunteers = NSSet(array: Voluntary_Item.createOrUpdate(withList: volunteers, in: context))
                 }
+                if let scales = dictionary["scales"] as? NSDictionary {
+                    team.scales = NSSet(array: Scale_Item.createOrUpdate(withList: scales, in: context))
+                }
             } else {
                 team = Team.create(withDictionary: dictionary, in: context)
             }
@@ -91,6 +116,17 @@ class Team: NSManagedObject {
         }
         return dictionary
     }
+    private func dictionaryValueForScales() -> [String: Any] {
+        var dictionary = [String: Any]()
+        if let scales = scales {
+            for scale in scales {
+                if let scale = scale as? Scale_Item, let identifier = scale.identifier {
+                    dictionary.updateValue(scale.dictionaryValue, forKey: identifier)
+                }
+            }
+        }
+        return dictionary
+    }
     var dictionaryValue: [String: Any] {
         get {
             return [
@@ -101,7 +137,8 @@ class Team: NSManagedObject {
                 "group_id": group_id ?? "",
                 "group_name": group_name ?? "",
                 "status": status ?? "",
-                "volunteers": dictionaryValueForVolunteers()
+                "volunteers": dictionaryValueForVolunteers(),
+                "scales": dictionaryValueForScales()
             ]
         }
     }
