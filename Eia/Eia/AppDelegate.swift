@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import FirebaseCore
+import FirebaseAuth
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -17,12 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        if #available(iOS 11.0, *) {
-            UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: EiaColors.PembaSand]
-            UINavigationBar.appearance().tintColor = EiaColors.PembaSand
-            UITabBar.appearance().tintColor = EiaColors.PembaSand
-        }
         FirebaseApp.configure()
+        if #available(iOS 11.0, *) {
+            UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: EiaColors.SunSet]
+            UINavigationBar.appearance().tintColor = EiaColors.SunSet
+            UINavigationBar.appearance().barTintColor = EiaColors.PembaSandLight
+            UINavigationBar.appearance().isTranslucent = false
+            UITabBar.appearance().tintColor = EiaColors.SunSet
+            UITabBar.appearance().barTintColor = EiaColors.PembaSandLight
+        }
+        if let _ = Auth.auth().currentUser {
+            let mainStoryBorad = UIStoryboard(name: "Main", bundle: nil)
+            let initialLogedViewController = mainStoryBorad.instantiateViewController(withIdentifier: "homeTabBarController")
+            self.window = UIWindow(frame: UIScreen.main.bounds)
+            self.window?.rootViewController = initialLogedViewController
+            self.window?.makeKeyAndVisible()
+        }
+        
         return true
     }
 

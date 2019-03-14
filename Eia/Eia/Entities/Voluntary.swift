@@ -20,6 +20,39 @@ enum VoluntaryStatus: String {
 }
 
 class Voluntary: NSManagedObject {
+    public func findInvitationItem(withInvitationId invitationId: String, in context: NSManagedObjectContext) -> Invitation_Item? {
+        let wantedInvitationItem = invitations?.first(where: {(item) in
+            if let invitationItem = item as? Invitation_Item {
+                if invitationItem.identifier == invitationId {
+                    return true
+                }
+            }
+            return false
+        })
+        return wantedInvitationItem as? Invitation_Item
+    }
+    public func findGroupItem(withGroupId groupId: String, in context: NSManagedObjectContext) -> Group_Item? {
+        let wantedGroupItem = groups?.first(where: {(item) in
+            if let groupItem = item as? Group_Item {
+                if groupItem.identifier == groupId {
+                    return true
+                }
+            }
+            return false
+        })
+        return wantedGroupItem as? Group_Item
+    }
+    public func findTeamItem(withTeamId teamId: String, in context: NSManagedObjectContext) -> Team_Item? {
+        let wantedTeamItem = teams?.first(where: {(item) in
+            if let teamItem = item as? Team_Item {
+                if teamItem.identifier == teamId {
+                    return true
+                }
+            }
+            return false
+        })
+        return wantedTeamItem as? Team_Item
+    }
     class func find(matching authId: String, in context: NSManagedObjectContext) -> Voluntary? {
         let request: NSFetchRequest<Voluntary> = Voluntary.fetchRequest()
         request.predicate = NSPredicate(format: "authId = %@", authId)

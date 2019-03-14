@@ -15,6 +15,9 @@ import FirebaseDatabase
 class ProfileViewController: UIViewController {
     public var voluntary: Voluntary?
     
+    private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
+    private let fbDBRef = Database.database().reference()
+
     @IBOutlet weak var photoBackgroundView: UIView!
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -27,6 +30,7 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        updateUI()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -48,7 +52,19 @@ class ProfileViewController: UIViewController {
         photoImageView.clipsToBounds = true
     }
     private func updateUI() {
-        guard let voluntary = voluntary else {return}
+        let context = containter.viewContext
+        let voluntaryId = Auth.auth().currentUser?.uid ?? ""
+        if voluntary == nil {
+            voluntary = Voluntary.find(matching: voluntaryId, in: context)
+        }
+        guard let voluntary = voluntary else {
+            retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] in
+                DispatchQueue.main.async {
+                    self?.updateUI()
+                }
+            })
+            return
+        }
         nameLabel.text = "\(voluntary.name ?? "") - \(voluntary.status ?? "")"
         emailLabel.text = voluntary.email
         phoneLabel.text = voluntary.phone
@@ -58,6 +74,20 @@ class ProfileViewController: UIViewController {
             // photo default...
         }
     }
+    private func retrieveVoluntaryFromCloud(withVoluntaryId voluntaryId: String, completionWithSuccess: @escaping () -> Void) {
+        let context = containter.viewContext
+        fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).observeSingleEvent(of: .value, with: {[weak self] (snapshot) in
+            if let voluntaryDic = snapshot.value as? NSDictionary {
+                DispatchQueue.main.async {
+                    self?.voluntary = Voluntary.createOrUpdate(matchDictionary: voluntaryDic, in: context)
+                    try? context.save()
+                    completionWithSuccess()
+                }
+            }
+        })
+    
+    }
+    
     private func manageProfile() {
         let manageAlert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         manageAlert.addAction(UIAlertAction(title: "Editar", style: .default, handler: {[weak self] (_) in

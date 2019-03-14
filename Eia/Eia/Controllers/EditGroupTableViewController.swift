@@ -116,30 +116,34 @@ class EditGroupTableViewController: EiaFormTableViewController {
         let groupId = group.identifier ?? ""
         fbDBRef.child(Group.rootFirebaseDatabaseReference).child(groupId).setValue(group.dictionaryValue)
         
-        let groupItem = Group_Item.create(withGroup: group, in: context)
-        
         let leaderId = group.leader_id ?? ""
         if let leader = Voluntary.find(matching: leaderId, in: context) {
-            leader.addToGroups(groupItem)
-            try? context.save()
-            fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(leaderId).child(Group_Item.rootFirebaseDatabaseReference).child(groupId).setValue(groupItem.dictionaryValue)
-        }
-        
-        for volunteerItem in volunteerItems {
-            let volunteerId = volunteerItem.identifier ?? ""
-            if let volunteer = Voluntary.find(matching: volunteerId, in: context) {
-                volunteer.addToGroups(groupItem)
+            if let groupItem = leader.findGroupItem(withGroupId: groupId, in: context) {
+                groupItem.name = name
                 try? context.save()
-                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(volunteerId).child(Group_Item.rootFirebaseDatabaseReference).child(groupId).setValue(groupItem.dictionaryValue)
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(leaderId).child(Group_Item.rootFirebaseDatabaseReference).child(groupId).setValue(groupItem.dictionaryValue)
             }
         }
-
-        for removedVolunteerItem in removedVolunteerItems {
-            let volunteerId = removedVolunteerItem.identifier ?? ""
-            if let volunteer = Voluntary.find(matching: volunteerId, in: context) {
-                volunteer.removeFromGroups(groupItem)
-                try? context.save()
-                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(volunteerId).child(Group_Item.rootFirebaseDatabaseReference).child(groupId).removeValue()
+        
+        for voluntaryItem in volunteerItems {
+            let voluntaryId = voluntaryItem.identifier ?? ""
+            if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
+                if let groupItem = voluntary.findGroupItem(withGroupId: groupId, in: context) {
+                    groupItem.name = name
+                    try? context.save()
+                    fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Group_Item.rootFirebaseDatabaseReference).child(groupId).setValue(groupItem.dictionaryValue)
+                }
+            }
+        }
+        
+        for voluntaryItem in removedVolunteerItems {
+            let voluntaryId = voluntaryItem.identifier ?? ""
+            if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
+                if let groupItem = voluntary.findGroupItem(withGroupId: groupId, in: context) {
+                    voluntary.removeFromGroups(groupItem)
+                    try? context.save()
+                    fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Group_Item.rootFirebaseDatabaseReference).child(groupId).removeValue()
+                }
             }
         }
         

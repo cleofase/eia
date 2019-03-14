@@ -15,10 +15,12 @@ class DetailTeamScalesDataSource: NSObject {
     private let context: NSManagedObjectContext
     private let team: Team
     private let fbDbRef = Database.database().reference()
+    private let viewController: UIViewController
     
-    init(withTeam team: Team, context: NSManagedObjectContext) {
+    init(withTeam team: Team, in context: NSManagedObjectContext, at viewController: UIViewController) {
         self.team = team
         self.context = context
+        self.viewController = viewController
     }
 }
 
@@ -35,5 +37,16 @@ extension DetailTeamScalesDataSource: UITableViewDataSource {
             return cell
         }
         return cell
+    }
+}
+
+extension DetailTeamScalesDataSource: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? TeamScaleTableViewCell {
+            viewController.performSegue(withIdentifier: "detailScaleFromTeamSegue", sender: cell.scale)
+        }
+    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 56
     }
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 class TeamNameTextField: EiaTextField, ValidableField {
-    let iconImage = UIImage(named: "user_field_icon")
+    let iconImage = UIImage(named: "team_unselected_tab_icon")
     override init(frame: CGRect) {
         super.init(frame: frame)
         setIcon(with: iconImage)
@@ -27,7 +27,7 @@ class TeamNameTextField: EiaTextField, ValidableField {
             markAsNotValid()
             throw EiaError(withType: EiaErrorType.teamNameTooShort)
         }
-        if text.count > 16 {
+        if text.count > 32 {
             markAsNotValid()
             throw EiaError(withType: EiaErrorType.teamNameTooLong)
         }

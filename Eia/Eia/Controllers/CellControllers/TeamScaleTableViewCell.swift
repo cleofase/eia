@@ -11,6 +11,8 @@ import FirebaseCore
 import FirebaseDatabase
 
 class TeamScaleTableViewCell: UITableViewCell {
+    public var scale: Scale?
+    
     private let fbDbRef = Database.database().reference()
     private let container = AppDelegate.persistentContainer!
     
@@ -26,7 +28,8 @@ class TeamScaleTableViewCell: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
-    public func setup(withScale scale: Scale) {
+    private func setup(withScale scale: Scale) {
+        self.scale = scale
         startDateLabel.text = scale.start?.dateStringValue
         startHourLabel.text = scale.start?.hourStringValue
         endDateLabel.text = scale.end?.dateStringValue
@@ -59,24 +62,5 @@ class TeamScaleTableViewCell: UITableViewCell {
                 }
             }
         })
-    }
-}
-
-extension Date {
-    var hourStringValue: String {
-        get {
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeStyle = .short
-            dateFormatter.dateStyle = .none
-            return dateFormatter.string(from: self)
-        }
-    }
-    var dateStringValue: String {
-        get {
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeStyle = .none
-            dateFormatter.dateStyle = .short
-            return dateFormatter.string(from: self)
-        }
     }
 }

@@ -8,18 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		800795472201A27300FA7BA1 /* TeamTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800795462201A27300FA7BA1 /* TeamTableViewCell.swift */; };
-		800795492201B05500FA7BA1 /* TeamsTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800795482201B05500FA7BA1 /* TeamsTableTableViewController.swift */; };
+		800795492201B05500FA7BA1 /* TeamsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800795482201B05500FA7BA1 /* TeamsTableViewController.swift */; };
 		8007954B22067BBE00FA7BA1 /* DetailTeamTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8007954A22067BBE00FA7BA1 /* DetailTeamTableViewController.swift */; };
-		8007954E22070BB300FA7BA1 /* DetailTeamVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8007954D22070BB300FA7BA1 /* DetailTeamVolunteersDataSource.swift */; };
 		800E2A6A22072773002057B0 /* EditTeamTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800E2A6922072773002057B0 /* EditTeamTableViewController.swift */; };
 		800E2A6C22072785002057B0 /* NewScaleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 800E2A6B22072785002057B0 /* NewScaleTableViewController.swift */; };
 		801CCE5E21D5BDA500D7DD3B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801CCE5D21D5BDA500D7DD3B /* GoogleService-Info.plist */; };
+		8029F19E222504B1002C6C3E /* EditScaleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029F19D222504B0002C6C3E /* EditScaleTableViewController.swift */; };
+		8029F1A022261F47002C6C3E /* ScaleStatusTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029F19F22261F47002C6C3E /* ScaleStatusTextField.swift */; };
+		8029F1A22226AF5A002C6C3E /* EditScaleInvitationsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8029F1A12226AF5A002C6C3E /* EditScaleInvitationsDataSource.swift */; };
+		802CDB1422178BBC0049683A /* ScaleInvitationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802CDB1322178BBC0049683A /* ScaleInvitationTableViewCell.swift */; };
+		802CDB1622178DDA0049683A /* DetailScaleTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802CDB1522178DDA0049683A /* DetailScaleTableViewController.swift */; };
+		802CDB182217A08B0049683A /* DetailScaleInvitationsDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 802CDB172217A08B0049683A /* DetailScaleInvitationsDataSource.swift */; };
 		80414A9921F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80414A9821F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift */; };
 		80456D1421D83AD8004678DD /* EiaFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80456D1321D83AD8004678DD /* EiaFeedback.swift */; };
 		80456D1621D886C6004678DD /* HomeTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80456D1521D886C6004678DD /* HomeTabBarController.swift */; };
 		8048452C220D0BD300B01FC6 /* BeginScaleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8048452B220D0BD300B01FC6 /* BeginScaleTextField.swift */; };
 		8048452E220D164C00B01FC6 /* NewScaleVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8048452D220D164C00B01FC6 /* NewScaleVolunteersDataSource.swift */; };
 		80484530220D18F400B01FC6 /* EndScaleTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8048452F220D18F400B01FC6 /* EndScaleTextField.swift */; };
+		8068DB0D2216553600DCCD11 /* EditTeamVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8068DB0C2216553600DCCD11 /* EditTeamVolunteersDataSource.swift */; };
+		8068DB0F2216591C00DCCD11 /* EditTeamScalesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8068DB0E2216591C00DCCD11 /* EditTeamScalesDataSource.swift */; };
+		8068DB1122165E5000DCCD11 /* DetailTeamVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8068DB1022165E5000DCCD11 /* DetailTeamVolunteersDataSource.swift */; };
+		808259982231130F0023C053 /* RequestExchangeVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808259972231130F0023C053 /* RequestExchangeVolunteersDataSource.swift */; };
 		8082EA0021FCDEFE000B747F /* EditGroupVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8082E9FF21FCDEFE000B747F /* EditGroupVolunteersDataSource.swift */; };
 		8082EA0221FD7A3F000B747F /* NewTeamVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8082EA0121FD7A3F000B747F /* NewTeamVolunteersDataSource.swift */; };
 		8082EA0421FD8754000B747F /* TeamNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8082EA0321FD8754000B747F /* TeamNameTextField.swift */; };
@@ -63,11 +72,13 @@
 		809F1F7721D0649300A943B7 /* SignUpTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */; };
 		809F1F7921D06F5E00A943B7 /* ResetPasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */; };
 		809F1F7C21D2851E00A943B7 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809F1F7B21D2851E00A943B7 /* ProfileViewController.swift */; };
-		80A61B0D21F407AB000FDD7F /* GroupVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80A61B0C21F407AB000FDD7F /* GroupVolunteersDataSource.swift */; };
 		80B507E621F6B31E00B197FD /* NewGroupVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B507E521F6B31E00B197FD /* NewGroupVolunteersDataSource.swift */; };
 		80B507E821F8671D00B197FD /* DetailGroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B507E721F8671D00B197FD /* DetailGroupTableViewController.swift */; };
 		80B507EA21F941B700B197FD /* DetailGroupVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B507E921F941B700B197FD /* DetailGroupVolunteersDataSource.swift */; };
 		80B507EC21FAA1C500B197FD /* EditGroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B507EB21FAA1C500B197FD /* EditGroupTableViewController.swift */; };
+		80C586E922125218001E720A /* ScaleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C586E822125218001E720A /* ScaleTableViewCell.swift */; };
+		80C586EB2212528C001E720A /* ScalesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C586EA2212528C001E720A /* ScalesTableViewController.swift */; };
+		80D4C7A022302DB3007E5DF9 /* RequestExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D4C79F22302DB3007E5DF9 /* RequestExchangeTableViewController.swift */; };
 		80E3CC83221105B400D59F2F /* DetailTeamScalesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3CC82221105B400D59F2F /* DetailTeamScalesDataSource.swift */; };
 		80E3CC8522110BCC00D59F2F /* TeamScaleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3CC8422110BCC00D59F2F /* TeamScaleTableViewCell.swift */; };
 		80FFCFD021D31E4F00FAF12D /* PhoneTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80FFCFCF21D31E4F00FAF12D /* PhoneTextField.swift */; };
@@ -79,18 +90,27 @@
 		01F4378AC67ECCA96A5088C0 /* Pods_Eia.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Eia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2B608739E29B2B70540ED05E /* Pods-Eia.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Eia.release.xcconfig"; path = "Pods/Target Support Files/Pods-Eia/Pods-Eia.release.xcconfig"; sourceTree = "<group>"; };
 		800795462201A27300FA7BA1 /* TeamTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamTableViewCell.swift; sourceTree = "<group>"; };
-		800795482201B05500FA7BA1 /* TeamsTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsTableTableViewController.swift; sourceTree = "<group>"; };
+		800795482201B05500FA7BA1 /* TeamsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsTableViewController.swift; sourceTree = "<group>"; };
 		8007954A22067BBE00FA7BA1 /* DetailTeamTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTeamTableViewController.swift; sourceTree = "<group>"; };
-		8007954D22070BB300FA7BA1 /* DetailTeamVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailTeamVolunteersDataSource.swift; path = /Users/cleofase/GitHub/eia/Eia/Eia/DataSources/DetailTeamVolunteersDataSource.swift; sourceTree = "<absolute>"; };
 		800E2A6922072773002057B0 /* EditTeamTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTeamTableViewController.swift; sourceTree = "<group>"; };
 		800E2A6B22072785002057B0 /* NewScaleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewScaleTableViewController.swift; sourceTree = "<group>"; };
 		801CCE5D21D5BDA500D7DD3B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		8029F19D222504B0002C6C3E /* EditScaleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScaleTableViewController.swift; sourceTree = "<group>"; };
+		8029F19F22261F47002C6C3E /* ScaleStatusTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleStatusTextField.swift; sourceTree = "<group>"; };
+		8029F1A12226AF5A002C6C3E /* EditScaleInvitationsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditScaleInvitationsDataSource.swift; sourceTree = "<group>"; };
+		802CDB1322178BBC0049683A /* ScaleInvitationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleInvitationTableViewCell.swift; sourceTree = "<group>"; };
+		802CDB1522178DDA0049683A /* DetailScaleTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScaleTableViewController.swift; sourceTree = "<group>"; };
+		802CDB172217A08B0049683A /* DetailScaleInvitationsDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailScaleInvitationsDataSource.swift; sourceTree = "<group>"; };
 		80414A9821F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupVolunteerTableViewCell.swift; sourceTree = "<group>"; };
 		80456D1321D83AD8004678DD /* EiaFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaFeedback.swift; sourceTree = "<group>"; };
 		80456D1521D886C6004678DD /* HomeTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeTabBarController.swift; sourceTree = "<group>"; };
 		8048452B220D0BD300B01FC6 /* BeginScaleTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginScaleTextField.swift; sourceTree = "<group>"; };
 		8048452D220D164C00B01FC6 /* NewScaleVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewScaleVolunteersDataSource.swift; sourceTree = "<group>"; };
 		8048452F220D18F400B01FC6 /* EndScaleTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndScaleTextField.swift; sourceTree = "<group>"; };
+		8068DB0C2216553600DCCD11 /* EditTeamVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTeamVolunteersDataSource.swift; sourceTree = "<group>"; };
+		8068DB0E2216591C00DCCD11 /* EditTeamScalesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTeamScalesDataSource.swift; sourceTree = "<group>"; };
+		8068DB1022165E5000DCCD11 /* DetailTeamVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DetailTeamVolunteersDataSource.swift; path = /Users/cleofase/GitHub/eia/Eia/Eia/DataSources/DetailTeamVolunteersDataSource.swift; sourceTree = "<absolute>"; };
+		808259972231130F0023C053 /* RequestExchangeVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestExchangeVolunteersDataSource.swift; sourceTree = "<group>"; };
 		8082E9FF21FCDEFE000B747F /* EditGroupVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupVolunteersDataSource.swift; sourceTree = "<group>"; };
 		8082EA0121FD7A3F000B747F /* NewTeamVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTeamVolunteersDataSource.swift; sourceTree = "<group>"; };
 		8082EA0321FD8754000B747F /* TeamNameTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamNameTextField.swift; sourceTree = "<group>"; };
@@ -136,11 +156,13 @@
 		809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTableViewController.swift; sourceTree = "<group>"; };
 		809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordTableViewController.swift; sourceTree = "<group>"; };
 		809F1F7B21D2851E00A943B7 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		80A61B0C21F407AB000FDD7F /* GroupVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupVolunteersDataSource.swift; sourceTree = "<group>"; };
 		80B507E521F6B31E00B197FD /* NewGroupVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGroupVolunteersDataSource.swift; sourceTree = "<group>"; };
 		80B507E721F8671D00B197FD /* DetailGroupTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGroupTableViewController.swift; sourceTree = "<group>"; };
 		80B507E921F941B700B197FD /* DetailGroupVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailGroupVolunteersDataSource.swift; sourceTree = "<group>"; };
 		80B507EB21FAA1C500B197FD /* EditGroupTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupTableViewController.swift; sourceTree = "<group>"; };
+		80C586E822125218001E720A /* ScaleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleTableViewCell.swift; sourceTree = "<group>"; };
+		80C586EA2212528C001E720A /* ScalesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalesTableViewController.swift; sourceTree = "<group>"; };
+		80D4C79F22302DB3007E5DF9 /* RequestExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestExchangeTableViewController.swift; sourceTree = "<group>"; };
 		80E3CC82221105B400D59F2F /* DetailTeamScalesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTeamScalesDataSource.swift; sourceTree = "<group>"; };
 		80E3CC8422110BCC00D59F2F /* TeamScaleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamScaleTableViewCell.swift; sourceTree = "<group>"; };
 		80FFCFCF21D31E4F00FAF12D /* PhoneTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneTextField.swift; sourceTree = "<group>"; };
@@ -180,8 +202,7 @@
 		8007954C22070B2700FA7BA1 /* DataSources */ = {
 			isa = PBXGroup;
 			children = (
-				80A61B0C21F407AB000FDD7F /* GroupVolunteersDataSource.swift */,
-				8007954D22070BB300FA7BA1 /* DetailTeamVolunteersDataSource.swift */,
+				8068DB1022165E5000DCCD11 /* DetailTeamVolunteersDataSource.swift */,
 				80B507E521F6B31E00B197FD /* NewGroupVolunteersDataSource.swift */,
 				80B507E921F941B700B197FD /* DetailGroupVolunteersDataSource.swift */,
 				8082E9FF21FCDEFE000B747F /* EditGroupVolunteersDataSource.swift */,
@@ -190,8 +211,27 @@
 				8082EA0B21FE1BFA000B747F /* EditGroupTeamsDataSource.swift */,
 				8048452D220D164C00B01FC6 /* NewScaleVolunteersDataSource.swift */,
 				80E3CC82221105B400D59F2F /* DetailTeamScalesDataSource.swift */,
+				8068DB0C2216553600DCCD11 /* EditTeamVolunteersDataSource.swift */,
+				8068DB0E2216591C00DCCD11 /* EditTeamScalesDataSource.swift */,
+				802CDB172217A08B0049683A /* DetailScaleInvitationsDataSource.swift */,
+				8029F1A12226AF5A002C6C3E /* EditScaleInvitationsDataSource.swift */,
+				808259972231130F0023C053 /* RequestExchangeVolunteersDataSource.swift */,
 			);
 			path = DataSources;
+			sourceTree = "<group>";
+		};
+		8068DB0B2214E6FE00DCCD11 /* CellControllers */ = {
+			isa = PBXGroup;
+			children = (
+				8087F51E21E1325C00870B3E /* GroupTableViewCell.swift */,
+				80414A9821F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift */,
+				8082EA0921FE0CAC000B747F /* GroupTeamTableViewCell.swift */,
+				800795462201A27300FA7BA1 /* TeamTableViewCell.swift */,
+				80E3CC8422110BCC00D59F2F /* TeamScaleTableViewCell.swift */,
+				80C586E822125218001E720A /* ScaleTableViewCell.swift */,
+				802CDB1322178BBC0049683A /* ScaleInvitationTableViewCell.swift */,
+			);
+			path = CellControllers;
 			sourceTree = "<group>";
 		};
 		80957A6721D3A614003D63DA /* Entities */ = {
@@ -254,7 +294,9 @@
 		809F1F6421CF932500A943B7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				8068DB0B2214E6FE00DCCD11 /* CellControllers */,
 				809F1F6521CF939700A943B7 /* LoginTableViewController.swift */,
+				802CDB1522178DDA0049683A /* DetailScaleTableViewController.swift */,
 				809F1F7621D0649300A943B7 /* SignUpTableViewController.swift */,
 				809F1F7821D06F5E00A943B7 /* ResetPasswordTableViewController.swift */,
 				809F1F7B21D2851E00A943B7 /* ProfileViewController.swift */,
@@ -262,19 +304,17 @@
 				80957A7221D56DA1003D63DA /* EiaFormTableViewController.swift */,
 				80456D1521D886C6004678DD /* HomeTabBarController.swift */,
 				8087F51C21E12D2A00870B3E /* GroupsTableViewController.swift */,
-				8087F51E21E1325C00870B3E /* GroupTableViewCell.swift */,
 				8087F52A21E6DA6800870B3E /* NewGroupTableViewController.swift */,
-				80414A9821F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift */,
 				80B507E721F8671D00B197FD /* DetailGroupTableViewController.swift */,
 				80B507EB21FAA1C500B197FD /* EditGroupTableViewController.swift */,
 				8082EA0521FD8936000B747F /* NewTeamTableViewController.swift */,
-				8082EA0921FE0CAC000B747F /* GroupTeamTableViewCell.swift */,
-				800795462201A27300FA7BA1 /* TeamTableViewCell.swift */,
-				800795482201B05500FA7BA1 /* TeamsTableTableViewController.swift */,
+				800795482201B05500FA7BA1 /* TeamsTableViewController.swift */,
 				8007954A22067BBE00FA7BA1 /* DetailTeamTableViewController.swift */,
 				800E2A6922072773002057B0 /* EditTeamTableViewController.swift */,
+				8029F19D222504B0002C6C3E /* EditScaleTableViewController.swift */,
 				800E2A6B22072785002057B0 /* NewScaleTableViewController.swift */,
-				80E3CC8422110BCC00D59F2F /* TeamScaleTableViewCell.swift */,
+				80C586EA2212528C001E720A /* ScalesTableViewController.swift */,
+				80D4C79F22302DB3007E5DF9 /* RequestExchangeTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -296,6 +336,7 @@
 				8082EA0321FD8754000B747F /* TeamNameTextField.swift */,
 				8048452B220D0BD300B01FC6 /* BeginScaleTextField.swift */,
 				8048452F220D18F400B01FC6 /* EndScaleTextField.swift */,
+				8029F19F22261F47002C6C3E /* ScaleStatusTextField.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -429,8 +470,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				809F1F5821CF061500A943B7 /* Eia.xcdatamodeld in Sources */,
+				8029F19E222504B1002C6C3E /* EditScaleTableViewController.swift in Sources */,
+				802CDB1422178BBC0049683A /* ScaleInvitationTableViewCell.swift in Sources */,
 				80E3CC83221105B400D59F2F /* DetailTeamScalesDataSource.swift in Sources */,
-				800795492201B05500FA7BA1 /* TeamsTableTableViewController.swift in Sources */,
+				8029F1A22226AF5A002C6C3E /* EditScaleInvitationsDataSource.swift in Sources */,
+				800795492201B05500FA7BA1 /* TeamsTableViewController.swift in Sources */,
 				80B507EC21FAA1C500B197FD /* EditGroupTableViewController.swift in Sources */,
 				809F1F6B21CFEE8600A943B7 /* MainFlowButton.swift in Sources */,
 				80B507E821F8671D00B197FD /* DetailGroupTableViewController.swift in Sources */,
@@ -443,20 +487,22 @@
 				8087F52D21E6DFBC00870B3E /* GroupNameTextField.swift in Sources */,
 				809F1F7321D00BA500A943B7 /* PasswordTextField.swift in Sources */,
 				800E2A6C22072785002057B0 /* NewScaleTableViewController.swift in Sources */,
-				8007954E22070BB300FA7BA1 /* DetailTeamVolunteersDataSource.swift in Sources */,
 				8082EA0C21FE1BFA000B747F /* EditGroupTeamsDataSource.swift in Sources */,
 				80414A9921F422CA00D8E5A0 /* GroupVolunteerTableViewCell.swift in Sources */,
+				80D4C7A022302DB3007E5DF9 /* RequestExchangeTableViewController.swift in Sources */,
 				80957A6D21D516E6003D63DA /* EiaError.swift in Sources */,
 				809F1F6F21CFF8B300A943B7 /* EmailTextField.swift in Sources */,
+				80C586EB2212528C001E720A /* ScalesTableViewController.swift in Sources */,
+				802CDB1622178DDA0049683A /* DetailScaleTableViewController.swift in Sources */,
 				8087F52321E1849200870B3E /* Group_Item.swift in Sources */,
 				809F1F7521D063E700A943B7 /* UserTextField.swift in Sources */,
 				809F1F7721D0649300A943B7 /* SignUpTableViewController.swift in Sources */,
 				80957A6B21D50AB6003D63DA /* EiaColors.swift in Sources */,
 				809F1F7921D06F5E00A943B7 /* ResetPasswordTableViewController.swift in Sources */,
 				8087F52721E1950E00870B3E /* Team.swift in Sources */,
+				80C586E922125218001E720A /* ScaleTableViewCell.swift in Sources */,
 				8087F52B21E6DA6900870B3E /* NewGroupTableViewController.swift in Sources */,
 				80FFCFD221D323F200FAF12D /* EditProfileTableViewController.swift in Sources */,
-				80A61B0D21F407AB000FDD7F /* GroupVolunteersDataSource.swift in Sources */,
 				8087F52F21E6E19600870B3E /* GroupDescriptionTextField.swift in Sources */,
 				800E2A6A22072773002057B0 /* EditTeamTableViewController.swift in Sources */,
 				809F1F6921CFEDAF00A943B7 /* EiaButton.swift in Sources */,
@@ -470,17 +516,23 @@
 				8094D410220932A80037F305 /* Invitation_Item.swift in Sources */,
 				8082EA0A21FE0CAC000B747F /* GroupTeamTableViewCell.swift in Sources */,
 				80E3CC8522110BCC00D59F2F /* TeamScaleTableViewCell.swift in Sources */,
+				8068DB1122165E5000DCCD11 /* DetailTeamVolunteersDataSource.swift in Sources */,
 				809F1F7121D008DB00A943B7 /* EiaTextField.swift in Sources */,
+				8068DB0F2216591C00DCCD11 /* EditTeamScalesDataSource.swift in Sources */,
 				8082EA0221FD7A3F000B747F /* NewTeamVolunteersDataSource.swift in Sources */,
 				8094D414220933390037F305 /* Invitation.swift in Sources */,
+				8029F1A022261F47002C6C3E /* ScaleStatusTextField.swift in Sources */,
 				8087F52921E195F500870B3E /* Team_Item.swift in Sources */,
+				808259982231130F0023C053 /* RequestExchangeVolunteersDataSource.swift in Sources */,
 				809F1F7C21D2851E00A943B7 /* ProfileViewController.swift in Sources */,
 				8094D40E2209328A0037F305 /* Scale_Item.swift in Sources */,
 				8087F51D21E12D2A00870B3E /* GroupsTableViewController.swift in Sources */,
+				802CDB182217A08B0049683A /* DetailScaleInvitationsDataSource.swift in Sources */,
 				8007954B22067BBE00FA7BA1 /* DetailTeamTableViewController.swift in Sources */,
 				8082EA0621FD8936000B747F /* NewTeamTableViewController.swift in Sources */,
 				80957A7121D55909003D63DA /* RePasswordTextField.swift in Sources */,
 				80484530220D18F400B01FC6 /* EndScaleTextField.swift in Sources */,
+				8068DB0D2216553600DCCD11 /* EditTeamVolunteersDataSource.swift in Sources */,
 				809F1F5021CF061500A943B7 /* AppDelegate.swift in Sources */,
 				8048452C220D0BD300B01FC6 /* BeginScaleTextField.swift in Sources */,
 				80B507EA21F941B700B197FD /* DetailGroupVolunteersDataSource.swift in Sources */,

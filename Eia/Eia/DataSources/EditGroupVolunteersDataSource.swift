@@ -40,10 +40,7 @@ class EditGroupVolunteersDataSource: NSObject {
             for volunteerDic in allVolunteersDic.allValues {
                 if let volunteerDic = volunteerDic as? NSDictionary {
                     if let volunteer = Voluntary.createOrUpdate(matchDictionary: volunteerDic, in: context) {
-                        let leaderId = self?.group.leader_id ?? ""
-                        if volunteer.authId != leaderId {
-                            self?.volunteers.append(volunteer)
-                        }
+                        self?.volunteers.append(volunteer)
                     }
                 }
             }

@@ -29,7 +29,9 @@
     </entity>
     <entity name="Invitation_Item" representedClassName=".Invitation_Item" syncable="YES" codeGenerationType="category">
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="scale_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voluntary_id" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="scale" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Scale" inverseName="invitations" inverseEntity="Scale" syncable="YES"/>
         <relationship name="voluntary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voluntary" inverseName="invitations" inverseEntity="Voluntary" syncable="YES"/>
     </entity>
@@ -91,7 +93,7 @@
         <element name="Group" positionX="-61.28125" positionY="183.21484375" width="128" height="193"/>
         <element name="Group_Item" positionX="-288.859375" positionY="82.77734375" width="128" height="88"/>
         <element name="Invitation" positionX="-287.86328125" positionY="315.125" width="128" height="163"/>
-        <element name="Invitation_Item" positionX="-694.70703125" positionY="177.09375" width="128" height="103"/>
+        <element name="Invitation_Item" positionX="-694.70703125" positionY="177.09375" width="128" height="133"/>
         <element name="Scale" positionX="-701.453125" positionY="370.68359375" width="128" height="180"/>
         <element name="Scale_Item" positionX="-496.74609375" positionY="406.74609375" width="128" height="103"/>
         <element name="Team" positionX="-286.72265625" positionY="470.578125" width="128" height="178"/>

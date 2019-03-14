@@ -51,6 +51,54 @@ class Invitation: NSManagedObject {
         invitation.voluntary = voluntaryItem
         return invitation
     }
+    class func create(withDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Invitation? {
+        let invitation = Invitation(context: context)
+        if let identifier = dictionary["identifier"] as? String {
+            invitation.identifier = identifier
+        } else {return nil}
+        if let status = dictionary["status"] as? String {
+            invitation.status = status
+        } else {return nil}
+        if let attendance = dictionary["attendance"] as? String {
+            invitation.attendance = attendance
+        } else {return nil}
+        if let scaleId = dictionary["scale_id"] as? String {
+            invitation.scale_id = scaleId
+        } else {return nil}
+        if let voluntaryId = dictionary["voluntary_id"] as? String {
+            invitation.voluntary_id = voluntaryId
+        } else {return nil}
+        if let voluntaryName = dictionary["voluntary_name"] as? String {
+            invitation.voluntary_name = voluntaryName
+        }
+        return invitation
+    }
+    class func createOrUpdate(matchDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Invitation? {
+        var invitation: Invitation? = nil
+        if let identifier = dictionary["identifier"] as? String {
+            invitation = Invitation.find(matching: identifier, in: context)
+            if let invitation = invitation {
+                if let status = dictionary["status"] as? String {
+                    invitation.status = status
+                }
+                if let attendance = dictionary["attendance"] as? String {
+                    invitation.attendance = attendance
+                }
+                if let scaleId = dictionary["scale_id"] as? String {
+                    invitation.scale_id = scaleId
+                }
+                if let voluntaryId = dictionary["voluntary_id"] as? String {
+                    invitation.voluntary_id = voluntaryId
+                }
+                if let voluntaryName = dictionary["voluntary_name"] as? String {
+                    invitation.voluntary_name = voluntaryName
+                }
+            } else {
+                invitation = Invitation.create(withDictionary: dictionary, in: context)
+            }
+        }
+        return invitation
+    }
     var dictionaryValue: [String: Any] {
         get {
             return [

@@ -24,6 +24,8 @@ class Invitation_Item: NSManagedObject {
         let invitationItem = Invitation_Item(context: context)
         invitationItem.identifier = invitation.identifier
         invitationItem.status = invitation.status
+        invitationItem.scale_id = invitation.scale_id
+        invitationItem.voluntary_id = invitation.voluntary_id
         return invitationItem
     }
     class func create(withDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Invitation_Item? {
@@ -34,6 +36,12 @@ class Invitation_Item: NSManagedObject {
         if let status = dictionary["status"] as? String {
             invitationItem.status = status
         } else {return nil}
+        if let scaleId = dictionary["scale_id"] as? String {
+            invitationItem.scale_id = scaleId
+        } else {return nil}
+        if let voluntaryId = dictionary["voluntary_id"] as? String {
+            invitationItem.voluntary_id = voluntaryId
+        } else {return nil}
         return invitationItem
     }
     class func createOrUpdate(matchDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Invitation_Item? {
@@ -43,6 +51,12 @@ class Invitation_Item: NSManagedObject {
             if let invitationItem = invitationItem {
                 if let status = dictionary["status"] as? String {
                     invitationItem.status = status
+                }
+                if let scaleId = dictionary["scale_id"] as? String {
+                    invitationItem.scale_id = scaleId
+                }
+                if let voluntaryId = dictionary["voluntary_id"] as? String {
+                    invitationItem.voluntary_id = voluntaryId
                 }
             } else {
                 invitationItem = Invitation_Item.create(withDictionary: dictionary, in: context)
@@ -65,7 +79,9 @@ class Invitation_Item: NSManagedObject {
         get {
             return [
                 "identifier": identifier ?? "",
-                "status": status ?? ""
+                "status": status ?? "",
+                "scale_id": scale_id ?? "",
+                "voluntary_id": voluntary_id ?? ""
             ]
         }
     }

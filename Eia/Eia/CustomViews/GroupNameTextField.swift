@@ -9,7 +9,7 @@
 import UIKit
 
 class GroupNameTextField: EiaTextField, ValidableField {
-    let iconImage = UIImage(named: "user_field_icon")
+    let iconImage = UIImage(named: "group_unselected_tab_icon")
     override init(frame: CGRect) {
         super.init(frame: frame)
         setIcon(with: iconImage)
@@ -27,7 +27,7 @@ class GroupNameTextField: EiaTextField, ValidableField {
             markAsNotValid()
             throw EiaError(withType: EiaErrorType.groupNameTooShort)
         }
-        if text.count > 16 {
+        if text.count > 32 {
             markAsNotValid()
             throw EiaError(withType: EiaErrorType.groupNameTooLong)
         }

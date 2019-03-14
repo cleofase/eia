@@ -91,7 +91,7 @@ extension HomeTabBarController: UITabBarControllerDelegate {
             if let groupsController = destination as? GroupsTableViewController {
                 groupsController.voluntary = voluntary
             }
-            if let teamsController = destination as? TeamsTableTableViewController {
+            if let teamsController = destination as? TeamsTableViewController {
                 teamsController.voluntary = voluntary
             }
         }

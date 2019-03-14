@@ -19,6 +19,17 @@ enum ScaleStatus: String {
         }}
 }
 class Scale: NSManagedObject {
+    public func findInvitationItem(withVoluntaryId voluntaryId: String, in context: NSManagedObjectContext) -> Invitation_Item? {
+        let wantedInvitationItem = invitations?.first(where: {(item) in
+            if let invitationItem = item as? Invitation_Item {
+                if invitationItem.voluntary_id == voluntaryId {
+                    return true
+                }
+            }
+            return false
+        })
+        return wantedInvitationItem as? Invitation_Item
+    }
     class func find(matching identifier: String, in context: NSManagedObjectContext) -> Scale? {
         let request: NSFetchRequest<Scale> = Scale.fetchRequest()
         request.predicate = NSPredicate(format: "identifier = %@", identifier)
@@ -139,6 +150,29 @@ class Scale: NSManagedObject {
                 "status": status ?? "",
                 "invitations": dictionaryValueForInvitations()
             ]
+        }
+    }
+    var isLate: Bool {
+        get {
+            if let scaleStatus = ScaleStatus(rawValue: status ?? "") {
+                switch scaleStatus {
+                case .created:
+                    if let startDate = start {
+                        if Date().compare(startDate) == .orderedDescending {
+                            return true
+                        }
+                    }
+                case .confirmed:
+                    if let endtDate = end {
+                        if Date().compare(endtDate) == .orderedDescending {
+                            return true
+                        }
+                    }
+                default:
+                    break
+                }
+            }
+            return false
         }
     }
     class var rootFirebaseDatabaseReference: String {

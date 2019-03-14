@@ -27,7 +27,7 @@ class UserTextField: EiaTextField, ValidableField {
             markAsNotValid()
             throw EiaError(withType: EiaErrorType.nameTooShort)
         }
-        if text.count > 16 {
+        if text.count > 32 {
             markAsNotValid()
             throw EiaError(withType: EiaErrorType.nameTooLong)
         }

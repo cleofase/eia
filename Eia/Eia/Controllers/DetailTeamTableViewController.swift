@@ -14,7 +14,6 @@ import FirebaseAuth
 class DetailTeamTableViewController: UITableViewController {
     public var team: Team?
     private let container = AppDelegate.persistentContainer!
-    private var volunteers = [Voluntary]()
     private var volunteersDataSource: DetailTeamVolunteersDataSource!
     private var scalesDataSource: DetailTeamScalesDataSource!
     
@@ -56,6 +55,12 @@ class DetailTeamTableViewController: UITableViewController {
                 destination.team = team
             }
         }
+        if segue.identifier == "detailScaleFromTeamSegue" {
+            if let destination = segue.destination as? DetailScaleTableViewController, let scale = sender as? Scale {
+                destination.scale = scale
+                destination.team = team
+            }
+        }
     }
     private func setupUI() {
         let context = container.viewContext
@@ -64,8 +69,9 @@ class DetailTeamTableViewController: UITableViewController {
         volunteersDataSource = DetailTeamVolunteersDataSource(withTeam: team, context: context)
         volunteersTableView.dataSource = volunteersDataSource
         scalesTableView.tableFooterView = UIView()
-        scalesDataSource = DetailTeamScalesDataSource(withTeam: team, context: context)
+        scalesDataSource = DetailTeamScalesDataSource(withTeam: team, in: context, at: self)
         scalesTableView.dataSource = scalesDataSource
+        scalesTableView.delegate = scalesDataSource
         manageButtonOutlet.isEnabled = false
         if let user = Auth.auth().currentUser {
             let identifier = user.uid

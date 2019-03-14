@@ -10,6 +10,17 @@ import UIKit
 import CoreData
 
 class Group: NSManagedObject {
+    public func findTeamItem(withTeamId teamId: String, in context: NSManagedObjectContext) -> Team_Item? {
+        let wantedTeamItem = teams?.first(where: {(item) in
+            if let teamItem = item as? Team_Item {
+                if teamItem.identifier == teamId {
+                    return true
+                }
+            }
+            return false
+        })
+        return wantedTeamItem as? Team_Item
+    }
     class func find(matching identifier: String, in context: NSManagedObjectContext) -> Group? {
         let request: NSFetchRequest<Group> = Group.fetchRequest()
         request.predicate = NSPredicate(format: "identifier = %@", identifier)

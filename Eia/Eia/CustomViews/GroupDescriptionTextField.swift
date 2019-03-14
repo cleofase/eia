@@ -9,7 +9,7 @@
 import UIKit
 
 class GroupDescriptionTextField: EiaTextField, ValidableField {
-    let iconImage = UIImage(named: "user_field_icon")
+    let iconImage = UIImage(named: "group_unselected_tab_icon")
     override init(frame: CGRect) {
         super.init(frame: frame)
         setIcon(with: iconImage)
