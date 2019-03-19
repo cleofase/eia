@@ -26,6 +26,7 @@ class Invitation_Item: NSManagedObject {
         invitationItem.status = invitation.status
         invitationItem.scale_id = invitation.scale_id
         invitationItem.voluntary_id = invitation.voluntary_id
+        invitationItem.voluntary_name = invitation.voluntary_name
         return invitationItem
     }
     class func create(withDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Invitation_Item? {
@@ -42,6 +43,9 @@ class Invitation_Item: NSManagedObject {
         if let voluntaryId = dictionary["voluntary_id"] as? String {
             invitationItem.voluntary_id = voluntaryId
         } else {return nil}
+        if let voluntaryName = dictionary["voluntary_name"] as? String {
+            invitationItem.voluntary_name = voluntaryName
+        } else {return nil}
         return invitationItem
     }
     class func createOrUpdate(matchDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Invitation_Item? {
@@ -57,6 +61,9 @@ class Invitation_Item: NSManagedObject {
                 }
                 if let voluntaryId = dictionary["voluntary_id"] as? String {
                     invitationItem.voluntary_id = voluntaryId
+                }
+                if let voluntaryName = dictionary["voluntary_name"] as? String {
+                    invitationItem.voluntary_name = voluntaryName
                 }
             } else {
                 invitationItem = Invitation_Item.create(withDictionary: dictionary, in: context)
@@ -81,7 +88,8 @@ class Invitation_Item: NSManagedObject {
                 "identifier": identifier ?? "",
                 "status": status ?? "",
                 "scale_id": scale_id ?? "",
-                "voluntary_id": voluntary_id ?? ""
+                "voluntary_id": voluntary_id ?? "",
+                "voluntary_name": voluntary_name ?? ""
             ]
         }
     }

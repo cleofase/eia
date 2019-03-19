@@ -56,7 +56,7 @@ class RequestExchangeVolunteersDataSource: NSObject {
                             return false
                         }
                     })
-                })
+                }).sorted(by: {($0.name ?? "") < ($1.name ?? "")})
             }
         }
     }

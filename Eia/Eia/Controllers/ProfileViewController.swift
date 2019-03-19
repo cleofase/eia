@@ -17,6 +17,7 @@ class ProfileViewController: UIViewController {
     
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDBRef = Database.database().reference()
+    private var handle: AuthStateDidChangeListenerHandle?
 
     @IBOutlet weak var photoBackgroundView: UIView!
     @IBOutlet weak var photoImageView: UIImageView!
@@ -30,7 +31,13 @@ class ProfileViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        updateUI()
+        handle = Auth.auth().addStateDidChangeListener({[weak self] (auth, user) in
+            guard let _ = user else {
+                self?.goToLoginScreen()
+                return
+            }
+            self?.updateUI()
+        })
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -42,6 +49,11 @@ class ProfileViewController: UIViewController {
                 destination.voluntary = voluntary
             }
         }
+    }
+    private func goToLoginScreen() {
+        let mainStoryBorad = UIStoryboard(name: "Main", bundle: nil)
+        let initialViewController = mainStoryBorad.instantiateInitialViewController()
+        UIApplication.shared.keyWindow?.rootViewController = initialViewController
     }
     private func setupUI() {
         let gradientLayer = CAGradientLayer()

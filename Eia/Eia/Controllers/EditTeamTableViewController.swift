@@ -108,7 +108,14 @@ class EditTeamTableViewController: EiaFormTableViewController {
                 fbDBRef.child(Group.rootFirebaseDatabaseReference).child(groupId).child(Team_Item.rootFirebaseDatabaseReference).child(teamId).setValue(teamItem.dictionaryValue)
             }
         }
-        
+        let leaderId = team.leader_id ?? ""
+        if let leader = Voluntary.find(matching: leaderId , in: context) {
+            if let teamItem = leader.findTeamItem(withTeamId: teamId, in: context) {
+                teamItem.name = name
+                try? context.save()
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(leaderId).child(Team_Item.rootFirebaseDatabaseReference).child(teamId).setValue(teamItem.dictionaryValue)
+            }
+        }
         for voluntaryItem in volunteerItems {
             let voluntaryId = voluntaryItem.identifier ?? ""
             if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {

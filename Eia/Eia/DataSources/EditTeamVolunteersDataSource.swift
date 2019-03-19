@@ -44,6 +44,9 @@ class EditTeamVolunteersDataSource: NSObject {
                     }
                 }
             }
+            if let sortedVolunteers = self?.volunteers.sorted(by: {($0.name ?? "") < ($1.name ?? "")}) {
+                self?.volunteers = sortedVolunteers
+            }
             didUpdateWithSuccess()
         })
     }

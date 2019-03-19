@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18C54" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14460.32" systemVersion="18D109" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Group" representedClassName=".Group" syncable="YES" codeGenerationType="category">
         <attribute name="group_description" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
@@ -32,6 +32,7 @@
         <attribute name="scale_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="voluntary_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voluntary_name" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="scale" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Scale" inverseName="invitations" inverseEntity="Scale" syncable="YES"/>
         <relationship name="voluntary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voluntary" inverseName="invitations" inverseEntity="Voluntary" syncable="YES"/>
     </entity>
@@ -48,9 +49,11 @@
     </entity>
     <entity name="Scale_Item" representedClassName=".Scale_Item" syncable="YES" codeGenerationType="category">
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="start" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="invitations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Invitation" inverseName="scale" inverseEntity="Invitation" syncable="YES"/>
         <relationship name="team" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Team" inverseName="scales" inverseEntity="Team" syncable="YES"/>
+        <relationship name="volunteers" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Voluntary" inverseName="scales" inverseEntity="Voluntary" syncable="YES"/>
     </entity>
     <entity name="Team" representedClassName=".Team" syncable="YES" codeGenerationType="category">
         <attribute name="group_id" optional="YES" attributeType="String" syncable="YES"/>
@@ -80,6 +83,7 @@
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group_Item" inverseName="volunteers" inverseEntity="Group_Item" syncable="YES"/>
         <relationship name="invitations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Invitation_Item" inverseName="voluntary" inverseEntity="Invitation_Item" syncable="YES"/>
+        <relationship name="scales" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Scale_Item" inverseName="volunteers" inverseEntity="Scale_Item" syncable="YES"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team_Item" inverseName="volunteers" inverseEntity="Team_Item" syncable="YES"/>
     </entity>
     <entity name="Voluntary_Item" representedClassName=".Voluntary_Item" syncable="YES" codeGenerationType="category">
@@ -93,12 +97,12 @@
         <element name="Group" positionX="-61.28125" positionY="183.21484375" width="128" height="193"/>
         <element name="Group_Item" positionX="-288.859375" positionY="82.77734375" width="128" height="88"/>
         <element name="Invitation" positionX="-287.86328125" positionY="315.125" width="128" height="163"/>
-        <element name="Invitation_Item" positionX="-694.70703125" positionY="177.09375" width="128" height="133"/>
+        <element name="Invitation_Item" positionX="-694.70703125" positionY="177.09375" width="128" height="148"/>
         <element name="Scale" positionX="-701.453125" positionY="370.68359375" width="128" height="180"/>
-        <element name="Scale_Item" positionX="-496.74609375" positionY="406.74609375" width="128" height="103"/>
-        <element name="Team" positionX="-286.72265625" positionY="470.578125" width="128" height="178"/>
+        <element name="Scale_Item" positionX="-501.74609375" positionY="415.07421875" width="128" height="133"/>
+        <element name="Team" positionX="-286.72265625" positionY="507.6328125" width="128" height="178"/>
         <element name="Team_Item" positionX="-287.46875" positionY="192.1328125" width="128" height="103"/>
-        <element name="Voluntary" positionX="-499.53125" positionY="87.234375" width="128" height="208"/>
+        <element name="Voluntary" positionX="-499.53125" positionY="87.234375" width="128" height="223"/>
         <element name="Voluntary_Item" positionX="-53.37890625" positionY="472.3671875" width="128" height="118"/>
     </elements>
 </model>

@@ -17,6 +17,17 @@ enum TeamStatus: String {
         }}
 }
 class Team: NSManagedObject {
+    public func findScaleItem(withScaleId scaleId: String, in context: NSManagedObjectContext) -> Scale_Item? {
+        let wantedScaleItem = scales?.first(where: {(item) in
+            if let scaleItem = item as? Scale_Item {
+                if scaleItem.identifier == scaleId {
+                    return true
+                }
+            }
+            return false
+        })
+        return wantedScaleItem as? Scale_Item
+    }
     class func find(matching identifier: String, in context: NSManagedObjectContext) -> Team? {
         let request: NSFetchRequest<Team> = Team.fetchRequest()
         request.predicate = NSPredicate(format: "identifier = %@", identifier)

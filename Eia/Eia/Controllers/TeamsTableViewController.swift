@@ -14,6 +14,7 @@ import FirebaseAuth
 
 class TeamsTableViewController: UITableViewController {
     public var voluntary: Voluntary?
+    private var teamItems = [Team_Item]()
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDBRef = Database.database().reference()
     
@@ -40,11 +41,17 @@ class TeamsTableViewController: UITableViewController {
         let voluntaryId = Auth.auth().currentUser?.uid ?? ""
         if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
             self.voluntary = voluntary
+            if let teamItems = voluntary.teams?.allObjects as? [Team_Item] {
+                self.teamItems = teamItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+            }
             tableView.reloadData()
         }
         retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] (voluntary) in
             DispatchQueue.main.async {[weak self] in
                 self?.voluntary = voluntary
+                if let teamItems = voluntary.teams?.allObjects as? [Team_Item] {
+                    self?.teamItems = teamItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+                }
                 self?.tableView.reloadData()
             }
         })
@@ -74,12 +81,11 @@ class TeamsTableViewController: UITableViewController {
         return 1
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        let  numberOfRows = voluntary?.teams?.count ?? 0
-        return numberOfRows
+        return teamItems.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "teamCell", for: indexPath)
-        if let cell = cell as? TeamTableViewCell, let teamItems = voluntary?.teams?.allObjects as? [Team_Item] {
+        if let cell = cell as? TeamTableViewCell {
             cell.setup(withTeamItem: teamItems[indexPath.row])
             return cell
         } else {

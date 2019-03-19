@@ -13,14 +13,25 @@ import FirebaseDatabase
 
 class EditScaleInvitationsDataSource: NSObject {
     private let context: NSManagedObjectContext
-    private let scale: Scale
+    private var scale: Scale
     private var scaleInvitationItems = [Invitation_Item]()
     private let fbDbRef = Database.database().reference()
     
     init(withScale scale: Scale, context: NSManagedObjectContext) {
         self.scale = scale
         self.context = context
-        self.scaleInvitationItems = scale.invitations?.allObjects as? [Invitation_Item] ?? [Invitation_Item]()
+        if let scaleInvitationItems = scale.invitations?.allObjects as? [Invitation_Item] {
+            self.scaleInvitationItems = scaleInvitationItems.sorted(by: {($0.voluntary_name ?? "") < ($1.voluntary_name ?? "")})
+        }
+    }
+    public func refresh() {
+        let scaleId = scale.identifier ?? ""
+        if let scale = Scale.find(matching: scaleId, in: context) {
+            self.scale = scale
+            if let scaleInvitationItems = scale.invitations?.allObjects as? [Invitation_Item] {
+                self.scaleInvitationItems = scaleInvitationItems.sorted(by: {($0.voluntary_name ?? "") < ($1.voluntary_name ?? "")})
+            }
+        }
     }
 }
 

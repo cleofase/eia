@@ -14,6 +14,7 @@ import FirebaseAuth
 
 class GroupsTableViewController: UITableViewController {
     public var voluntary: Voluntary?
+    private var groupItems = [Group_Item]()
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDBRef = Database.database().reference()
 
@@ -48,11 +49,18 @@ class GroupsTableViewController: UITableViewController {
         let voluntaryId = Auth.auth().currentUser?.uid ?? ""
         if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
             self.voluntary = voluntary
+            if let groupItems = voluntary.groups?.allObjects as? [Group_Item] {
+                self.groupItems = groupItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+            }
             tableView.reloadData()
         }
         retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] (voluntary) in
             DispatchQueue.main.async {[weak self] in
                 self?.voluntary = voluntary
+                if let groupItems = voluntary.groups?.allObjects as? [Group_Item] {
+                    self?.groupItems = groupItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+                }
+
                 self?.tableView.reloadData()
             }
         })
@@ -82,11 +90,11 @@ class GroupsTableViewController: UITableViewController {
         return 1
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return voluntary?.groups?.count ?? 0
+        return groupItems.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell", for: indexPath)
-        if let cell = cell as? GroupTableViewCell, let groupItems = voluntary?.groups?.allObjects as? [Group_Item] {
+        if let cell = cell as? GroupTableViewCell {
             cell.setup(withGroupItem: groupItems[indexPath.row])
             return cell
         } else {

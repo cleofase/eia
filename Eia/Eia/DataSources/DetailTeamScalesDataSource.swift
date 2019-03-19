@@ -13,7 +13,8 @@ import FirebaseDatabase
 
 class DetailTeamScalesDataSource: NSObject {
     private let context: NSManagedObjectContext
-    private let team: Team
+    private var team: Team
+    private var scaleItems = [Scale_Item]()
     private let fbDbRef = Database.database().reference()
     private let viewController: UIViewController
     
@@ -21,6 +22,18 @@ class DetailTeamScalesDataSource: NSObject {
         self.team = team
         self.context = context
         self.viewController = viewController
+        if let scaleItems = team.scales?.allObjects as? [Scale_Item] {
+            self.scaleItems = scaleItems.sorted(by: {($0.start ?? Date()) > ($1.start ?? Date())})
+        }
+    }
+    public func refresh() {
+        let teamId = team.identifier ?? ""
+        if let team = Team.find(matching: teamId, in: context) {
+            self.team = team
+            if let scaleItems = team.scales?.allObjects as? [Scale_Item] {
+                self.scaleItems = scaleItems.sorted(by: {($0.start ?? Date()) > ($1.start ?? Date())})
+            }
+        }
     }
 }
 

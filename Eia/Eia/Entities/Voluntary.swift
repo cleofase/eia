@@ -107,6 +107,9 @@ class Voluntary: NSManagedObject {
         if let invitations = dictionary["invitations"] as? NSDictionary {
             voluntary.invitations = NSSet(array: Invitation_Item.createOrUpdate(withList: invitations, in: context))
         }
+        if let scales = dictionary["scales"] as? NSDictionary {
+            voluntary.scales = NSSet(array: Scale_Item.createOrUpdate(withList: scales, in: context))
+        }
         return voluntary
     }
     class func createOrUpdate(matchDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Voluntary? {
@@ -137,6 +140,9 @@ class Voluntary: NSManagedObject {
                 }
                 if let invitations = dictionary["invitations"] as? NSDictionary {
                     voluntary.invitations = NSSet(array: Invitation_Item.createOrUpdate(withList: invitations, in: context))
+                }
+                if let scales = dictionary["scales"] as? NSDictionary {
+                    voluntary.scales = NSSet(array: Scale_Item.createOrUpdate(withList: scales, in: context))
                 }
             } else {
                 voluntary = Voluntary.create(withDictionary: dictionary, in: context)
@@ -177,6 +183,17 @@ class Voluntary: NSManagedObject {
         }
         return dictionary
     }
+    private func dictionaryValueForScales() -> [String: Any] {
+        var dictionary = [String: Any]()
+        if let scales = scales {
+            for scale in scales {
+                if let scale = scale as? Scale_Item, let identifier = scale.identifier {
+                    dictionary.updateValue(scale.dictionaryValue, forKey: identifier)
+                }
+            }
+        }
+        return dictionary
+    }
     var dictionaryValue: [String: Any] {
         get {
             return [
@@ -190,7 +207,8 @@ class Voluntary: NSManagedObject {
                 "authId": authId ?? "",
                 "groups": dictionaryValueForGroups(),
                 "teams": dictionaryValueForTeams(),
-                "invitations": dictionaryValueForInvitations()
+                "invitations": dictionaryValueForInvitations(),
+                "scales": dictionaryValueForScales()
             ]            
         }
     }

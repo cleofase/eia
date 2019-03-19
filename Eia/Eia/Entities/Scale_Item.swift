@@ -24,6 +24,7 @@ class Scale_Item: NSManagedObject {
         let scaleItem = Scale_Item(context: context)
         scaleItem.identifier = scale.identifier
         scaleItem.status = scale.status
+        scaleItem.start = scale.start
         return scaleItem
     }
     class func create(withDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Scale_Item? {
@@ -34,6 +35,11 @@ class Scale_Item: NSManagedObject {
         if let status = dictionary["status"] as? String {
             scaleItem.status = status
         } else {return nil}
+        if let strStart = dictionary["start"] as? String {
+            if let startAsInterval = UInt64(strStart) {
+                scaleItem.start = Date(timeIntervalSince1970: TimeInterval(bitPattern: startAsInterval))
+            } else {return nil}
+        } else {return nil}
         return scaleItem
     }
     class func createOrUpdate(matchDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Scale_Item? {
@@ -43,6 +49,11 @@ class Scale_Item: NSManagedObject {
             if let scaleItem = scaleItem {
                 if let status = dictionary["status"] as? String {
                     scaleItem.status = status
+                }
+                if let strStart = dictionary["start"] as? String {
+                    if let startAsInterval = UInt64(strStart) {
+                        scaleItem.start = Date(timeIntervalSince1970: TimeInterval(bitPattern: startAsInterval))
+                    }
                 }
             } else {
                 scaleItem = Scale_Item.create(withDictionary: dictionary, in: context)
@@ -65,7 +76,8 @@ class Scale_Item: NSManagedObject {
         get {
             return [
                 "identifier": identifier ?? "",
-                "status": status ?? ""
+                "status": status ?? "",
+                "start": start?.timeIntervalSince1970.bitPattern.description ?? ""
             ]
         }
     }

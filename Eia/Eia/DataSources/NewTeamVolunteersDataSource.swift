@@ -13,7 +13,7 @@ import FirebaseDatabase
 
 class NewTeamVolunteersDataSource: NSObject {
     private let context: NSManagedObjectContext
-    private let group: Group
+    private var group: Group
     private var groupVolunteerItens = [Voluntary_Item]()
     private let fbDbRef = Database.database().reference()
     public var selectedVolunteerItems = [Voluntary_Item]()
@@ -21,7 +21,18 @@ class NewTeamVolunteersDataSource: NSObject {
     init(withGroup group: Group, context: NSManagedObjectContext) {
         self.group = group
         self.context = context
-        self.groupVolunteerItens = group.volunteers?.allObjects as? [Voluntary_Item] ?? [Voluntary_Item]()
+        if let groupVolunteerItens = group.volunteers?.allObjects as? [Voluntary_Item] {
+            self.groupVolunteerItens = groupVolunteerItens.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+        }
+    }
+    public func refresh() {
+        let groupId = group.identifier ?? ""
+        if let group = Group.find(matching: groupId, in: context) {
+            self.group = group
+            if let groupVolunteerItens = group.volunteers?.allObjects as? [Voluntary_Item] {
+                self.groupVolunteerItens = groupVolunteerItens.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+            }
+        }
     }
 }
 

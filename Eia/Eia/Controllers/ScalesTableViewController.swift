@@ -16,6 +16,7 @@ class ScalesTableViewController: UITableViewController {
     public var voluntary: Voluntary?
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDBRef = Database.database().reference()
+    private var scaleItems = [Scale_Item]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,11 +41,17 @@ class ScalesTableViewController: UITableViewController {
         let voluntaryId = Auth.auth().currentUser?.uid ?? ""
         if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
             self.voluntary = voluntary
+            if let scaleItems = voluntary.scales?.allObjects as? [Scale_Item] {
+                self.scaleItems = scaleItems.sorted(by: {($0.start ?? Date()) > ($1.start ?? Date())})
+            }
             tableView.reloadData()
         }
         retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] (voluntary) in
             DispatchQueue.main.async {[weak self] in
                 self?.voluntary = voluntary
+                if let scaleItems = voluntary.scales?.allObjects as? [Scale_Item] {
+                    self?.scaleItems = scaleItems.sorted(by: {($0.start ?? Date()) > ($1.start ?? Date())})
+                }
                 self?.tableView.reloadData()
             }
         })
@@ -74,12 +81,12 @@ class ScalesTableViewController: UITableViewController {
         return 1
     }
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return voluntary?.invitations?.count ?? 0
+        return scaleItems.count
     }
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "scaleCell", for: indexPath)
-        if let cell = cell as? ScaleTableViewCell, let invitationItems = voluntary?.invitations?.allObjects as? [Invitation_Item] {
-            let scaleId = invitationItems[indexPath.row].scale_id ?? ""
+        if let cell = cell as? ScaleTableViewCell {
+            let scaleId = scaleItems[indexPath.row].identifier ?? ""
             cell.setup(withScaleId: scaleId)
             return cell
         } else {

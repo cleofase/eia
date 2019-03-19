@@ -23,11 +23,13 @@ class DetailScaleTableViewController: UITableViewController {
     private let fbDbRef = Database.database().reference()
     private var myInvitationStatus: InvitationStatus? {
         get {
-            guard let scale = scale else {return nil}
-            guard let myId = Auth.auth().currentUser?.uid else {return nil}
             let context = container.viewContext
-            if let invitation = scale.findInvitationItem(withVoluntaryId: myId, in: context) {
-                return InvitationStatus(rawValue: invitation.status ?? "")
+            let scaleId = scale?.identifier ?? ""
+            if let scale = Scale.find(matching: scaleId, in: context) {
+                guard let myId = Auth.auth().currentUser?.uid else {return nil}
+                if let invitation = scale.findInvitationItem(withVoluntaryId: myId, in: context) {
+                    return InvitationStatus(rawValue: invitation.status ?? "")
+                }
             }
             return nil
         }
@@ -284,12 +286,16 @@ class DetailScaleTableViewController: UITableViewController {
         }
     }
     private func updateUI() {
+        let context = container.viewContext
+        let scaleId = scale?.identifier ?? ""
+        scale = Scale.find(matching: scaleId, in: context)
         guard let scale = scale else {return}
         scaleNavigationItem.title = scale.status
         teamNameLabel.text = scale.team_name
         startScaleLabel.text = scale.start?.dateHourStringValue
         endScaleLabel.text = scale.end?.dateHourStringValue
         handleManageButtonVisibility()
+        invitationsDataSource.refresh()
         invitationsTableView.reloadData()
     }
     private func handleManageButtonVisibility() {

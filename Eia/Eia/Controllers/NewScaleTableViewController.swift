@@ -80,22 +80,25 @@ class NewScaleTableViewController: EiaFormTableViewController {
         team.addToScales(scaleItem)
         try? context.save()
 
+        let scaleId = scale.identifier ?? ""
+        let teamId = team.identifier ?? ""
         for volunteerItem in volunteerItems {
             let invitation = Invitation.create(withVoluntaryItem: volunteerItem, scaleItem: scaleItem, in: context)
             let invitationId = invitation.identifier ?? ""
             let invitationItem = Invitation_Item.create(withInvitation: invitation, in: context)
             scale.addToInvitations(invitationItem)
+            try? context.save()
             let voluntaryId = volunteerItem.identifier ?? ""
             if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
                 voluntary.addToInvitations(invitationItem)
+                voluntary.addToScales(scaleItem)
+                try? context.save()
             }
-            try? context.save()
             fbDBRef.child(Invitation.rootFirebaseDatabaseReference).child(invitationId).setValue(invitation.dictionaryValue)
             fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Invitation_Item.rootFirebaseDatabaseReference).child(invitationId).setValue(invitationItem.dictionaryValue)
+            fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Scale_Item.rootFirebaseDatabaseReference).child(scaleId).setValue(scaleItem.dictionaryValue)
         }
-        let scaleId = scale.identifier ?? ""
         fbDBRef.child(Scale.rootFirebaseDatabaseReference).child(scaleId).setValue(scale.dictionaryValue)
-        let teamId = team.identifier ?? ""
         fbDBRef.child(Team.rootFirebaseDatabaseReference).child(teamId).child(Scale_Item.rootFirebaseDatabaseReference).child(scaleId).setValue(scaleItem.dictionaryValue)
         navigationController?.popViewController(animated: true)
     }

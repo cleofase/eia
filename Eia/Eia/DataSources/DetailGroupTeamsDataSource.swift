@@ -13,25 +13,37 @@ import FirebaseDatabase
 
 class DetailGroupTeamsDataSource: NSObject {
     private let context: NSManagedObjectContext
-    private let group: Group
+    private var group: Group
+    private var teamItems = [Team_Item]()
     private let fbDbRef = Database.database().reference()
     
     init(withGroup group: Group, context: NSManagedObjectContext) {
         self.group = group
         self.context = context
+        if let teamItems = group.teams?.allObjects as? [Team_Item] {
+            self.teamItems = teamItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+        }
+    }
+    public func refresh() {
+        let groupId = group.identifier ?? ""
+        if let group = Group.find(matching: groupId, in: context) {
+            self.group = group
+            if let teamItems = group.teams?.allObjects as? [Team_Item] {
+                self.teamItems = teamItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+            }
+
+        }
     }
 }
 
 extension DetailGroupTeamsDataSource: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return group.teams?.count ?? 0
+        return teamItems.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "detailGroupTeamCell", for: indexPath)
         if let cell = cell as? GroupTeamTableViewCell {
-            if let teamsItemSet = group.teams, let teamItems = teamsItemSet.allObjects as? [Team_Item] {
-                cell.setup(withTeamItem: teamItems[indexPath.row])
-            }
+            cell.setup(withTeamItem: teamItems[indexPath.row])
             return cell
         }
         return cell

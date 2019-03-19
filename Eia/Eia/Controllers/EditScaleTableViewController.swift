@@ -97,6 +97,15 @@ class EditScaleTableViewController: EiaFormTableViewController {
         
         let scaleId = scale.identifier ?? ""
         fbDBRef.child(Scale.rootFirebaseDatabaseReference).child(scaleId).setValue(scale.dictionaryValue)
+        
+        let teamId = scale.team_id ?? ""
+        if let team = Team.find(matching: teamId, in: context) {
+            if let teamItem = team.findScaleItem(withScaleId: scaleId, in: context) {
+                teamItem.start = scale.start
+                try? context.save()
+                fbDBRef.child(Team.rootFirebaseDatabaseReference).child(teamId).child(Scale_Item.rootFirebaseDatabaseReference).child(scaleId).setValue(teamItem.dictionaryValue)
+            }
+        }
         navigationController?.popViewController(animated: true)
     }
     // MARK: - Table view data source

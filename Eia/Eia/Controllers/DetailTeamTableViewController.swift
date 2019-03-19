@@ -85,6 +85,7 @@ class DetailTeamTableViewController: UITableViewController {
         teamNameLabel.text = team.name
         groupNameLabel.text = team.group_name
         leaderNameLabel.text = team.leader_name
+        scalesDataSource.refresh()
         volunteersTableView.reloadData()
         scalesTableView.reloadData()
     }
