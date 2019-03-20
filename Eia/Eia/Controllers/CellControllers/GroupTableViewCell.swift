@@ -14,6 +14,7 @@ import FirebaseDatabase
 class GroupTableViewCell: UITableViewCell {
     private let container: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDbRef = Database.database().reference()
+    private var workingIndicator = WorkingIndicator()
     public var group: Group?
     
     @IBOutlet weak var groupImageView: UIImageView!
@@ -53,6 +54,7 @@ class GroupTableViewCell: UITableViewCell {
     private func updateGroupFromCloud(withGroupItem groupItem: Group_Item) {
         let context = container.viewContext
         let identifier = groupItem.identifier ?? ""
+        workingIndicator.show(at: self.contentView)
         fbDbRef.child(Group.rootFirebaseDatabaseReference).child(identifier).observeSingleEvent(of: .value, with: {[weak self](snapshot) in
             if let groupDic = snapshot.value as? NSDictionary {
                 DispatchQueue.main.async {[weak self] in
@@ -63,6 +65,7 @@ class GroupTableViewCell: UITableViewCell {
                     }
                 }
             }
+            self?.workingIndicator.hide()
         })
     }
 }

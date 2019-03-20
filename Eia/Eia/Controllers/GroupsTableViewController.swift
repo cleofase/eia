@@ -44,7 +44,7 @@ class GroupsTableViewController: UITableViewController {
     private func setupUI() {
         tableView.tableFooterView = UIView()
     }
-    private func updateUI() {
+    @objc private func updateUI() {
         let context = containter.viewContext
         let voluntaryId = Auth.auth().currentUser?.uid ?? ""
         if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
@@ -60,7 +60,6 @@ class GroupsTableViewController: UITableViewController {
                 if let groupItems = voluntary.groups?.allObjects as? [Group_Item] {
                     self?.groupItems = groupItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
                 }
-
                 self?.tableView.reloadData()
             }
         })

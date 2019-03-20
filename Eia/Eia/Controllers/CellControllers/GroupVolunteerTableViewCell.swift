@@ -14,6 +14,7 @@ import FirebaseDatabase
 class GroupVolunteerTableViewCell: UITableViewCell {
     private let fbDbRef = Database.database().reference()
     private let container = AppDelegate.persistentContainer!
+    private let workingIndicator = WorkingIndicator()
 
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -51,6 +52,7 @@ class GroupVolunteerTableViewCell: UITableViewCell {
     private func updateVoluntaryFromCloud(withVoluntaryItem voluntaryItem: Voluntary_Item) {
         let context = container.viewContext
         let identifier = voluntaryItem.identifier ?? ""
+        workingIndicator.show(at: self.contentView)
         fbDbRef.child(Voluntary.rootFirebaseDatabaseReference).child(identifier).observeSingleEvent(of: .value, with: {[weak self](snapshot) in
             if let voluntaryDic = snapshot.value as? NSDictionary {
                 if let voluntary = Voluntary.createOrUpdate(matchDictionary: voluntaryDic, in: context) {
@@ -60,6 +62,7 @@ class GroupVolunteerTableViewCell: UITableViewCell {
                     }
                 }
             }
+            self?.workingIndicator.hide()
         })
     }
 

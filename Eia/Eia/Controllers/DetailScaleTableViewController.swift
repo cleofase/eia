@@ -34,31 +34,36 @@ class DetailScaleTableViewController: UITableViewController {
             return nil
         }
     }
-    private lazy var iAmInvited: Bool = {
-        guard let scale = scale else {return false}
-        guard let myId = Auth.auth().currentUser?.uid else {return false}
-        if let invitations = scale.invitations?.allObjects as? [Invitation_Item] {
-            return invitations.contains(where: {$0.identifier == myId})
+    private var iAmInvited: Bool {
+        get {
+            guard let scale = scale else {return false}
+            guard let myId = Auth.auth().currentUser?.uid else {return false}
+            if let invitations = scale.invitations?.allObjects as? [Invitation_Item] {
+                return invitations.contains(where: {$0.identifier == myId})
+            }
+            return false
         }
-        return false
-    }()
-    private lazy var iAmLeader: Bool = {
-        guard let scale = scale else {return false}
-        guard let myId = Auth.auth().currentUser?.uid else {return false}
-        if let leaderId: String = scale.leader_id, leaderId.count > 0 {
-            return leaderId == myId
+    }
+    private var iAmLeader: Bool {
+        get{
+            guard let scale = scale else {return false}
+            guard let myId = Auth.auth().currentUser?.uid else {return false}
+            if let leaderId: String = scale.leader_id, leaderId.count > 0 {
+                return leaderId == myId
+            }
+            return false
         }
-        return false
-    }()
-    private lazy var iBelongTeam: Bool = {
-        guard let scale = scale else {return false}
-        guard let team = team else {return false}
-        guard let myId = Auth.auth().currentUser?.uid else {return false}
-        if let volunteers = team.volunteers?.allObjects as? [Voluntary_Item] {
-            return volunteers.contains(where: {$0.identifier == myId})
+    }
+    private var iBelongTeam: Bool {
+        get {
+            guard let team = team else {return false}
+            guard let myId = Auth.auth().currentUser?.uid else {return false}
+            if let volunteers = team.volunteers?.allObjects as? [Voluntary_Item] {
+                return volunteers.contains(where: {$0.identifier == myId})
+            }
+            return false
         }
-        return false
-    }()
+    }
     @IBOutlet weak var manageButtonOutlet: UIBarButtonItem!
     @IBOutlet weak var scaleNavigationItem: UINavigationItem!
     @IBOutlet weak var teamNameLabel: UILabel!

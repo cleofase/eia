@@ -14,6 +14,7 @@ import FirebaseDatabase
 class TeamTableViewCell: UITableViewCell {
     private let container: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDbRef = Database.database().reference()
+    private let workingIndicator = WorkingIndicator()
     public var team: Team?
     
     @IBOutlet weak var teamNameLabel: UILabel!
@@ -52,6 +53,7 @@ class TeamTableViewCell: UITableViewCell {
     private func updateTeamFromCloud(withTeamItem teamItem: Team_Item) {
         let context = container.viewContext
         let teamId = teamItem.identifier ?? ""
+        workingIndicator.show(at: self.contentView)
         fbDbRef.child(Team.rootFirebaseDatabaseReference).child(teamId).observeSingleEvent(of: .value, with: {[weak self](snapshot) in
             if let teamDic = snapshot.value as? NSDictionary {
                 DispatchQueue.main.async {[weak self] in
@@ -62,6 +64,7 @@ class TeamTableViewCell: UITableViewCell {
                     }
                 }
             }
+            self?.workingIndicator.hide()
         })
     }
 }

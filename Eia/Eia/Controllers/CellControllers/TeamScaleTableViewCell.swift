@@ -15,6 +15,7 @@ class TeamScaleTableViewCell: UITableViewCell {
     
     private let fbDbRef = Database.database().reference()
     private let container = AppDelegate.persistentContainer!
+    private let workingIndicator = WorkingIndicator()
     
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var startHourLabel: UILabel!
@@ -53,6 +54,7 @@ class TeamScaleTableViewCell: UITableViewCell {
     private func updateTeamFromCloud(withTeamItem scaleItem: Scale_Item) {
         let context = container.viewContext
         let identifier = scaleItem.identifier ?? ""
+        workingIndicator.show(at: self.contentView)
         fbDbRef.child(Scale.rootFirebaseDatabaseReference).child(identifier).observeSingleEvent(of: .value, with: {[weak self](snapshot) in
             if let scaleDic = snapshot.value as? NSDictionary {
                 if let scale = Scale.createOrUpdate(matchDictionary: scaleDic, in: context) {
@@ -61,6 +63,7 @@ class TeamScaleTableViewCell: UITableViewCell {
                     }
                 }
             }
+            self?.workingIndicator.hide()
         })
     }
 }

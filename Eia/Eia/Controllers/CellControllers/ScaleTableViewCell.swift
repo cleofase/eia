@@ -14,6 +14,7 @@ import FirebaseDatabase
 class ScaleTableViewCell: UITableViewCell {
     private let container: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDbRef = Database.database().reference()
+    private let workingIndicator = WorkingIndicator()
     public var scale: Scale?
     
     @IBOutlet weak var startDateLabel: UILabel!
@@ -39,21 +40,21 @@ class ScaleTableViewCell: UITableViewCell {
         statusLabel.text = scale.status
         teamNameLabel.text = scale.team_name
     }
-    public func setup(withScaleItem scaleItem: Scale_Item) {
-        let context = container.viewContext
-        let scaleId = scaleItem.identifier ?? ""
-        if let scale = Scale.find(matching: scaleId, in: context) {
-            setup(withScale: scale)
-        } else {
-            startDateLabel.text?.removeAll()
-            startHourLabel.text?.removeAll()
-            endDateLabel.text?.removeAll()
-            endHourLabel.text?.removeAll()
-            teamNameLabel.text?.removeAll()
-            statusLabel.text = scaleItem.status
-        }
-        updateTeamFromCloud(withScaleId: scaleId)
-    }
+//    public func setup(withScaleItem scaleItem: Scale_Item) {
+//        let context = container.viewContext
+//        let scaleId = scaleItem.identifier ?? ""
+//        if let scale = Scale.find(matching: scaleId, in: context) {
+//            setup(withScale: scale)
+//        } else {
+//            startDateLabel.text?.removeAll()
+//            startHourLabel.text?.removeAll()
+//            endDateLabel.text?.removeAll()
+//            endHourLabel.text?.removeAll()
+//            teamNameLabel.text?.removeAll()
+//            statusLabel.text = scaleItem.status
+//        }
+//        updateTeamFromCloud(withScaleId: scaleId)
+//    }
     public func setup(withScaleId scaleId: String) {
         let context = container.viewContext
         if let scale = Scale.find(matching: scaleId, in: context) {
@@ -70,6 +71,7 @@ class ScaleTableViewCell: UITableViewCell {
     }
     private func updateTeamFromCloud(withScaleId scaleId: String) {
         let context = container.viewContext
+        workingIndicator.show(at: self.contentView)
         fbDbRef.child(Scale.rootFirebaseDatabaseReference).child(scaleId).observeSingleEvent(of: .value, with: {[weak self](snapshot) in
             if let scaleDic = snapshot.value as? NSDictionary {
                 if let scale = Scale.createOrUpdate(matchDictionary: scaleDic, in: context) {
@@ -78,6 +80,7 @@ class ScaleTableViewCell: UITableViewCell {
                     }
                 }
             }
+            self?.workingIndicator.hide()
         })
     }
 }

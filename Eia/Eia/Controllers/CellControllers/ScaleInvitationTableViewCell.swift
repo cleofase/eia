@@ -14,6 +14,7 @@ import FirebaseDatabase
 class ScaleInvitationTableViewCell: UITableViewCell {
     private let fbDbRef = Database.database().reference()
     private let container = AppDelegate.persistentContainer!
+    private let workingIndicator = WorkingIndicator()
     
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
@@ -28,8 +29,6 @@ class ScaleInvitationTableViewCell: UITableViewCell {
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
     }
     public func setup(withInvitationItem invitationItem: Invitation_Item) {
         let context = container.viewContext
@@ -65,6 +64,7 @@ class ScaleInvitationTableViewCell: UITableViewCell {
     }
     private func updateInvitationFromCloud(withInvitationId invitationId: String) {
         let context = container.viewContext
+        workingIndicator.show(at: self.contentView)
         fbDbRef.child(Invitation.rootFirebaseDatabaseReference).child(invitationId).observeSingleEvent(of: .value, with: {[weak self](snapshot) in
             if let invitationDic = snapshot.value as? NSDictionary {
                 if let invitation = Invitation.createOrUpdate(matchDictionary: invitationDic, in: context) {
@@ -73,10 +73,12 @@ class ScaleInvitationTableViewCell: UITableViewCell {
                     }
                 }
             }
+            self?.workingIndicator.hide()
         })
     }
     private func updateVoluntaryFromCloud(withVoluntaryId voluntaryId: String) {
         let context = container.viewContext
+        workingIndicator.show(at: self.contentView)
         fbDbRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).observeSingleEvent(of: .value, with: {[weak self](snapshot) in
             if let voluntaryDic = snapshot.value as? NSDictionary {
                 if let voluntary = Voluntary.createOrUpdate(matchDictionary: voluntaryDic, in: context) {
@@ -85,6 +87,7 @@ class ScaleInvitationTableViewCell: UITableViewCell {
                     }
                 }
             }
+            self?.workingIndicator.hide()
         })
     }
 }

@@ -11,6 +11,7 @@ import FirebaseCore
 import FirebaseAuth
 
 class LoginTableViewController: EiaFormTableViewController {
+    private let workingIndicator = WorkingIndicator()
     
     @IBOutlet weak var emailTextField: EmailTextField!
     @IBOutlet weak var alertEmailLabel: UILabel!
@@ -52,7 +53,9 @@ class LoginTableViewController: EiaFormTableViewController {
         alertLabels = [alertEmailLabel, alertPasswordLabel]
     }
     private func performLogin(withEmail email: String, password: String, completion: @escaping (Bool) -> Void) {
-        Auth.auth().signIn(withEmail: email, password: password) {(authResult, error) in
+        workingIndicator.show(at: self.tableView)
+        Auth.auth().signIn(withEmail: email, password: password) {[weak self] (authResult, error) in
+            self?.workingIndicator.hide()
             if let error = error {
                 let serverError = EiaError(withType: .serverError)
                 serverError.showAsAlert(title: "Login", controller: self, complement: error.localizedDescription) {
