@@ -88,15 +88,23 @@ class NewScaleTableViewController: EiaFormTableViewController {
             let invitationItem = Invitation_Item.create(withInvitation: invitation, in: context)
             scale.addToInvitations(invitationItem)
             try? context.save()
+            fbDBRef.child(Invitation.rootFirebaseDatabaseReference).child(invitationId).setValue(invitation.dictionaryValue)
             let voluntaryId = volunteerItem.identifier ?? ""
             if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
                 voluntary.addToInvitations(invitationItem)
                 voluntary.addToScales(scaleItem)
                 try? context.save()
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Invitation_Item.rootFirebaseDatabaseReference).child(invitationId).setValue(invitationItem.dictionaryValue)
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Scale_Item.rootFirebaseDatabaseReference).child(scaleId).setValue(scaleItem.dictionaryValue)
+                // Send notices routine...
+                if let notice = Notice.create(withType: NoticeType.newScale, relatedEntity: scale, voluntaryId: voluntaryId, in: context) {
+                    voluntary.addToNotices(notice)
+                    try? context.save()
+                    let noticeId = notice.identifier ?? ""
+                    fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Notice.rootFirebaseDatabaseReference).child(noticeId).setValue(notice.dictionaryValue)
+                }
+
             }
-            fbDBRef.child(Invitation.rootFirebaseDatabaseReference).child(invitationId).setValue(invitation.dictionaryValue)
-            fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Invitation_Item.rootFirebaseDatabaseReference).child(invitationId).setValue(invitationItem.dictionaryValue)
-            fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Scale_Item.rootFirebaseDatabaseReference).child(scaleId).setValue(scaleItem.dictionaryValue)
         }
         fbDBRef.child(Scale.rootFirebaseDatabaseReference).child(scaleId).setValue(scale.dictionaryValue)
         fbDBRef.child(Team.rootFirebaseDatabaseReference).child(teamId).child(Scale_Item.rootFirebaseDatabaseReference).child(scaleId).setValue(scaleItem.dictionaryValue)

@@ -38,7 +38,8 @@ class GroupTableViewCell: UITableViewCell {
             groupImageView.image = photoImage
         } else {
             groupImageView.image = nil
-            // photo default...
+            let defaultPhoto = UIImage(named: "group_default_icon")
+            groupImageView.image = defaultPhoto
         }
     }
     public func setup(withGroupItem groupItem: Group_Item) {

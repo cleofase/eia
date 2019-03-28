@@ -76,7 +76,8 @@ class EditProfileTableViewController: EiaFormTableViewController {
             photoImageView.image = photoImage
         } else {
             self.photoStr = nil
-            // load default user photo...
+            let defaultPhoto = UIImage(named: "voluntary_default_icon")
+            photoImageView.image = defaultPhoto
         }
     }
     private func saveVoluntaryData(withName name: String, phone: String) {

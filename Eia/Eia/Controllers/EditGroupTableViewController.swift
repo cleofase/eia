@@ -96,7 +96,8 @@ class EditGroupTableViewController: EiaFormTableViewController {
             self.photoStr = photoStr
         } else {
             self.photoStr = nil
-            // photo default...
+            let defaultPhoto = UIImage(named: "group_default_icon")
+            photoImageView.image = defaultPhoto
         }
         volunteersDataSource.update {[weak self] in
             self?.volunteerTableView.reloadData()

@@ -110,6 +110,9 @@ class Voluntary: NSManagedObject {
         if let scales = dictionary["scales"] as? NSDictionary {
             voluntary.scales = NSSet(array: Scale_Item.createOrUpdate(withList: scales, in: context))
         }
+        if let notices = dictionary["notices"] as? NSDictionary {
+            voluntary.notices = NSSet(array: Notice.createOrUpdate(withList: notices, in: context))
+        }
         return voluntary
     }
     class func createOrUpdate(matchDictionary dictionary: NSDictionary, in context: NSManagedObjectContext) -> Voluntary? {
@@ -143,6 +146,9 @@ class Voluntary: NSManagedObject {
                 }
                 if let scales = dictionary["scales"] as? NSDictionary {
                     voluntary.scales = NSSet(array: Scale_Item.createOrUpdate(withList: scales, in: context))
+                }
+                if let notices = dictionary["notices"] as? NSDictionary {
+                    voluntary.notices = NSSet(array: Notice.createOrUpdate(withList: notices, in: context))
                 }
             } else {
                 voluntary = Voluntary.create(withDictionary: dictionary, in: context)
@@ -194,6 +200,17 @@ class Voluntary: NSManagedObject {
         }
         return dictionary
     }
+    private func dictionaryValueForNotices() -> [String: Any] {
+        var dictionary = [String: Any]()
+        if let notices = notices {
+            for notice in notices {
+                if let notice = notice as? Notice, let identifier = notice.identifier {
+                    dictionary.updateValue(notice.dictionaryValue, forKey: identifier)
+                }
+            }
+        }
+        return dictionary
+    }
     var dictionaryValue: [String: Any] {
         get {
             return [
@@ -208,7 +225,8 @@ class Voluntary: NSManagedObject {
                 "groups": dictionaryValueForGroups(),
                 "teams": dictionaryValueForTeams(),
                 "invitations": dictionaryValueForInvitations(),
-                "scales": dictionaryValueForScales()
+                "scales": dictionaryValueForScales(),
+                "notices": dictionaryValueForNotices()
             ]            
         }
     }

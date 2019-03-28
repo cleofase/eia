@@ -85,11 +85,18 @@ class NewGroupTableViewController: EiaFormTableViewController {
             try? context.save()
             let groupItemId = groupItem.identifier ?? ""
             fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(leaderId).child(Group_Item.rootFirebaseDatabaseReference).child(groupItemId).setValue(groupItem.dictionaryValue)
-            for volunteer in volunteers {
-                volunteer.addToGroups(groupItem)
+            for voluntary in volunteers {
+                voluntary.addToGroups(groupItem)
                 try? context.save()
-                let volunteerId = volunteer.authId ?? ""
-                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(volunteerId).child(Group_Item.rootFirebaseDatabaseReference).child(groupItemId).setValue(groupItem.dictionaryValue)
+                let voluntaryId = voluntary.authId ?? ""
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Group_Item.rootFirebaseDatabaseReference).child(groupItemId).setValue(groupItem.dictionaryValue)
+                // Send notices routine...
+                if let notice = Notice.create(withType: NoticeType.joinGroup, relatedEntity: group, voluntaryId: voluntaryId, in: context) {
+                    voluntary.addToNotices(notice)
+                    try? context.save()
+                    let noticeId = notice.identifier ?? ""
+                    fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Notice.rootFirebaseDatabaseReference).child(noticeId).setValue(notice.dictionaryValue)
+                }
             }
         }
     }

@@ -37,3 +37,22 @@
 "SUBSTITUTE_NOT_SELECTED" = "Selecione um voluntário substituto.";
 //Eia Feedback
 "VERIIFCATION_EMAIL_SENT" = "Acesse o seu e-mail para concluir o cadastro.";
+
+//Eia Notice type
+"JOIN_GROUP_NOTICE_TYPE" = "Inclusão em Grupo";
+"JOIN_TEAM_NOTICE_TYPE" = "Inclusão em Equipe";
+"NEW_SCALE_NOTICE_TYPE" = "Criação de Escala";
+"CONFIRMED_SCALE_NOTICE_TYPE" = "Confirmação de Escala";
+"UPDATE_SCALE_NOTICE_TYPE" = "Alteração de Escala";
+"CANCEL_SCALE_NOTICE_TYPE" = "Cancelamento de Escala";
+"DONE_SCALE_NOTICE_TYPE" = "Conclusão de Escala";
+"EXCHANGE_REQUEST_NOTICE_TYPE" = "Solicitação de Troca";
+
+//Eia Notice content
+"JOIN_GROUP_NOTICE_CONTENT" = "Você foi incluído no grupo %@.";
+"JOIN_TEAM_NOTICE_CONTENT" = "Você foi incluído na equipe %@.";
+"NEW_SCALE_NOTICE_CONTENT" = "Você recebeu um convite para participar da escala de %@, pela equipe %@.";
+"CONFIRMED_SCALE_NOTICE_CONTENT" = "A escala de %@ foi confirmada.";
+"CANCEL_SCALE_NOTICE_CONTENT" = "A escala de %@ foi cancelada.";
+"DONE_SCALE_NOTICE_CONTENT" = "A escala de %@ foi concluída.";
+"EXCHANGE_REQUEST_NOTICE_CONTENT" = "Você recebeu um convite extra para participar da escala de %@, pela equipe %@.";

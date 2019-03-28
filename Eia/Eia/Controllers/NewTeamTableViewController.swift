@@ -88,11 +88,18 @@ class NewTeamTableViewController: EiaFormTableViewController {
         }
         
         for volunteerItem in volunteerItems {
-            let identifier = volunteerItem.identifier ?? ""
-            if let volunteer = Voluntary.find(matching: identifier, in: context) {
-                volunteer.addToTeams(teamItem)
+            let voluntaryId = volunteerItem.identifier ?? ""
+            if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
+                voluntary.addToTeams(teamItem)
                 try? context.save()
-                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(identifier).child(Team_Item.rootFirebaseDatabaseReference).child(teamId).setValue(teamItem.dictionaryValue)
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Team_Item.rootFirebaseDatabaseReference).child(teamId).setValue(teamItem.dictionaryValue)
+                // Send notices routine...
+                if let notice = Notice.create(withType: NoticeType.joinTeam, relatedEntity: team, voluntaryId: voluntaryId, in: context) {
+                    voluntary.addToNotices(notice)
+                    try? context.save()
+                    let noticeId = notice.identifier ?? ""
+                    fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Notice.rootFirebaseDatabaseReference).child(noticeId).setValue(notice.dictionaryValue)
+                }
             }
         }
         // listar para testar as entidades group, team, group_item, team_item, voluntary, voluntary_item...

@@ -89,7 +89,8 @@ class DetailGroupTableViewController: UITableViewController {
         if let photoStr = group.photo_str, let photoData = Data(base64Encoded: photoStr), let photoImage = UIImage(data: photoData) {
             photoImageView.image = photoImage
         } else {
-            // photo default...
+            let defaultPhoto = UIImage(named: "group_default_icon")
+            photoImageView.image = defaultPhoto
         }
         teamsTableView.reloadData()
         volunteersTableView.reloadData()

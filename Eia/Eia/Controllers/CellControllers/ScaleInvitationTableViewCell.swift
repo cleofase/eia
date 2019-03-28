@@ -59,7 +59,8 @@ class ScaleInvitationTableViewCell: UITableViewCell {
             photoImageView.image = photoImage
         } else {
             photoImageView.image = nil
-            // photo default...
+            let defaultPhoto = UIImage(named: "voluntary_default_icon")
+            photoImageView.image = defaultPhoto
         }
     }
     private func updateInvitationFromCloud(withInvitationId invitationId: String) {

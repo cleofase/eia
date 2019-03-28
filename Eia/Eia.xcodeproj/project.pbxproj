@@ -29,6 +29,9 @@
 		8068DB0D2216553600DCCD11 /* EditTeamVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8068DB0C2216553600DCCD11 /* EditTeamVolunteersDataSource.swift */; };
 		8068DB0F2216591C00DCCD11 /* EditTeamScalesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8068DB0E2216591C00DCCD11 /* EditTeamScalesDataSource.swift */; };
 		8068DB1122165E5000DCCD11 /* DetailTeamVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8068DB1022165E5000DCCD11 /* DetailTeamVolunteersDataSource.swift */; };
+		8076DA2B22465EB900FA53D9 /* Notice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8076DA2A22465EB900FA53D9 /* Notice.swift */; };
+		8076DA2D2247D99D00FA53D9 /* NoticeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8076DA2C2247D99D00FA53D9 /* NoticeTableViewCell.swift */; };
+		8076DA2F2247DB1400FA53D9 /* NoticesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8076DA2E2247DB1400FA53D9 /* NoticesTableViewController.swift */; };
 		808259982231130F0023C053 /* RequestExchangeVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 808259972231130F0023C053 /* RequestExchangeVolunteersDataSource.swift */; };
 		8082EA0021FCDEFE000B747F /* EditGroupVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8082E9FF21FCDEFE000B747F /* EditGroupVolunteersDataSource.swift */; };
 		8082EA0221FD7A3F000B747F /* NewTeamVolunteersDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8082EA0121FD7A3F000B747F /* NewTeamVolunteersDataSource.swift */; };
@@ -112,6 +115,9 @@
 		8068DB0C2216553600DCCD11 /* EditTeamVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTeamVolunteersDataSource.swift; sourceTree = "<group>"; };
 		8068DB0E2216591C00DCCD11 /* EditTeamScalesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTeamScalesDataSource.swift; sourceTree = "<group>"; };
 		8068DB1022165E5000DCCD11 /* DetailTeamVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTeamVolunteersDataSource.swift; sourceTree = "<group>"; };
+		8076DA2A22465EB900FA53D9 /* Notice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notice.swift; sourceTree = "<group>"; };
+		8076DA2C2247D99D00FA53D9 /* NoticeTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeTableViewCell.swift; sourceTree = "<group>"; };
+		8076DA2E2247DB1400FA53D9 /* NoticesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticesTableViewController.swift; sourceTree = "<group>"; };
 		808259972231130F0023C053 /* RequestExchangeVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestExchangeVolunteersDataSource.swift; sourceTree = "<group>"; };
 		8082E9FF21FCDEFE000B747F /* EditGroupVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupVolunteersDataSource.swift; sourceTree = "<group>"; };
 		8082EA0121FD7A3F000B747F /* NewTeamVolunteersDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTeamVolunteersDataSource.swift; sourceTree = "<group>"; };
@@ -232,6 +238,7 @@
 				80E3CC8422110BCC00D59F2F /* TeamScaleTableViewCell.swift */,
 				80C586E822125218001E720A /* ScaleTableViewCell.swift */,
 				802CDB1322178BBC0049683A /* ScaleInvitationTableViewCell.swift */,
+				8076DA2C2247D99D00FA53D9 /* NoticeTableViewCell.swift */,
 			);
 			path = CellControllers;
 			sourceTree = "<group>";
@@ -253,6 +260,7 @@
 				8094D411220932CE0037F305 /* Scale.swift */,
 				8094D413220933390037F305 /* Invitation.swift */,
 				804D7C282241D87B000555FE /* WorkingIndicator.swift */,
+				8076DA2A22465EB900FA53D9 /* Notice.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -318,6 +326,7 @@
 				800E2A6B22072785002057B0 /* NewScaleTableViewController.swift */,
 				80C586EA2212528C001E720A /* ScalesTableViewController.swift */,
 				80D4C79F22302DB3007E5DF9 /* RequestExchangeTableViewController.swift */,
+				8076DA2E2247DB1400FA53D9 /* NoticesTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -497,6 +506,7 @@
 				809F1F6F21CFF8B300A943B7 /* EmailTextField.swift in Sources */,
 				80C586EB2212528C001E720A /* ScalesTableViewController.swift in Sources */,
 				802CDB1622178DDA0049683A /* DetailScaleTableViewController.swift in Sources */,
+				8076DA2D2247D99D00FA53D9 /* NoticeTableViewCell.swift in Sources */,
 				8087F52321E1849200870B3E /* Group_Item.swift in Sources */,
 				809F1F7521D063E700A943B7 /* UserTextField.swift in Sources */,
 				809F1F7721D0649300A943B7 /* SignUpTableViewController.swift in Sources */,
@@ -511,6 +521,7 @@
 				809F1F6921CFEDAF00A943B7 /* EiaButton.swift in Sources */,
 				809F1F6D21CFF17D00A943B7 /* AlternativeFlowButton.swift in Sources */,
 				800795472201A27300FA7BA1 /* TeamTableViewCell.swift in Sources */,
+				8076DA2B22465EB900FA53D9 /* Notice.swift in Sources */,
 				8082EA0821FE09BD000B747F /* DetailGroupTeamsDataSource.swift in Sources */,
 				8094D412220932CE0037F305 /* Scale.swift in Sources */,
 				80456D1421D83AD8004678DD /* EiaFeedback.swift in Sources */,
@@ -530,6 +541,7 @@
 				809F1F7C21D2851E00A943B7 /* ProfileViewController.swift in Sources */,
 				8094D40E2209328A0037F305 /* Scale_Item.swift in Sources */,
 				8087F51D21E12D2A00870B3E /* GroupsTableViewController.swift in Sources */,
+				8076DA2F2247DB1400FA53D9 /* NoticesTableViewController.swift in Sources */,
 				802CDB182217A08B0049683A /* DetailScaleInvitationsDataSource.swift in Sources */,
 				8007954B22067BBE00FA7BA1 /* DetailTeamTableViewController.swift in Sources */,
 				8082EA0621FD8936000B747F /* NewTeamTableViewController.swift in Sources */,

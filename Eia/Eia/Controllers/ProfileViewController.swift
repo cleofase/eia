@@ -56,10 +56,10 @@ class ProfileViewController: UIViewController {
         UIApplication.shared.keyWindow?.rootViewController = initialViewController
     }
     private func setupUI() {
-        let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = photoBackgroundView.bounds
-        gradientLayer.colors = [EiaColors.PembaSand.cgColor, UIColor.white.cgColor]
-        photoBackgroundView.layer.insertSublayer(gradientLayer, at: 0)
+//        let gradientLayer = CAGradientLayer()
+//        gradientLayer.frame = photoBackgroundView.bounds
+//        gradientLayer.colors = [EiaColors.PembaSand.cgColor, UIColor.white.cgColor]
+//        photoBackgroundView.layer.insertSublayer(gradientLayer, at: 0)
         photoImageView.layer.cornerRadius = photoImageView.frame.height/2
         photoImageView.clipsToBounds = true
     }
@@ -77,13 +77,14 @@ class ProfileViewController: UIViewController {
             })
             return
         }
-        nameLabel.text = "\(voluntary.name ?? "") - \(voluntary.status ?? "")"
+        nameLabel.text = voluntary.name
         emailLabel.text = voluntary.email
         phoneLabel.text = voluntary.phone
         if let photoStr = voluntary.photo_str, let photoData = Data(base64Encoded: photoStr), let photoImage = UIImage(data: photoData) {
             photoImageView.image = photoImage
         } else {
-            // photo default...
+            let defaultPhoto = UIImage(named: "voluntary_default_icon")
+            photoImageView.image = defaultPhoto
         }
     }
     private func retrieveVoluntaryFromCloud(withVoluntaryId voluntaryId: String, completionWithSuccess: @escaping () -> Void) {

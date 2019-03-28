@@ -36,6 +36,18 @@
         <relationship name="scale" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Scale" inverseName="invitations" inverseEntity="Scale" syncable="YES"/>
         <relationship name="voluntary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voluntary" inverseName="invitations" inverseEntity="Voluntary" syncable="YES"/>
     </entity>
+    <entity name="Notice" representedClassName=".Notice" syncable="YES" codeGenerationType="category">
+        <attribute name="date" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
+        <attribute name="entity_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notice_content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notice_type" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="related_entity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="voluntary_id" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="voluntary" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Voluntary" inverseName="notices" inverseEntity="Voluntary" syncable="YES"/>
+    </entity>
     <entity name="Scale" representedClassName=".Scale" syncable="YES" codeGenerationType="category">
         <attribute name="end" optional="YES" attributeType="Date" usesScalarValueType="NO" syncable="YES"/>
         <attribute name="identifier" optional="YES" attributeType="String" syncable="YES"/>
@@ -83,6 +95,7 @@
         <attribute name="status" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group_Item" inverseName="volunteers" inverseEntity="Group_Item" syncable="YES"/>
         <relationship name="invitations" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Invitation_Item" inverseName="voluntary" inverseEntity="Invitation_Item" syncable="YES"/>
+        <relationship name="notices" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Notice" inverseName="voluntary" inverseEntity="Notice" syncable="YES"/>
         <relationship name="scales" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Scale_Item" inverseName="volunteers" inverseEntity="Scale_Item" syncable="YES"/>
         <relationship name="teams" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Team_Item" inverseName="volunteers" inverseEntity="Team_Item" syncable="YES"/>
     </entity>
@@ -102,7 +115,8 @@
         <element name="Scale_Item" positionX="-501.74609375" positionY="415.07421875" width="128" height="133"/>
         <element name="Team" positionX="-286.72265625" positionY="507.6328125" width="128" height="178"/>
         <element name="Team_Item" positionX="-287.46875" positionY="192.1328125" width="128" height="103"/>
-        <element name="Voluntary" positionX="-499.53125" positionY="87.234375" width="128" height="223"/>
+        <element name="Voluntary" positionX="-499.53125" positionY="87.234375" width="128" height="238"/>
         <element name="Voluntary_Item" positionX="-53.37890625" positionY="472.3671875" width="128" height="118"/>
+        <element name="Notice" positionX="-694.66015625" positionY="-44.65234375" width="128" height="193"/>
     </elements>
 </model>
