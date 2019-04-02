@@ -11,11 +11,21 @@ import UIKit
 class WorkingIndicator {
     private var activityIndicator = UIActivityIndicatorView()
     private var baseView = UIView()
+    private var baseTableView: UITableView?
     
     public func show(at view: UIView) {
         setupView(for: view)
         view.addSubview(baseView)
         activityIndicator.startAnimating()
+    }
+    public func show(atTable tableView: UITableView) {
+        DispatchQueue.main.async {[weak self] in
+            let headerView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: tableView.bounds.maxX, height: 64))
+            headerView.backgroundColor = UIColor.clear
+            tableView.tableHeaderView = headerView
+            self?.baseTableView = tableView
+            self?.show(at: headerView)
+        }
     }
     private func setupView(for view: UIView) {
         baseView.frame = view.frame
@@ -33,6 +43,10 @@ class WorkingIndicator {
             DispatchQueue.main.async {[weak self] in
                 self?.activityIndicator.stopAnimating()
                 self?.baseView.removeFromSuperview()
+                if let _ = self?.baseTableView {
+                    self?.baseTableView?.tableHeaderView = nil
+                    self?.baseTableView = nil
+                }
             }
         }
     }

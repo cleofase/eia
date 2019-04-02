@@ -17,18 +17,27 @@ class LoginTableViewController: EiaFormTableViewController {
     @IBOutlet weak var alertEmailLabel: UILabel!
     @IBOutlet weak var passwordTextField: PasswordTextField!
     @IBOutlet weak var alertPasswordLabel: UILabel!
+    @IBOutlet weak var coverLoginView: UIView!
+    @IBOutlet weak var coverResetPasswordView: UIView!
+    @IBOutlet weak var coverSignUpView: UIView!
     
     @IBAction func loginButton(_ sender: MainFlowButton) {
+        hideFormButtons()
+        workingIndicator.show(at: coverLoginView)
         performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
             if formValid {
                 let email = self?.emailTextField.text ?? ""
                 let password = self?.passwordTextField.text ?? ""
                 self?.performLogin(withEmail: email, password: password) {[weak self] (success) in
+                    self?.workingIndicator.hide()
+                    self?.showFormButtons()
                     if success {
                         self?.goToHomeScreen()
                     }
                 }
             } else {
+                self?.workingIndicator.hide()
+                self?.showFormButtons()
                 self?.becomeFirstNotValidFieldFirstResponder()
             }
         })
@@ -51,11 +60,20 @@ class LoginTableViewController: EiaFormTableViewController {
         passwordTextField.delegate = self
         eiaTextFields = [emailTextField, passwordTextField]
         alertLabels = [alertEmailLabel, alertPasswordLabel]
+        showFormButtons()
+    }
+    private func hideFormButtons() {
+        coverLoginView.isHidden = false
+        coverResetPasswordView.isHidden = false
+        coverSignUpView.isHidden = false
+    }
+    private func showFormButtons() {
+        coverLoginView.isHidden = true
+        coverResetPasswordView.isHidden = true
+        coverSignUpView.isHidden = true
     }
     private func performLogin(withEmail email: String, password: String, completion: @escaping (Bool) -> Void) {
-        workingIndicator.show(at: self.tableView)
         Auth.auth().signIn(withEmail: email, password: password) {[weak self] (authResult, error) in
-            self?.workingIndicator.hide()
             if let error = error {
                 let serverError = EiaError(withType: .serverError)
                 serverError.showAsAlert(title: "Login", controller: self, complement: error.localizedDescription) {

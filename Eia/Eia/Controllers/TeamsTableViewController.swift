@@ -14,9 +14,10 @@ import FirebaseAuth
 
 class TeamsTableViewController: UITableViewController {
     public var voluntary: Voluntary?
-    private var teamItems = [Team_Item]()
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDBRef = Database.database().reference()
+    private var teamItems = [Team_Item]()
+    private let workingIndicator = WorkingIndicator()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +40,15 @@ class TeamsTableViewController: UITableViewController {
     private func updateUI() {
         let context = containter.viewContext
         let voluntaryId = Auth.auth().currentUser?.uid ?? ""
-        if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
-            self.voluntary = voluntary
-            if let teamItems = voluntary.teams?.allObjects as? [Team_Item] {
-                self.teamItems = teamItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+        workingIndicator.show(atTable: tableView)
+        DispatchQueue.main.async {[weak self] in
+            if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
+                self?.voluntary = voluntary
+                if let teamItems = voluntary.teams?.allObjects as? [Team_Item] {
+                    self?.teamItems = teamItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+                }
+                self?.tableView.reloadData()
             }
-            tableView.reloadData()
         }
         retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] (voluntary) in
             DispatchQueue.main.async {[weak self] in
@@ -53,6 +57,7 @@ class TeamsTableViewController: UITableViewController {
                     self?.teamItems = teamItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
                 }
                 self?.tableView.reloadData()
+                self?.workingIndicator.hide()
             }
         })
     }

@@ -92,6 +92,8 @@ class DetailGroupTableViewController: UITableViewController {
             let defaultPhoto = UIImage(named: "group_default_icon")
             photoImageView.image = defaultPhoto
         }
+        teamsDataSource.refresh()
+        volunteersDataSource.refresh()
         teamsTableView.reloadData()
         volunteersTableView.reloadData()
     }

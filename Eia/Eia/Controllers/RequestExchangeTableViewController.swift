@@ -145,16 +145,24 @@ class RequestExchangeTableViewController: EiaFormTableViewController {
                 .child(Invitation_Item.rootFirebaseDatabaseReference)
                 .child(substituteInvitationId)
                 .setValue(substituteInvitationItem.dictionaryValue)
-            if let substituteVolutary = Voluntary.find(matching: substituteVolutaryId, in: context) {
-                substituteVolutary.addToInvitations(substituteInvitationItem)
+            
+            
+            // Send notices routine...
+            if let notice = Notice.create(withType: NoticeType.exchangeRequest, relatedEntity: scale, voluntaryId: substituteVolutaryId, in: context) {
+                if let substituteVolutary = Voluntary.find(matching: substituteVolutaryId, in: context) {
+                    substituteVolutary.addToInvitations(substituteInvitationItem)
+                    substituteVolutary.addToNotices(notice)
+                }
                 try? context.save()
-                fbDBRef
-                    .child(Voluntary.rootFirebaseDatabaseReference)
-                    .child(substituteVolutaryId)
-                    .child(Invitation_Item.rootFirebaseDatabaseReference)
-                    .child(substituteInvitationId)
-                    .setValue(substituteInvitationItem.dictionaryValue)
+                let noticeId = notice.identifier ?? ""
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(substituteVolutaryId).child(Notice.rootFirebaseDatabaseReference).child(noticeId).setValue(notice.dictionaryValue)
             }
+            fbDBRef
+                .child(Voluntary.rootFirebaseDatabaseReference)
+                .child(substituteVolutaryId)
+                .child(Invitation_Item.rootFirebaseDatabaseReference)
+                .child(substituteInvitationId)
+                .setValue(substituteInvitationItem.dictionaryValue)
         }
         navigationController?.popViewController(animated: true)
     }

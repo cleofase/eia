@@ -57,7 +57,7 @@ class NoticesTableViewController: UITableViewController {
     private func updateUI() {
         let context = containter.viewContext
         let voluntaryId = Auth.auth().currentUser?.uid ?? ""
-        workingIndicator.show(at: self.view)
+        workingIndicator.show(atTable: tableView)
         if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
             self.voluntary = voluntary
             if let notices = voluntary.notices?.allObjects as? [Notice] {

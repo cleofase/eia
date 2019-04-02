@@ -253,6 +253,32 @@ class DetailScaleTableViewController: UITableViewController {
         try? context.save()
         fbDbRef.child(Scale.rootFirebaseDatabaseReference).child(scaleId).setValue(scale.dictionaryValue)
         fbDbRef.child(Team.rootFirebaseDatabaseReference).child(teamId).setValue(team?.dictionaryValue)
+        
+        // Send notices routine...
+        if let invitations = scale.invitations?.allObjects as? [Invitation_Item] {
+            let noticeType: NoticeType!
+            switch status {
+            case .canceled:
+                noticeType = NoticeType.cancelScale
+            case .confirmed:
+                noticeType = NoticeType.confirmedScale
+            case .done:
+                noticeType = NoticeType.doneScale
+            default:
+                return
+            }
+            for invitation in invitations {
+                let voluntaryId = invitation.voluntary_id ?? ""
+                if let notice = Notice.create(withType: noticeType, relatedEntity: scale, voluntaryId: voluntaryId, in: context) {
+                    if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
+                        voluntary.addToNotices(notice)
+                    }
+                    try? context.save()
+                    let noticeId = notice.identifier ?? ""
+                    fbDbRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Notice.rootFirebaseDatabaseReference).child(noticeId).setValue(notice.dictionaryValue)
+                }
+            }
+        }
     }
     
     // MARK: - UIViewController

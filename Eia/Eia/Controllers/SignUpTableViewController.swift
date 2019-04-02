@@ -15,6 +15,7 @@ import FirebaseDatabase
 class SignUpTableViewController: EiaFormTableViewController {
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDbRef = Database.database().reference()
+    private let workingIndicator = WorkingIndicator()
 
     @IBOutlet weak var nameTextField: UserTextField!
     @IBOutlet weak var alertNameLabel: UILabel!
@@ -24,19 +25,28 @@ class SignUpTableViewController: EiaFormTableViewController {
     @IBOutlet weak var alertPasswordLabel: UILabel!
     @IBOutlet weak var rePasswordTextField: RePasswordTextField!
     @IBOutlet weak var alertRePasswordLabel: UILabel!
+    @IBOutlet weak var coverSignUpView: UIView!
+    @IBOutlet weak var coverLoginView: UIView!
+    
     
     @IBAction func signUpButton(_ sender: MainFlowButton) {
+        hideFormButtons()
+        workingIndicator.show(at: coverLoginView)
         performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
             if formValid {
                 let name = self?.nameTextField.text ?? ""
                 let email = self?.emailTextField.text ?? ""
                 let password = self?.passwordTextField.text ?? ""
                 self?.perfomSignUp(name: name, email: email, password: password) {[weak self] (success) in
+                    self?.workingIndicator.hide()
+                    self?.showFormButtons()
                     if success {
                         self?.dismiss(animated: true, completion: nil)
                     }
                 }
             } else {
+                self?.workingIndicator.hide()
+                self?.showFormButtons()
                 self?.becomeFirstNotValidFieldFirstResponder()
             }
         })
@@ -66,6 +76,15 @@ class SignUpTableViewController: EiaFormTableViewController {
         rePasswordTextField.associatedPasswordTextField = passwordTextField
         eiaTextFields = [nameTextField, emailTextField, passwordTextField, rePasswordTextField]
         alertLabels = [alertNameLabel, alertEmailLabel, alertPasswordLabel, alertRePasswordLabel]
+        showFormButtons()
+    }
+    private func hideFormButtons() {
+        coverLoginView.isHidden = false
+        coverSignUpView.isHidden = false
+    }
+    private func showFormButtons() {
+        coverLoginView.isHidden = true
+        coverSignUpView.isHidden = true
     }
     private func perfomSignUp(name: String, email: String, password: String, completion: @escaping (Bool) -> Void) {
         let context: NSManagedObjectContext = containter.viewContext
@@ -164,7 +183,7 @@ class SignUpTableViewController: EiaFormTableViewController {
             get {
                 switch self {
                 case .Logo:
-                    return 88
+                    return 112
                 case .Description:
                     return 88
                 case .UserName:

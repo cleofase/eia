@@ -7,16 +7,33 @@
 //
 
 import UIKit
+import FirebaseCore
+import FirebaseAuth
 
 class ResetPasswordTableViewController: EiaFormTableViewController {
+    private let workingIndicator = WorkingIndicator()
+    
     @IBOutlet weak var emailTextField: EmailTextField!
     @IBOutlet weak var alertEmailLabel: UILabel!
+    @IBOutlet weak var coverResetPasswordView: UIView!
+    @IBOutlet weak var coverLoginView: UIView!
     
     @IBAction func resetPasswordButton(_ sender: MainFlowButton) {
+        hideFormButtons()
+        workingIndicator.show(at: coverLoginView)
         performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
             if formValid {
-                self?.perfomResetPassword()
+                let email = self?.emailTextField.text ?? ""
+                self?.perfomResetPassword(withEmail: email) {[weak self] (success) in
+                    self?.workingIndicator.hide()
+                    self?.showFormButtons()
+                    if success {
+                        self?.dismiss(animated: true, completion: nil)
+                    }
+                }
             } else {
+                self?.workingIndicator.hide()
+                self?.showFormButtons()
                 self?.becomeFirstNotValidFieldFirstResponder()
             }
         })
@@ -41,9 +58,28 @@ class ResetPasswordTableViewController: EiaFormTableViewController {
         emailTextField.delegate = self
         eiaTextFields = [emailTextField]
         alertLabels = [alertEmailLabel]
+        showFormButtons()
     }
-    private func perfomResetPassword() {
-        
+    private func hideFormButtons() {
+        coverLoginView.isHidden = false
+        coverResetPasswordView.isHidden = false
+    }
+    private func showFormButtons() {
+        coverLoginView.isHidden = true
+        coverResetPasswordView.isHidden = true
+    }
+    private func perfomResetPassword(withEmail email: String, completion: @escaping (Bool) -> Void) {
+        Auth.auth().sendPasswordReset(withEmail: email) {(error) in
+            if let error = error {
+                let serverError = EiaError(withType: EiaErrorType.serverError)
+                serverError.showAsAlert(title: "Reiniciar Senha", controller: self, complement: error.localizedDescription) {
+                    completion(false)
+                }
+            } else {
+                // send instructions alert
+                completion(true)
+            }
+        }
     }
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -73,7 +109,7 @@ class ResetPasswordTableViewController: EiaFormTableViewController {
             get {
                 switch self {
                 case .Logo:
-                    return 88
+                    return 112
                 case .Description:
                     return 88
                 case .EmailField:
