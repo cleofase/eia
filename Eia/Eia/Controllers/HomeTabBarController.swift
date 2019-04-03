@@ -23,6 +23,7 @@ class HomeTabBarController: UITabBarController {
         self.delegate = self
         selectedIndex = 2
         guard let currentUser = Auth.auth().currentUser else {return}
+        let currentUserId = currentUser.uid
         retrieveVoluntary(withUser: currentUser)
         handle = Auth.auth().addStateDidChangeListener({[weak self] (auth, user) in
             guard let user = user else {
@@ -31,11 +32,12 @@ class HomeTabBarController: UITabBarController {
             }
             self?.retrieveVoluntary(withUser: user)
         })
-
+        startChangeVoluntaryListener(withIdentifier: currentUserId)
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         Auth.auth().removeStateDidChangeListener(handle!)
+        fbDbRef.removeAllObservers()
     }
     private func goToLoginScreen() {
         let mainStoryBorad = UIStoryboard(name: "Main", bundle: nil)
@@ -50,31 +52,44 @@ class HomeTabBarController: UITabBarController {
             }
         }
     }
+    private func updateVolutary(withDictionary dictionary: NSDictionary) {
+        let context: NSManagedObjectContext = containter.viewContext
+        DispatchQueue.main.async {[weak self] in
+            if let retrievedVoluntary = Voluntary.createOrUpdate(matchDictionary: dictionary, in: context) {
+                let status = retrievedVoluntary.status ?? ""
+                if status == VoluntaryStatus.pending.stringValue {
+                    let voluntaryId = retrievedVoluntary.authId ?? ""
+                    retrievedVoluntary.status = VoluntaryStatus.active.stringValue
+                    try? context.save()
+                    self?.fbDbRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).setValue(retrievedVoluntary.dictionaryValue)
+                } else {
+                    try? context.save()
+                }
+                self?.voluntary = retrievedVoluntary
+            }
+        }
+    }
+    private func startChangeVoluntaryListener(withIdentifier identifier: String) {
+        fbDbRef.child(Voluntary.rootFirebaseDatabaseReference).child(identifier).observe(.childChanged, with: {[weak self] (snapshot) in
+            if let voluntaryDictionary = snapshot.value as? NSDictionary {
+                self?.updateVolutary(withDictionary: voluntaryDictionary)
+            }
+        })
+    }
     private func retrieveVoluntary(withUser user: User) {
         let context: NSManagedObjectContext = containter.viewContext
         let authId = user.uid
         fbDbRef.child(Voluntary.rootFirebaseDatabaseReference).child(authId).observeSingleEvent(of: .value) {[weak self] (snapshot) in
             if let voluntaryDictionary = snapshot.value as? NSDictionary {
-                DispatchQueue.main.async {[weak self] in
-                    if let retrievedVoluntary = Voluntary.createOrUpdate(matchDictionary: voluntaryDictionary, in: context) {
-                        let status = retrievedVoluntary.status ?? ""
-                        if status == VoluntaryStatus.pending.stringValue {
-                            retrievedVoluntary.status = VoluntaryStatus.active.stringValue
-                            try? context.save()
-                            self?.fbDbRef.child(Voluntary.rootFirebaseDatabaseReference).child(authId).setValue(retrievedVoluntary.dictionaryValue)
-                        } else {
-                            try? context.save()
-                        }
-                        self?.voluntary = retrievedVoluntary
-                        return
-                    }
-                }
+                self?.updateVolutary(withDictionary: voluntaryDictionary)
+            } else {
+                let name = "Novo Voluntário"
+                self?.voluntary = Voluntary.create(with: user, name: name, in: context)
+                try? context.save()
             }
-            let name = "Novo Voluntário"
-            self?.voluntary = Voluntary.create(with: user, name: name, in: context)
-            try? context.save()
         }
     }
+
 
 }
 

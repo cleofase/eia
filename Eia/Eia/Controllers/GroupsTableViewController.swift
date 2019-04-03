@@ -54,15 +54,15 @@ class GroupsTableViewController: UITableViewController {
             }
             tableView.reloadData()
         }
-        retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] (voluntary) in
-            DispatchQueue.main.async {[weak self] in
-                self?.voluntary = voluntary
-                if let groupItems = voluntary.groups?.allObjects as? [Group_Item] {
-                    self?.groupItems = groupItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
-                }
-                self?.tableView.reloadData()
-            }
-        })
+//        retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] (voluntary) in
+//            DispatchQueue.main.async {[weak self] in
+//                self?.voluntary = voluntary
+//                if let groupItems = voluntary.groups?.allObjects as? [Group_Item] {
+//                    self?.groupItems = groupItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
+//                }
+//                self?.tableView.reloadData()
+//            }
+//        })
     }
     private func retrieveVoluntaryFromCloud(withVoluntaryId voluntaryId: String, completionWithSuccess: @escaping (Voluntary) -> Void) {
         let context: NSManagedObjectContext = containter.viewContext

@@ -67,8 +67,10 @@ class NewGroupTableViewController: EiaFormTableViewController {
     }
     private func updateUI() {
         volunteersDataSource.update {[weak self] in
-            self?.volunteerTableView.reloadData()
-            self?.volunteerTableView.setEditing(true, animated: true)
+            DispatchQueue.main.async {[weak self] in
+                self?.volunteerTableView.reloadData()
+                self?.volunteerTableView.setEditing(true, animated: true)
+            }
         }
     }
     private func createGroup(withName name: String, description: String, volunteers: [Voluntary]) {

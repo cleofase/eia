@@ -57,7 +57,7 @@ class NoticesTableViewController: UITableViewController {
     private func updateUI() {
         let context = containter.viewContext
         let voluntaryId = Auth.auth().currentUser?.uid ?? ""
-        workingIndicator.show(atTable: tableView)
+//        workingIndicator.show(atTable: tableView)
         if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
             self.voluntary = voluntary
             if let notices = voluntary.notices?.allObjects as? [Notice] {
@@ -65,16 +65,16 @@ class NoticesTableViewController: UITableViewController {
             }
             tableView.reloadData()
         }
-        retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] (voluntary) in
-            DispatchQueue.main.async {[weak self] in
-                self?.voluntary = voluntary
-                if let notices = voluntary.notices?.allObjects as? [Notice] {
-                    self?.notices = notices.sorted(by: {($0.date ?? Date()) > ($1.date ?? Date())})
-                }
-                self?.tableView.reloadData()
-                self?.workingIndicator.hide()
-            }
-        })
+//        retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] (voluntary) in
+//            DispatchQueue.main.async {[weak self] in
+//                self?.voluntary = voluntary
+//                if let notices = voluntary.notices?.allObjects as? [Notice] {
+//                    self?.notices = notices.sorted(by: {($0.date ?? Date()) > ($1.date ?? Date())})
+//                }
+//                self?.tableView.reloadData()
+//                self?.workingIndicator.hide()
+//            }
+//        })
     }
     private func retrieveVoluntaryFromCloud(withVoluntaryId voluntaryId: String, completionWithSuccess: @escaping (Voluntary) -> Void) {
         let context: NSManagedObjectContext = containter.viewContext
