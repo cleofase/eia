@@ -224,7 +224,7 @@ class Notice: NSManagedObject {
         get {
             return [
                 "identifier": identifier ?? "",
-                "notice_typenotice_type": notice_type ?? "",
+                "notice_type": notice_type ?? "",
                 "voluntary_id": voluntary_id ?? "",
                 "related_entity": related_entity ?? "",
                 "entity_id": entity_id ?? "",

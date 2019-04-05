@@ -17,6 +17,7 @@ class HomeTabBarController: UITabBarController {
     private var voluntary: Voluntary?
     private var handle: AuthStateDidChangeListenerHandle?
     private var fbDbRef = Database.database().reference()
+    private var updateVoluntaryDelegate: UpdateVoluntaryDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,6 +67,9 @@ class HomeTabBarController: UITabBarController {
                     try? context.save()
                 }
                 self?.voluntary = retrievedVoluntary
+                if let updateVoluntaryDelegate = self?.updateVoluntaryDelegate {
+                    updateVoluntaryDelegate.voluntaryHasBeenUpdated(withVoluntary: retrievedVoluntary)
+                }
             }
         }
     }
@@ -89,8 +93,6 @@ class HomeTabBarController: UITabBarController {
             }
         }
     }
-
-
 }
 
 extension HomeTabBarController: UITabBarControllerDelegate {
@@ -100,15 +102,30 @@ extension HomeTabBarController: UITabBarControllerDelegate {
         
         if let navigationController = viewController as? UINavigationController {
             let destination = navigationController.viewControllers.first
-            if let profileController = destination as? ProfileViewController {
-                profileController.voluntary = voluntary                
+            if let teamsController = destination as? TeamsTableViewController {
+                print("*** Equipes ***")
+                teamsController.voluntary = voluntary
+            }
+            if let scalesController = destination as? ScalesTableViewController {
+                print("*** Escalas ***")
+                scalesController.voluntary = voluntary
+            }
+            if let noticesController = destination as? NoticesTableViewController {
+                print("*** Noticias ***")
+                noticesController.voluntary = voluntary
             }
             if let groupsController = destination as? GroupsTableViewController {
+                print("*** Grupos ***")
                 groupsController.voluntary = voluntary
             }
-            if let teamsController = destination as? TeamsTableViewController {
-                teamsController.voluntary = voluntary
+            if let profileController = destination as? ProfileViewController {
+                print("*** Perfil ***")
+                profileController.voluntary = voluntary
             }
         }
     }
+}
+
+protocol UpdateVoluntaryDelegate {
+    func voluntaryHasBeenUpdated(withVoluntary voluntary: Voluntary)
 }
