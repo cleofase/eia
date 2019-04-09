@@ -12,6 +12,7 @@ import CoreData
 import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
+import FirebaseStorage
 
 class EditProfileTableViewController: EiaFormTableViewController {
     public var voluntary: Voluntary?
