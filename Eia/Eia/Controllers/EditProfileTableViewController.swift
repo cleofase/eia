@@ -19,6 +19,8 @@ class EditProfileTableViewController: EiaFormTableViewController {
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private let fbDBRef = Database.database().reference()
     private var photoStr: String?
+    private var photoUID: String?
+    private var photoURL: String?
 
     @IBOutlet weak var photoImageView: UIImageView!
     @IBOutlet weak var nameText: UserTextField!
@@ -91,6 +93,11 @@ class EditProfileTableViewController: EiaFormTableViewController {
         try? context.save()
         fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(authId).setValue(voluntary.dictionaryValue)
     }
+    // Fazer o upload da photo para o firebase Storage e retornar a URL para download...
+    private func uploadVoluntaryPhoto(withPhotoStr photoStr: String) -> String {
+        
+        return ""
+    }
 
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
@@ -136,8 +143,8 @@ extension EditProfileTableViewController: UIImagePickerControllerDelegate, UINav
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             photoImageView.image = pickedImage
             if let imageData = pickedImage.pngData() {
-                let imageStr = imageData.base64EncodedString()
-                photoStr = imageStr
+                photoStr = imageData.base64EncodedString()
+                photoUID = UUID().uuidString
             }
         }
         picker.dismiss(animated: true, completion: nil)
