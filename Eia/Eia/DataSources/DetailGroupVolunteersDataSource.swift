@@ -25,9 +25,10 @@ class DetailGroupVolunteersDataSource: NSObject {
         }
     }
     public func refresh() {
-        let groupId = self.group.identifier ?? ""
+        let groupId = group.identifier ?? ""
         if let group = Group.find(matching: groupId, in: context) {
             self.group = group
+            volunteerItems.removeAll()
             if let volunteerItems = group.volunteers?.allObjects as? [Voluntary_Item] {
                 self.volunteerItems = volunteerItems.sorted(by: {($0.name ?? "") < ($1.name ?? "")})
             }

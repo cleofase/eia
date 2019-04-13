@@ -16,6 +16,7 @@ class NewGroupTableViewController: EiaFormTableViewController {
     private var containter: NSPersistentContainer = AppDelegate.persistentContainer!
     private var volunteersDataSource: NewGroupVolunteersDataSource!
     private let fbDBRef = Database.database().reference()
+    private var workingIndicator = WorkingIndicator()
 
     @IBOutlet weak var leaderNameTextField: UserTextField!
     @IBOutlet weak var nameTextField: GroupNameTextField!
@@ -66,12 +67,18 @@ class NewGroupTableViewController: EiaFormTableViewController {
         volunteerTableView.delegate = volunteersDataSource
     }
     private func updateUI() {
-        volunteersDataSource.update {[weak self] in
+        refreshEntitiesTables()
+    }
+    private func refreshEntitiesTables() {
+        workingIndicator.show(atTable: volunteerTableView)
+        volunteersDataSource.update {
             DispatchQueue.main.async {[weak self] in
                 self?.volunteerTableView.reloadData()
                 self?.volunteerTableView.setEditing(true, animated: true)
+                self?.workingIndicator.hide()
             }
         }
+        volunteerTableView.reloadData()
     }
     private func createGroup(withName name: String, description: String, volunteers: [Voluntary]) {
         guard let voluntary = voluntary else {return}

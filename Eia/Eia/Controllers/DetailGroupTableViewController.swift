@@ -14,8 +14,6 @@ import FirebaseAuth
 class DetailGroupTableViewController: UITableViewController {
     public var group: Group?
     private let container = AppDelegate.persistentContainer!
-    private var teams = [Team]()
-    private var volunteers = [Voluntary]()
     private var volunteersDataSource: DetailGroupVolunteersDataSource!
     private var teamsDataSource: DetailGroupTeamsDataSource!
     
@@ -97,6 +95,36 @@ class DetailGroupTableViewController: UITableViewController {
         teamsTableView.reloadData()
         volunteersTableView.reloadData()
     }
+    private enum FormSectionContentType: Int {
+        case photo = 0
+        case description = 1
+        case leaderName = 2
+        case teams = 3
+        case volunteers = 4
+        
+        func heightForRow(with group: Group?) -> CGFloat {
+            switch self {
+            case .photo:
+                return 182
+            case .description:
+                return 40
+            case .leaderName:
+                return 40
+            case .teams:
+                if let numberOfTeams = group?.teams?.count {
+                    return CGFloat(44 * numberOfTeams + 44)
+                } else {
+                    return 44
+                }
+            case .volunteers:
+                if let numberOfVolunteers = group?.volunteers?.count {
+                    return CGFloat(44 * numberOfVolunteers + 44)
+                } else {
+                    return 44
+                }
+            }
+        }
+    }
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 5
@@ -110,6 +138,14 @@ class DetailGroupTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = EiaColors.SunSet
+        }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        if let contentType = FormSectionContentType(rawValue: section) {
+            return contentType.heightForRow(with: group)
+        } else {
+            return 40
         }
     }
 }

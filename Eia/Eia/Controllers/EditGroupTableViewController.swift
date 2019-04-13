@@ -23,6 +23,7 @@ class EditGroupTableViewController: EiaFormTableViewController {
     private var photoStr: String?
     private var volunteersDataSource: EditGroupVolunteersDataSource!
     private var teamsDataSource: EditGroupTeamsDataSource!
+    private var workingIndicator = WorkingIndicator()
     
     // MARK: - Outlets
     @IBOutlet weak var photoImageView: UIImageView!
@@ -35,16 +36,24 @@ class EditGroupTableViewController: EiaFormTableViewController {
     @IBOutlet weak var teamTableView: UITableView!
     @IBOutlet weak var volunteerTableView: UITableView!
     
+    // MARK: - Actions
     @IBAction func confirmButton(_ sender: UIBarButtonItem) {
-        performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
+        performFormValidation(validationDidFinishWithSuccess: {(formValid) in
             if formValid {
-                let name = self?.nameTextField.text ?? ""
-                let description = self?.descriptionTextField.text ?? ""
-                let volunteerItems = self?.volunteersDataSource.selectedVolunteerItems ?? [Voluntary_Item]()
-                let removedItems = self?.volunteersDataSource.removedVolunteerItems ?? [Voluntary_Item]()
-                self?.saveGroupDataWithExit(withName: name, description: description, volunteerItems: volunteerItems, removedVolunteerItems: removedItems)
+                DispatchQueue.main.async {[weak self] in
+                    guard let strongSelf = self else {return}
+                    let name = strongSelf.nameTextField.text ?? ""
+                    let description = strongSelf.descriptionTextField.text ?? ""
+                    let addedItems = strongSelf.volunteersDataSource.addedVolunteerItems
+                    let removedItems = strongSelf.volunteersDataSource.removedVolunteerItems
+                    let notChangedItems = strongSelf.volunteersDataSource.notChangedVolunteerItems
+                    let selectedItems = strongSelf.volunteersDataSource.selectedVolunteerItems
+                    self?.saveGroupDataWithExit(withName: name, description: description, addedVolunteerItems: addedItems, removedVolunteerItems: removedItems, notChangedVolunteerItems: notChangedItems, selectedVolunteerItems: selectedItems)
+                }
             } else {
-                self?.becomeFirstNotValidFieldFirstResponder()
+                DispatchQueue.main.async {[weak self] in
+                    self?.becomeFirstNotValidFieldFirstResponder()
+                }
             }
         })
     }
@@ -85,7 +94,6 @@ class EditGroupTableViewController: EiaFormTableViewController {
         teamTableView.dataSource = teamsDataSource
     }
     
-    // exibir a tabela de equipes apenas para leitura...
     private func updateUI() {
         guard let group = group else {return}
         nameTextField.text = group.name
@@ -99,19 +107,27 @@ class EditGroupTableViewController: EiaFormTableViewController {
             let defaultPhoto = UIImage(named: "group_default_icon")
             photoImageView.image = defaultPhoto
         }
-        volunteersDataSource.update {[weak self] in
-            self?.volunteerTableView.reloadData()
-            self?.volunteerTableView.setEditing(true, animated: true)
+        refreshEntitiesTables()
+    }
+    private func refreshEntitiesTables() {
+        workingIndicator.show(atTable: volunteerTableView)
+        volunteersDataSource.update {
+            DispatchQueue.main.async {[weak self] in
+                self?.volunteerTableView.reloadData()
+                self?.volunteerTableView.setEditing(true, animated: true)
+                self?.workingIndicator.hide()
+            }
         }
+        volunteerTableView.reloadData()
         teamTableView.reloadData()
     }
 
-    private func saveGroupDataWithExit(withName name: String, description: String, volunteerItems: [Voluntary_Item], removedVolunteerItems: [Voluntary_Item]) {
+    private func saveGroupDataWithExit(withName name: String, description: String, addedVolunteerItems: [Voluntary_Item], removedVolunteerItems: [Voluntary_Item], notChangedVolunteerItems: [Voluntary_Item], selectedVolunteerItems: [Voluntary_Item]) {
         let context: NSManagedObjectContext = containter.viewContext
         guard let group = group else {return}
         group.name = name
         group.group_description = description
-        group.volunteers = NSSet(array: volunteerItems)
+        group.volunteers = NSSet(array: selectedVolunteerItems)
         group.photo_str = photoStr
         try? context.save()
         let groupId = group.identifier ?? ""
@@ -125,8 +141,16 @@ class EditGroupTableViewController: EiaFormTableViewController {
                 fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(leaderId).child(Group_Item.rootFirebaseDatabaseReference).child(groupId).setValue(groupItem.dictionaryValue)
             }
         }
-        
-        for voluntaryItem in volunteerItems {
+        for voluntaryItem in addedVolunteerItems {
+            let voluntaryId = voluntaryItem.identifier ?? ""
+            if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
+                let groupItem = Group_Item.create(withGroup: group, in: context)
+                voluntary.addToGroups(groupItem)
+                try? context.save()
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Group_Item.rootFirebaseDatabaseReference).child(groupId).setValue(groupItem.dictionaryValue)
+            }
+        }
+        for voluntaryItem in notChangedVolunteerItems {
             let voluntaryId = voluntaryItem.identifier ?? ""
             if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
                 if let groupItem = voluntary.findGroupItem(withGroupId: groupId, in: context) {
@@ -136,9 +160,9 @@ class EditGroupTableViewController: EiaFormTableViewController {
                 }
             }
         }
-        
         for voluntaryItem in removedVolunteerItems {
             let voluntaryId = voluntaryItem.identifier ?? ""
+            if voluntaryId == leaderId {continue}
             if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
                 if let groupItem = voluntary.findGroupItem(withGroupId: groupId, in: context) {
                     voluntary.removeFromGroups(groupItem)
@@ -147,10 +171,37 @@ class EditGroupTableViewController: EiaFormTableViewController {
                 }
             }
         }
-        
         navigationController?.popViewController(animated: true)
     }
-    
+    private enum FormSectionContentType: Int {
+        case photo = 0
+        case groupName = 1
+        case description = 2
+        case leaderName = 3
+        case teams = 4
+        case volunteers = 5
+        
+        func heightForRow(with group: Group?) -> CGFloat {
+            switch self {
+            case .photo:
+                return 182
+            case .groupName:
+                return 40
+            case .description:
+                return 40
+            case .leaderName:
+                return 40
+            case .teams:
+                if let numberOfTeams = group?.teams?.count {
+                    return CGFloat(44 * numberOfTeams + 44)
+                } else {
+                    return 44
+                }
+            case .volunteers:
+                return 180
+            }
+        }
+    }
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 6
@@ -164,6 +215,14 @@ class EditGroupTableViewController: EiaFormTableViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = EiaColors.SunSet
+        }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        if let contentType = FormSectionContentType(rawValue: section) {
+            return contentType.heightForRow(with: group)
+        } else {
+            return 40
         }
     }
     private func pickImage() {

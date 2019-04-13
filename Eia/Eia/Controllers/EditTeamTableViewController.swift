@@ -12,6 +12,7 @@ import FirebaseCore
 import FirebaseAuth
 import FirebaseDatabase
 
+
 class EditTeamTableViewController: EiaFormTableViewController {
     // MARK: - Public vars
     public var team: Team?
@@ -21,6 +22,8 @@ class EditTeamTableViewController: EiaFormTableViewController {
     private let fbDBRef = Database.database().reference()
     private var volunteersDataSource: EditTeamVolunteersDataSource!
     private var scalesDataSource: EditTeamScalesDataSource!
+    private var workingIndicator = WorkingIndicator()
+    
     
     // MARK: - Outlets
     @IBOutlet weak var groupNameTextField: GroupNameTextField!
@@ -32,16 +35,24 @@ class EditTeamTableViewController: EiaFormTableViewController {
     @IBOutlet weak var volunteersTableView: UITableView!
     @IBOutlet weak var scalesTableView: UITableView!
     
+    
     // MARK: - Actions
     @IBAction func confirmButton(_ sender: UIBarButtonItem) {
-        performFormValidation(validationDidFinishWithSuccess: {[weak self] (formValid) in
+        performFormValidation(validationDidFinishWithSuccess: {(formValid) in
             if formValid {
-                let teamName = self?.teamNameTextField.text ?? ""
-                let volunteerItems = self?.volunteersDataSource.selectedVolunteerItems ?? [Voluntary_Item]()
-                let removedItems = self?.volunteersDataSource.removedVolunteerItems ?? [Voluntary_Item]()
-                self?.saveTeamDataWithExit(withName: teamName, volunteerItems: volunteerItems, removedVolunteerItems: removedItems)
+                DispatchQueue.main.async {[weak self] in
+                    guard let strongSelf = self else {return}
+                    let teamName = strongSelf.teamNameTextField.text ?? ""
+                    let addedItems = strongSelf.volunteersDataSource.addedVolunteerItems
+                    let removedItems = strongSelf.volunteersDataSource.removedVolunteerItems
+                    let notChangedItems = strongSelf.volunteersDataSource.notChangedVolunteerItems
+                    let selectedItems = strongSelf.volunteersDataSource.selectedVolunteerItems
+                    self?.saveTeamDataWithExit(withName: teamName, addedVolunteerItems: addedItems, removedVolunteerItems: removedItems, notChangedVolunteerItems: notChangedItems, selectedVolunteerItems: selectedItems)
+                }
             } else {
-                self?.becomeFirstNotValidFieldFirstResponder()
+                DispatchQueue.main.async {[weak self] in
+                    self?.becomeFirstNotValidFieldFirstResponder()
+                }
             }
         })
     }
@@ -84,18 +95,25 @@ class EditTeamTableViewController: EiaFormTableViewController {
         alertLeaderNameLabel.text?.removeAll()
         teamNameTextField.text = team.name
         alertTeamNameLabel.text?.removeAll()
-        volunteersDataSource.update {[weak self] in
-            self?.volunteersTableView.reloadData()
-            self?.volunteersTableView.setEditing(true, animated: true)
+        refreshEntitiesTables()
+    }
+    private func refreshEntitiesTables() {
+        workingIndicator.show(atTable: volunteersTableView)
+        volunteersDataSource.update {
+            DispatchQueue.main.async {[weak self] in
+                self?.volunteersTableView.reloadData()
+                self?.volunteersTableView.setEditing(true, animated: true)
+                self?.workingIndicator.hide()
+            }
         }
         volunteersTableView.reloadData()
         scalesTableView.reloadData()
     }
-    private func saveTeamDataWithExit(withName name: String, volunteerItems: [Voluntary_Item], removedVolunteerItems: [Voluntary_Item]) {
+    private func saveTeamDataWithExit(withName name: String, addedVolunteerItems: [Voluntary_Item], removedVolunteerItems: [Voluntary_Item], notChangedVolunteerItems: [Voluntary_Item], selectedVolunteerItems: [Voluntary_Item]) {
         let context = containter.viewContext
         guard let team = team else {return}
         team.name = name
-        team.volunteers = NSSet(array: volunteerItems)
+        team.volunteers = NSSet(array: selectedVolunteerItems)
         try? context.save()
         let teamId = team.identifier ?? ""
         fbDBRef.child(Team.rootFirebaseDatabaseReference).child(teamId).setValue(team.dictionaryValue)
@@ -116,7 +134,16 @@ class EditTeamTableViewController: EiaFormTableViewController {
                 fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(leaderId).child(Team_Item.rootFirebaseDatabaseReference).child(teamId).setValue(teamItem.dictionaryValue)
             }
         }
-        for voluntaryItem in volunteerItems {
+        for voluntaryItem in addedVolunteerItems {
+            let voluntaryId = voluntaryItem.identifier ?? ""
+            if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
+                let teamItem = Team_Item.create(withTeam: team, in: context)
+                voluntary.addToTeams(teamItem)
+                try? context.save()
+                fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Team_Item.rootFirebaseDatabaseReference).child(teamId).setValue(teamItem.dictionaryValue)
+            }
+        }
+        for voluntaryItem in notChangedVolunteerItems {
             let voluntaryId = voluntaryItem.identifier ?? ""
             if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
                 if let teamItem = voluntary.findTeamItem(withTeamId: teamId, in: context) {
@@ -126,9 +153,9 @@ class EditTeamTableViewController: EiaFormTableViewController {
                 }
             }
         }
-        
         for voluntaryItem in removedVolunteerItems {
             let voluntaryId = voluntaryItem.identifier ?? ""
+            if voluntaryId == leaderId {continue}
             if let voluntary = Voluntary.find(matching: voluntaryId, in: context) {
                 if let teamItem = voluntary.findTeamItem(withTeamId: teamId, in: context) {
                     voluntary.removeFromTeams(teamItem)
@@ -141,6 +168,43 @@ class EditTeamTableViewController: EiaFormTableViewController {
     }
 
     // MARK: - Table view data source
+    private enum FormSectionContentType: Int {
+        case groupName = 0
+        case leaderName = 1
+        case teamName = 2
+        case volunteers = 3
+        case scales = 4
+        
+        func heightForRow(with team: Team?, in context: NSManagedObjectContext) -> CGFloat {
+            switch self {
+            case .groupName:
+                return 64
+            case .leaderName:
+                return 64
+            case .teamName:
+                return 64
+            case .volunteers:
+                let groupId = team?.group_id ?? ""
+                if let group = Group.find(matching: groupId, in: context) {
+                    if let numberOfVolunteers = group.volunteers?.count {
+                        return CGFloat(44 * numberOfVolunteers + 44)
+                    }
+                }
+                if let numberOfVolunteers = team?.volunteers?.count {
+                    return CGFloat(44 * numberOfVolunteers + 44)
+                } else {
+                    return 44
+                }
+            case .scales:
+                if let numberOfScales = team?.scales?.count {
+                    return CGFloat(60 * numberOfScales + 60)
+                } else {
+                    return 60
+                }
+            }
+        }
+    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 5
     }
@@ -153,6 +217,14 @@ class EditTeamTableViewController: EiaFormTableViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = EiaColors.SunSet
+        }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        if let contentType = FormSectionContentType(rawValue: section) {
+            return contentType.heightForRow(with: team, in: containter.viewContext )
+        } else {
+            return 40
         }
     }
 }

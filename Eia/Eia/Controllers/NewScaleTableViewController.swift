@@ -103,7 +103,6 @@ class NewScaleTableViewController: EiaFormTableViewController {
                     let noticeId = notice.identifier ?? ""
                     fbDBRef.child(Voluntary.rootFirebaseDatabaseReference).child(voluntaryId).child(Notice.rootFirebaseDatabaseReference).child(noticeId).setValue(notice.dictionaryValue)
                 }
-
             }
         }
         fbDBRef.child(Scale.rootFirebaseDatabaseReference).child(scaleId).setValue(scale.dictionaryValue)
@@ -112,6 +111,29 @@ class NewScaleTableViewController: EiaFormTableViewController {
     }
     
     // MARK: - Table view data source
+    private enum FormSectionContentType: Int {
+        case teamName = 0
+        case start = 1
+        case end = 2
+        case volunteers = 3
+        
+        func heightForRow(with team: Team?) -> CGFloat {
+            switch self {
+            case .teamName:
+                return 64
+            case .start:
+                return 64
+            case .end:
+                return 64
+            case .volunteers:
+                if let numberOfVolunteers = team?.volunteers?.count {
+                    return CGFloat(44 * numberOfVolunteers + 44)
+                } else {
+                    return 44
+                }
+            }
+        }
+    }
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
     }
@@ -124,6 +146,14 @@ class NewScaleTableViewController: EiaFormTableViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = EiaColors.SunSet
+        }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        if let contentType = FormSectionContentType(rawValue: section) {
+            return contentType.heightForRow(with: team)
+        } else {
+            return 40
         }
     }
 }

@@ -102,88 +102,28 @@ class NewTeamTableViewController: EiaFormTableViewController {
                 }
             }
         }
-        // listar para testar as entidades group, team, group_item, team_item, voluntary, voluntary_item...
-        print ("\n\n*** O grupo: \(group.name ?? "") tem:")
-        print ("\n****** Itens de Equipes: ([Team_Item])")
-        if let teams = group.teams?.allObjects as? [Team_Item] {
-            for teamItem in teams {
-                print ("\n****** \(teamItem.name ?? "")")
-            }
-        }
-        print ("\n****** Items de Voluntarios: ([Voluntary_Item])")
-        if let volunteers = group.volunteers?.allObjects as? [Voluntary_Item] {
-            for volunteer in volunteers {
-                print ("\n****** \(volunteer.name ?? "")")
-            }
-        }
-        
-        print ("\n\n*** A equipe: \(team.name ?? "") tem:")
-        print ("\n****** Itens de Voluntarios: ([Voluntary_Item])")
-        if let volunteers = team.volunteers?.allObjects as? [Voluntary_Item] {
-            for volunteer in volunteers {
-                print ("\n****** \(volunteer.name ?? "")")
-            }
-        }
-        
-        if let groupItem = Group_Item.find(matching: group.identifier ?? "", in: context) {
-            print ("\n\n*** O Item do grupo: \(groupItem.name ?? "") tem:")
-            print ("\n****** Voluntarios: ([Voluntary])")
-            if let volunteers = groupItem.volunteers?.allObjects as? [Voluntary] {
-                for volunteer in volunteers {
-                    print ("\n****** \(volunteer.name ?? "")")
-                }
-            }
-        }
-        
-        print ("\n\n*** O Item da equipe: \(teamItem.name ?? "") tem:")
-        print ("\n****** Grupo: (Group)")
-        print ("\n****** \(teamItem.group?.name ?? "")")
-        print ("\n****** Voluntarios: ([Voluntary])")
-        if let volunteers = teamItem.volunteers?.allObjects as? [Voluntary] {
-            for volunteer in volunteers {
-                print ("\n****** \(volunteer.name ?? "")")
-            }
-        }
-        
-        for volunteerItem in volunteerItems {
-            print ("\n\n*** O Item de voluntario: \(volunteerItem.name ?? "") tem:")
-            print ("\n****** Grupos: ([Group]])")
-            if let groups = volunteerItem.groups?.allObjects as? [Group] {
-                for group in groups {
-                    print ("\n****** \(group.name ?? "")")
-                }
-            }
-            print ("\n****** Equipes: ([Team])")
-            if let teams = volunteerItem.teams?.allObjects as? [Team] {
-                for team in teams {
-                    print ("\n****** \(team.name ?? "")")
-                }
-            }
-        }
-        
-        for volunteerItem in volunteerItems {
-            let identifier = volunteerItem.identifier ?? ""
-            if let volunteer = Voluntary.find(matching: identifier, in: context) {
-                print ("\n\n*** O voluntario: \(volunteer.name ?? "") tem:")
-                print ("\n****** Itens de Grupos: ([Group_Item]])")
-                if let groupItems = volunteer.groups?.allObjects as? [Group_Item] {
-                    for groupItem in groupItems {
-                        print ("\n****** \(groupItem.name ?? "")")
-                    }
-                }
-                print ("\n****** Itens de Equipes: ([Team_Item])")
-                if let teamItems = volunteer.teams?.allObjects as? [Team_Item] {
-                    for teamItem in teamItems {
-                        print ("\n****** \(teamItem.name ?? "")")
-                    }
-                }
-            }
-        }
-        
-        //
         navigationController?.popViewController(animated: true)
     }
-    
+    private enum FormSectionContentType: Int {
+        case groupName = 0
+        case teamName = 1
+        case volunteers = 2
+        
+        func heightForRow(with group: Group?) -> CGFloat {
+            switch self {
+            case .teamName:
+                return 64
+            case .groupName:
+                return 64
+            case .volunteers:
+                if let numberOfVolunteers = group?.volunteers?.count {
+                    return CGFloat(44 * numberOfVolunteers + 44)
+                } else {
+                    return 44
+                }
+            }
+        }
+    }
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 3
@@ -197,6 +137,14 @@ class NewTeamTableViewController: EiaFormTableViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = EiaColors.SunSet
+        }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        if let contentType = FormSectionContentType(rawValue: section) {
+            return contentType.heightForRow(with: group)
+        } else {
+            return 40
         }
     }
 }

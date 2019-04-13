@@ -17,8 +17,10 @@ class ScaleTableViewCell: UITableViewCell {
     private let workingIndicator = WorkingIndicator()
     public var scale: Scale?
     
+    @IBOutlet weak var startTextLabel: UILabel!
     @IBOutlet weak var startDateLabel: UILabel!
     @IBOutlet weak var startHourLabel: UILabel!
+    @IBOutlet weak var endTextLabel: UILabel!
     @IBOutlet weak var endDateLabel: UILabel!
     @IBOutlet weak var endHourLabel: UILabel!
     @IBOutlet weak var statusLabel: UILabel!
@@ -33,28 +35,38 @@ class ScaleTableViewCell: UITableViewCell {
     
     private func setup(withScale scale: Scale) {
         self.scale = scale
+        let scaleStatus = scale.status ?? ""
+        var scaleTextColor = EiaColors.PembaSand
+        if let scaleStatus = ScaleStatus(rawValue: scaleStatus) {
+            scaleTextColor = getScaleStatusColor(with: scaleStatus)
+        }
+        startTextLabel.textColor = scaleTextColor
+        startDateLabel.textColor = scaleTextColor
         startDateLabel.text = scale.start?.dateStringValue
+        startHourLabel.textColor = scaleTextColor
         startHourLabel.text = scale.start?.hourStringValue
+        endTextLabel.textColor = scaleTextColor
+        endDateLabel.textColor = scaleTextColor
         endDateLabel.text = scale.end?.dateStringValue
+        endHourLabel.textColor = scaleTextColor
         endHourLabel.text = scale.end?.hourStringValue
+        statusLabel.textColor = scaleTextColor
         statusLabel.text = scale.status
+        teamNameLabel.textColor = scaleTextColor
         teamNameLabel.text = scale.team_name
     }
-//    public func setup(withScaleItem scaleItem: Scale_Item) {
-//        let context = container.viewContext
-//        let scaleId = scaleItem.identifier ?? ""
-//        if let scale = Scale.find(matching: scaleId, in: context) {
-//            setup(withScale: scale)
-//        } else {
-//            startDateLabel.text?.removeAll()
-//            startHourLabel.text?.removeAll()
-//            endDateLabel.text?.removeAll()
-//            endHourLabel.text?.removeAll()
-//            teamNameLabel.text?.removeAll()
-//            statusLabel.text = scaleItem.status
-//        }
-//        updateTeamFromCloud(withScaleId: scaleId)
-//    }
+    private func getScaleStatusColor(with scaleStatus: ScaleStatus) -> UIColor {
+        switch scaleStatus {
+        case .created:
+            return EiaColors.PembaSand
+        case .confirmed:
+            return EiaColors.SunSet
+        case .done:
+            return EiaColors.PembaSandLight
+        case .canceled:
+            return EiaColors.PembaSandLight
+        }
+    }
     public func setup(withScaleId scaleId: String) {
         let context = container.viewContext
         if let scale = Scale.find(matching: scaleId, in: context) {

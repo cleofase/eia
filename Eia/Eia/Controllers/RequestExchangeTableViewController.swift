@@ -168,6 +168,28 @@ class RequestExchangeTableViewController: EiaFormTableViewController {
     }
 
     // MARK: - Table view data source
+    private enum FormSectionContentType: Int {
+        case teamName = 0
+        case status = 1
+        case start = 2
+        case end = 3
+        case volunteers = 4
+        
+        func heightForRow(with scale: Scale?) -> CGFloat {
+            switch self {
+            case .teamName:
+                return 64
+            case .status:
+                return 64
+            case .start:
+                return 64
+            case .end:
+                return 64
+            case .volunteers:
+                return 180
+            }
+        }
+    }
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 5
     }
@@ -180,6 +202,14 @@ class RequestExchangeTableViewController: EiaFormTableViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = EiaColors.SunSet
+        }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        if let contentType = FormSectionContentType(rawValue: section) {
+            return contentType.heightForRow(with: scale)
+        } else {
+            return 40
         }
     }
 }

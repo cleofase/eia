@@ -18,19 +18,43 @@ class EditTeamVolunteersDataSource: NSObject {
     private var volunteers = [Voluntary]()
     private let fbDbRef = Database.database().reference()
     public var selectedVolunteerItems = [Voluntary_Item]()
-    lazy public var removedVolunteerItems: [Voluntary_Item] = {
-        return teamVolunteerItems.filter({(oldItem) in
-            return !selectedVolunteerItems.contains(where: {(selectedItem) in
-                let selectedItemId = selectedItem.identifier ?? ""
-                let oldItemId = oldItem.identifier ?? ""
-                return selectedItemId == oldItemId
+    public var addedVolunteerItems: [Voluntary_Item] {
+        get {
+            return selectedVolunteerItems.filter({(selectedItem) in
+                return !teamVolunteerItems.contains(where: {(oldItem) in
+                    let selectedItemId = selectedItem.identifier ?? ""
+                    let oldItemId = oldItem.identifier ?? ""
+                    return selectedItemId == oldItemId
+                })
             })
-        })
-    }()
-    
+        }
+    }
+    public var removedVolunteerItems: [Voluntary_Item] {
+        get {
+            return teamVolunteerItems.filter({(oldItem) in
+                return !selectedVolunteerItems.contains(where: {(selectedItem) in
+                    let selectedItemId = selectedItem.identifier ?? ""
+                    let oldItemId = oldItem.identifier ?? ""
+                    return selectedItemId == oldItemId
+                })
+            })            
+        }
+    }
+    public var notChangedVolunteerItems: [Voluntary_Item] {
+        get {
+            return teamVolunteerItems.filter({(oldItem) in
+                return selectedVolunteerItems.contains(where: {(selectedItem) in
+                    let selectedItemId = selectedItem.identifier ?? ""
+                    let oldItemId = oldItem.identifier ?? ""
+                    return selectedItemId == oldItemId
+                })
+            })
+        }
+    }
     init(withTeam team: Team, context: NSManagedObjectContext) {
         self.team = team
         self.teamVolunteerItems = team.volunteers?.allObjects as? [Voluntary_Item] ?? [Voluntary_Item]()
+        self.selectedVolunteerItems = self.teamVolunteerItems
         self.context = context
     }
     private func updateVolunteersFromCloud(inContext context: NSManagedObjectContext, didUpdateWithSuccess: @escaping () -> Void) {
@@ -80,8 +104,11 @@ extension EditTeamVolunteersDataSource: UITableViewDataSource {
 
 extension EditTeamVolunteersDataSource: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let volunteerItem = Voluntary_Item.create(withVoluntary: volunteers[indexPath.row], in: context)
-        selectedVolunteerItems.append(volunteerItem)
+        let volunteer = volunteers[indexPath.row]
+        if !selectedVolunteerItems.contains(where: {$0.identifier == volunteer.authId}) {
+            let volunteerItem = Voluntary_Item.create(withVoluntary: volunteer, in: context)
+            selectedVolunteerItems.append(volunteerItem)
+        }
     }
     
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {

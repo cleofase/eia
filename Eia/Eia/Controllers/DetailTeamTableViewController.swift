@@ -65,6 +65,7 @@ class DetailTeamTableViewController: UITableViewController {
     private func setupUI() {
         let context = container.viewContext
         guard let team = team else {return}
+        tableView.tableFooterView = UIView()
         volunteersTableView.tableFooterView = UIView()
         volunteersDataSource = DetailTeamVolunteersDataSource(withTeam: team, context: context)
         volunteersTableView.dataSource = volunteersDataSource
@@ -89,6 +90,37 @@ class DetailTeamTableViewController: UITableViewController {
         volunteersTableView.reloadData()
         scalesTableView.reloadData()
     }
+    private enum FormSectionContentType: Int {
+        case teamName = 0
+        case groupName = 1
+        case leaderName = 2
+        case volunteers = 3
+        case scales = 4
+        
+        func heightForRow(with team: Team?) -> CGFloat {
+            switch self {
+            case .teamName:
+                return 40
+            case .groupName:
+                return 40
+            case .leaderName:
+                return 40
+            case .volunteers:
+                if let numberOfVolunteers = team?.volunteers?.count {
+                    return CGFloat(44 * numberOfVolunteers + 44)
+                } else {
+                    return 44
+                }
+            case .scales:
+                if let numberOfScales = team?.scales?.count {
+                    return CGFloat(60 * numberOfScales + 60)
+                } else {
+                    return 60
+                }
+            }
+        }
+    }
+
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 5
@@ -102,6 +134,14 @@ class DetailTeamTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = EiaColors.SunSet
+        }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        if let contentType = FormSectionContentType(rawValue: section) {
+            return contentType.heightForRow(with: team)
+        } else {
+            return 40
         }
     }
 }

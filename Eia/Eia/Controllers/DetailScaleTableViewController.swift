@@ -355,6 +355,29 @@ class DetailScaleTableViewController: UITableViewController {
             }
         })
     }
+    private enum FormSectionContentType: Int {
+        case teamName = 0
+        case start = 1
+        case end = 2
+        case volunteers = 3
+        
+        func heightForRow(with scale: Scale?) -> CGFloat {
+            switch self {
+            case .teamName:
+                return 40
+            case .start:
+                return 40
+            case .end:
+                return 40
+            case .volunteers:
+                if let numberOfVolunteers = scale?.invitations?.count {
+                    return CGFloat(68 * numberOfVolunteers + 68)
+                } else {
+                    return 68
+                }
+            }
+        }
+    }
     // MARK: - Table view data source
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 4
@@ -368,6 +391,14 @@ class DetailScaleTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if let view = view as? UITableViewHeaderFooterView {
             view.textLabel?.textColor = EiaColors.SunSet
+        }
+    }
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let section = indexPath.section
+        if let contentType = FormSectionContentType(rawValue: section) {
+            return contentType.heightForRow(with: scale)
+        } else {
+            return 40
         }
     }
 }
