@@ -147,8 +147,6 @@ class SignUpTableViewController: EiaFormTableViewController {
     private func persisteOnCloud(withVoluntary voluntary: Voluntary, completion: @escaping () -> Void) {
         let child = Voluntary.rootFirebaseDatabaseReference
         let authId = voluntary.authId ?? ""
-        print(fbDbRef.debugDescription)
-        print(voluntary.dictionaryValue.debugDescription)
         fbDbRef.child(child).child(authId).setValue(voluntary.dictionaryValue)
         completion()
     }

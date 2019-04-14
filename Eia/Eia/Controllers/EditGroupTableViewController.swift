@@ -252,10 +252,12 @@ class EditGroupTableViewController: EiaFormTableViewController {
 extension EditGroupTableViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            photoImageView.image = pickedImage
-            if let imageData = pickedImage.pngData() {
-                let imageStr = imageData.base64EncodedString()
-                photoStr = imageStr
+            let tumbnail = pickedImage.tumbnail
+            DispatchQueue.main.async {[weak self] in
+                self?.photoImageView.image = tumbnail
+            }
+            if let imageData = tumbnail.pngData() {
+                photoStr = imageData.base64EncodedString()
             }
         }
         picker.dismiss(animated: true, completion: nil)

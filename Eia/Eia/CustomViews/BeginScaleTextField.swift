@@ -63,29 +63,3 @@ class BeginScaleTextField: EiaTextField, ValidableField {
         markAsValid()
     }
 }
-
-extension Date {
-    var hourStringValue: String {
-        get {
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeStyle = .short
-            dateFormatter.dateStyle = .none
-            return dateFormatter.string(from: self)
-        }
-    }
-    var dateStringValue: String {
-        get {
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeStyle = .none
-            dateFormatter.dateStyle = .short
-            return dateFormatter.string(from: self)
-        }
-    }
-    var dateHourStringValue: String {
-        get {
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
-            return dateFormatter.string(from: self)
-        }
-    }
-}

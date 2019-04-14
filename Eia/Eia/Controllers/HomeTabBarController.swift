@@ -103,23 +103,18 @@ extension HomeTabBarController: UITabBarControllerDelegate {
         if let navigationController = viewController as? UINavigationController {
             let destination = navigationController.viewControllers.first
             if let teamsController = destination as? TeamsTableViewController {
-                print("*** Equipes ***")
                 teamsController.voluntary = voluntary
             }
             if let scalesController = destination as? ScalesTableViewController {
-                print("*** Escalas ***")
                 scalesController.voluntary = voluntary
             }
             if let noticesController = destination as? NoticesTableViewController {
-                print("*** Noticias ***")
                 noticesController.voluntary = voluntary
             }
             if let groupsController = destination as? GroupsTableViewController {
-                print("*** Grupos ***")
                 groupsController.voluntary = voluntary
             }
             if let profileController = destination as? ProfileViewController {
-                print("*** Perfil ***")
                 profileController.voluntary = voluntary
             }
         }

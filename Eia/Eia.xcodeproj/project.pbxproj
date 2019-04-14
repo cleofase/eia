@@ -82,6 +82,8 @@
 		80B507EC21FAA1C500B197FD /* EditGroupTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80B507EB21FAA1C500B197FD /* EditGroupTableViewController.swift */; };
 		80C586E922125218001E720A /* ScaleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C586E822125218001E720A /* ScaleTableViewCell.swift */; };
 		80C586EB2212528C001E720A /* ScalesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80C586EA2212528C001E720A /* ScalesTableViewController.swift */; };
+		80CEADAB2262D1410085A0AD /* EiaImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CEADAA2262D1410085A0AD /* EiaImage.swift */; };
+		80CEADAD2262D1B00085A0AD /* EiaDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80CEADAC2262D1B00085A0AD /* EiaDate.swift */; };
 		80D4C7A022302DB3007E5DF9 /* RequestExchangeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80D4C79F22302DB3007E5DF9 /* RequestExchangeTableViewController.swift */; };
 		80E3CC83221105B400D59F2F /* DetailTeamScalesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3CC82221105B400D59F2F /* DetailTeamScalesDataSource.swift */; };
 		80E3CC8522110BCC00D59F2F /* TeamScaleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80E3CC8422110BCC00D59F2F /* TeamScaleTableViewCell.swift */; };
@@ -170,6 +172,8 @@
 		80B507EB21FAA1C500B197FD /* EditGroupTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditGroupTableViewController.swift; sourceTree = "<group>"; };
 		80C586E822125218001E720A /* ScaleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleTableViewCell.swift; sourceTree = "<group>"; };
 		80C586EA2212528C001E720A /* ScalesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScalesTableViewController.swift; sourceTree = "<group>"; };
+		80CEADAA2262D1410085A0AD /* EiaImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaImage.swift; sourceTree = "<group>"; };
+		80CEADAC2262D1B00085A0AD /* EiaDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EiaDate.swift; sourceTree = "<group>"; };
 		80D4C79F22302DB3007E5DF9 /* RequestExchangeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestExchangeTableViewController.swift; sourceTree = "<group>"; };
 		80E3CC82221105B400D59F2F /* DetailTeamScalesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailTeamScalesDataSource.swift; sourceTree = "<group>"; };
 		80E3CC8422110BCC00D59F2F /* TeamScaleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamScaleTableViewCell.swift; sourceTree = "<group>"; };
@@ -261,6 +265,8 @@
 				8094D413220933390037F305 /* Invitation.swift */,
 				804D7C282241D87B000555FE /* WorkingIndicator.swift */,
 				8076DA2A22465EB900FA53D9 /* Notice.swift */,
+				80CEADAA2262D1410085A0AD /* EiaImage.swift */,
+				80CEADAC2262D1B00085A0AD /* EiaDate.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -492,6 +498,7 @@
 				80B507E821F8671D00B197FD /* DetailGroupTableViewController.swift in Sources */,
 				80456D1621D886C6004678DD /* HomeTabBarController.swift in Sources */,
 				8087F52121E170CD00870B3E /* Group.swift in Sources */,
+				80CEADAB2262D1410085A0AD /* EiaImage.swift in Sources */,
 				8087F52521E18C1800870B3E /* Voluntary_Item.swift in Sources */,
 				8087F51F21E1325C00870B3E /* GroupTableViewCell.swift in Sources */,
 				80957A7321D56DA1003D63DA /* EiaFormTableViewController.swift in Sources */,
@@ -519,6 +526,7 @@
 				8087F52F21E6E19600870B3E /* GroupDescriptionTextField.swift in Sources */,
 				800E2A6A22072773002057B0 /* EditTeamTableViewController.swift in Sources */,
 				809F1F6921CFEDAF00A943B7 /* EiaButton.swift in Sources */,
+				80CEADAD2262D1B00085A0AD /* EiaDate.swift in Sources */,
 				809F1F6D21CFF17D00A943B7 /* AlternativeFlowButton.swift in Sources */,
 				800795472201A27300FA7BA1 /* TeamTableViewCell.swift in Sources */,
 				8076DA2B22465EB900FA53D9 /* Notice.swift in Sources */,
