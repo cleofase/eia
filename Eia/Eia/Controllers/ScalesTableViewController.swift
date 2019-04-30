@@ -46,15 +46,6 @@ class ScalesTableViewController: UITableViewController {
             }
             tableView.reloadData()
         }
-//        retrieveVoluntaryFromCloud(withVoluntaryId: voluntaryId, completionWithSuccess: {[weak self] (voluntary) in
-//            DispatchQueue.main.async {[weak self] in
-//                self?.voluntary = voluntary
-//                if let scaleItems = voluntary.scales?.allObjects as? [Scale_Item] {
-//                    self?.scaleItems = scaleItems.sorted(by: {($0.start ?? Date()) > ($1.start ?? Date())})
-//                }
-//                self?.tableView.reloadData()
-//            }
-//        })
     }
     private func retrieveVoluntaryFromCloud(withVoluntaryId voluntaryId: String, completionWithSuccess: @escaping (Voluntary) -> Void) {
         let context: NSManagedObjectContext = containter.viewContext
